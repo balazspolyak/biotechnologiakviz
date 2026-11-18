@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kertészeti Biotechnológia – ABCD & Szókiegészítős Vizsgateszt (MATE)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    :root {
+      --background: #f8fafc;
+      --foreground: #0f172a;
+      --card: #ffffff;
+      --card-border: #e2e8f0;
+      --border: #cbd5e1;
+      --muted-foreground: #475569;
+      --primary: #059669;
+      --primary-foreground: #ffffff;
+      --secondary: #f1f5f9;
+      --secondary-foreground: #1e293b;
+      --accent: #10b981;
+      --success: #16a34a;
+      --warning: #d97706;
+      --error: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --background: #0b1120;
+        --foreground: #f1f5f9;
+        --card: #111827;
+        --card-border: #1e293b;
+        --border: #334155;
+        --muted-foreground: #94a3b8;
+        --primary: #10b981;
+        --primary-foreground: #052e16;
+        --secondary: #1e293b;
+        --secondary-foreground: #e2e8f0;
+        --accent: #34d399;
+        --success: #22c55e;
+        --warning: #f59e0b;
+        --error: #ef4444;
+      }
+    }
+    * { box-sizing: border-box; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    .option-btn {
+      transition: all 0.16s ease;
+    }
+    .option-btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+    }
+    .blank-slot {
+      display: inline-block;
+      min-width: 120px;
+      padding: 0 8px;
+      border-bottom: 2px dashed var(--primary);
+      font-weight: 700;
+      color: var(--primary);
+      text-align: center;
+    }
+    .chip-btn {
+      transition: all 0.15s ease;
+    }
+    .chip-btn:hover {
+      transform: scale(1.03);
+    }
+  </style>
+</head>
+<body class="bg-[var(--background)] text-[var(--foreground)] antialiased p-4 md:p-6 m-0 min-h-screen">
+  <div class="max-w-5xl mx-auto space-y-5">
+
+    <!-- Header -->
+    <header class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-4 md:p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div>
+        <div class="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[var(--muted-foreground)]">
+          <span>MATE • Kertészmérnök BSc • III. félév • 2026</span>
+        </div>
+        <h1 class="text-xl md:text-2xl font-bold mt-1 text-[var(--foreground)]">
+          Kertészeti Biotechnológia – Interaktív ABCD & Szókiegészítős Teszt
+        </h1>
+        <p class="text-xs md:text-sm text-[var(--muted-foreground)] mt-1">
+          A teljes előadásanyag (1–6. óra), a 2026-os GMO szabályozási/kimutatási és etikai/kockázati diasorok, valamint a javított vizsgakérdések alapján.
+        </p>
+      </div>
+      <div class="flex flex-wrap items-center gap-2">
+        <button id="tabQuizBtn" onclick="switchMainTab('quiz')" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-[var(--primary)] text-[var(--primary-foreground)]">
+          Interaktív Teszt
+        </button>
+        <button id="tabDiagramsBtn" onclick="switchMainTab('diagrams')" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-[var(--secondary)] text-[var(--secondary-foreground)] border border-[var(--border)]">
+          Vizsgaábrák & Színek
+        </button>
+        <button id="tabBankBtn" onclick="switchMainTab('bank')" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-[var(--secondary)] text-[var(--secondary-foreground)] border border-[var(--border)]">
+          Teljes Kérdésbank (<span id="totalBankCount">0</span>)
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN TAB 1: INTERACTIVE QUIZ -->
+    <section id="mainTabQuiz" class="space-y-4">
+      <!-- Filter & Mode Bar -->
+      <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-4 grid grid-cols-1 md:grid-cols-4 gap-3">
+        <div>
+          <label class="block text-xs font-medium text-[var(--muted-foreground)] mb-1">Témakör</label>
+          <select id="topicSelect" onchange="restartQuiz()" class="w-full rounded-lg bg-[var(--background)] border border-[var(--border)] text-[var(--foreground)] px-3 py-2 text-xs">
+            <option value="all">Összes témakör (Teljes anyag)</option>
+            <option value="exam">Csak a korábbi vizsgakérdések (Javítva & bővítve)</option>
+            <option value="t1">I. Bevezetés, Színek & In vitro mikroszaporítás</option>
+            <option value="t2">II. Genetikai transzformáció, Agrobacterium, Génpuska & CRISPR</option>
+            <option value="t3">III. PCR, Gélelektroforézis & Molekuláris markerek</option>
+            <option value="t4">IV. Bioinformatika, NCBI, BLAST & Filogenetika</option>
+            <option value="t5">V. GM növények (1–3. generáció) & Színanyagok</option>
+            <option value="t6">VI. GMO szabályozás (EU/USA/Magyarország), Kimutatás & Etika</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-[var(--muted-foreground)] mb-1">Feladattípus</label>
+          <select id="typeSelect" onchange="restartQuiz()" class="w-full rounded-lg bg-[var(--background)] border border-[var(--border)] text-[var(--foreground)] px-3 py-2 text-xs">
+            <option value="both">Vegyes (ABCD + Szókiegészítős)</option>
+            <option value="abcd">Csak ABCD feleletválasztós</option>
+            <option value="fill">Csak szókiegészítős (beírós / szóbankos)</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-[var(--muted-foreground)] mb-1">Kérdésszám & Sorrend</label>
+          <select id="limitSelect" onchange="restartQuiz()" class="w-full rounded-lg bg-[var(--background)] border border-[var(--border)] text-[var(--foreground)] px-3 py-2 text-xs">
+            <option value="all_shuffled">Összes szűrt kérdés (Keverve)</option>
+            <option value="20">20 kérdéses gyorsvizsga</option>
+            <option value="40">40 kérdéses nagyvizsga</option>
+            <option value="all_ordered">Összes szűrt kérdés (Sorrendben)</option>
+          </select>
+        </div>
+
+        <div class="flex flex-col justify-end">
+          <div class="flex items-center justify-between gap-2">
+            <button onclick="restartQuiz()" class="flex-1 px-3 py-2 rounded-lg text-xs font-semibold bg-[var(--primary)] text-[var(--primary-foreground)]">
+              Új teszt indítása
+            </button>
+            <button onclick="toggleWordBank()" id="wordBankToggleBtn" class="px-3 py-2 rounded-lg text-xs font-medium bg-[var(--secondary)] text-[var(--secondary-foreground)] border border-[var(--border)]" title="Szóbank segítség megjelenítése szókiegészítős kérdéseknél">
+              Szóbank: BE
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress & Score Strip -->
+      <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-3.5 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-3 text-xs">
+          <span class="font-mono font-bold px-2.5 py-1 rounded bg-[var(--background)] border border-[var(--border)]" id="progressText">1 / 100</span>
+          <span class="text-[var(--muted-foreground)]" id="currentTopicBadge">Témakör</span>
+          <span class="px-2 py-0.5 rounded font-semibold text-xs" id="currentTypeBadge">ABCD</span>
+        </div>
+        <div class="flex items-center gap-4 text-xs font-mono">
+          <span class="text-[var(--success)] font-semibold">✓ Helyes: <span id="scoreCorrect">0</span></span>
+          <span class="text-[var(--error)] font-semibold">✗ Hibás: <span id="scoreWrong">0</span></span>
+          <span class="text-[var(--muted-foreground)]">Pontosság: <span id="scorePercent">0%</span></span>
+        </div>
+      </div>
+
+      <!-- Question Card -->
+      <div id="questionCard" class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-5 md:p-6 space-y-5">
+        <div class="flex items-start justify-between gap-3">
+          <h2 id="questionPrompt" class="text-base md:text-lg font-semibold leading-relaxed text-[var(--foreground)]"></h2>
+          <span id="examStarBadge" class="hidden shrink-0 px-2.5 py-1 rounded-full text-xs font-semibold bg-[var(--warning)]/20 text-[var(--warning)] border border-[var(--warning)]/40">
+            ★ Vizsgakérdés
+          </span>
+        </div>
+
+        <!-- Optional Diagram Area inside Question -->
+        <div id="questionDiagramBox" class="hidden rounded-lg bg-[var(--background)] border border-[var(--border)] p-3"></div>
+
+        <!-- ABCD Options Container -->
+        <div id="abcdContainer" class="grid grid-cols-1 gap-2.5"></div>
+
+        <!-- Fill-in-the-blank Container -->
+        <div id="fillContainer" class="hidden space-y-3">
+          <div class="flex flex-col sm:flex-row gap-2">
+            <input
+              id="fillInput"
+              type="text"
+              placeholder="Írd be a hiányzó kifejezést (vagy kattints a szóbank egyik elemére)..."
+              class="flex-1 rounded-lg bg-[var(--background)] border border-[var(--border)] px-3.5 py-2.5 text-sm text-[var(--foreground)] focus:outline-none focus:border-[var(--primary)]"
+              onkeydown="if(event.key==='Enter'){submitFillAnswer();}"
+            />
+            <button id="fillSubmitBtn" onclick="submitFillAnswer()" class="px-5 py-2.5 rounded-lg text-sm font-semibold bg-[var(--primary)] text-[var(--primary-foreground)]">
+              Ellenőrzés
+            </button>
+          </div>
+          <!-- Clickable Word Bank Hints -->
+          <div id="wordBankBox" class="pt-2 border-t border-[var(--card-border)]">
+            <div class="text-xs text-[var(--muted-foreground)] mb-1.5">Választható kifejezések (kattints a beillesztéshez):</div>
+            <div id="wordBankChips" class="flex flex-wrap gap-1.5"></div>
+          </div>
+        </div>
+
+        <!-- Feedback & Explanation Box -->
+        <div id="feedbackBox" class="hidden rounded-lg p-4 border text-xs md:text-sm space-y-1.5">
+          <div id="feedbackTitle" class="font-bold text-sm"></div>
+          <div id="feedbackAnswer" class="font-medium"></div>
+          <div id="feedbackExplanation" class="text-[var(--muted-foreground)] leading-relaxed pt-1"></div>
+        </div>
+
+        <!-- Navigation Footer -->
+        <div class="flex items-center justify-between pt-3 border-t border-[var(--card-border)]">
+          <button onclick="prevQuestion()" id="prevBtn" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-[var(--secondary)] text-[var(--secondary-foreground)] border border-[var(--border)] disabled:opacity-40">
+            ← Előző
+          </button>
+          <button onclick="revealCurrentAnswer()" id="revealBtn" class="px-3.5 py-2 rounded-lg text-xs font-medium text-[var(--muted-foreground)] hover:text-[var(--foreground)]">
+            Megoldás mutatása
+          </button>
+          <button onclick="nextQuestion()" id="nextBtn" class="px-4 py-2 rounded-lg text-xs font-semibold bg-[var(--primary)] text-[var(--primary-foreground)]">
+            Következő →
+          </button>
+        </div>
+      </div>
+
+      <!-- Summary Result Screen -->
+      <div id="summaryCard" class="hidden bg-[var(--card)] border border-[var(--border)] rounded-xl p-6 text-center space-y-4">
+        <h2 class="text-xl font-bold">Teszt befejezve!</h2>
+        <p id="summaryStats" class="text-sm text-[var(--muted-foreground)]"></p>
+        <div id="missedQuestionsList" class="text-left space-y-2 max-h-96 overflow-y-auto"></div>
+        <div class="flex justify-center gap-3 pt-2">
+          <button onclick="restartQuiz()" class="px-4 py-2 rounded-lg text-xs font-semibold bg-[var(--primary)] text-[var(--primary-foreground)]">
+            Újrakezdés
+          </button>
+          <button onclick="retryMistakes()" id="retryMistakesBtn" class="hidden px-4 py-2 rounded-lg text-xs font-semibold bg-[var(--secondary)] text-[var(--secondary-foreground)] border border-[var(--border)]">
+            Csak a hibás kérdések gyakorlása
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAIN TAB 2: DIAGRAMS & VISUAL CHEAT SHEET -->
+    <section id="mainTabDiagrams" class="hidden space-y-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Card 1: Biotech Colors -->
+        <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-4 space-y-3">
+          <h3 class="text-sm font-bold border-b border-[var(--card-border)] pb-2">1. A biotechnológia színei (Vizsgakérdés!)</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            <div class="p-2 rounded bg-[var(--background)] border border-[var(--border)]"><strong>Vörös (piros):</strong> Egészségügy, orvosi, gyógyászat, diagnosztika</div>
+            <div class="p-2 rounded bg-[var(--background)] border border-[var(--border)]"><strong>Zöld:</strong> Mezőgazdasági, növényi és környezeti biotechnológia</div>
+            <div class="p-2 rounded bg-[var(--background)] border border-[var(--border)]"><strong>Fehér:</strong> Ipari biotechnológia (enzimek, fermentáció, biopolimerek)</div>
+            <div class="p-2 rounded bg-[var(--background)] border border-[var(--border)]"><strong>Kék:</strong> Vízi, tengeri és part menti biotechnológia</div>
+            <div class="p-2 rounded bg-[var(--background)] border border-[var(--border)]"><strong>Sárga:</strong> Élelmiszer-biotechnológia, táplálkozástudomány</div>
+            <div class="p-2 rounded bg-[var(--background)] border border-[var(--border)]"><strong>Barna:</strong> Sivatagi és száraz területek biotechnológiája</div>
+            <div class="p-2 rounded bg-[var(--background)] border border-[var(--border)]"><strong>Arany:</strong> Bioinformatika, nanobiotechnológia</div>
+            <div class="p-2 rounded bg-[var(--background)] border border-[var(--border)]"><strong>Lila:</strong> Jog, etika, szabványok, publikációk, szabadalmak</div>
+            <div class="p-2 rounded bg-[var(--background)] border border-[var(--border)] sm:col-span-2"><strong>Fekete:</strong> Bioterrorizmus, biofegyverek</div>
+          </div>
+        </div>
+
+        <!-- Card 2: Pigments & GM Plants -->
+        <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-4 space-y-3">
+          <h3 class="text-sm font-bold border-b border-[var(--card-border)] pb-2">2. Színanyagok, Enzimek és GM/GE Növények Párosítása</h3>
+          <div class="space-y-1.5 text-xs">
+            <div class="p-2 rounded bg-[var(--background)] border border-[var(--border)]"><strong>Kék szegfű (Moonshadow) & Kék rózsa (Applause):</strong> <em>Delfinidin</em> (kék antocianidin) felhalmozása árvácska <em>F3’5’H</em> génnel (+ DFR RNSi és Torenia 5AT gén). (Cianidin = piros, Pelargonidin = narancs/sárga)</div>
+            <div class="p-2 rounded bg-[var(--background)] border border-[var(--border)]"><strong>Rózsaszín ananász (Pinkglow):</strong> <em>Likopin</em> felhalmozódás (piros/rózsaszín karotinoid), mert a likopin-béta-cikláz (LCYB) enzim gátolt, így nem alakul át sárga béta-karotinná/xantofillokká.</div>
+            <div class="p-2 rounded bg-[var(--background)] border border-[var(--border)]"><strong>Aranyrizs (Golden Rice 1 & 2), Aranybanán, Arany saláta:</strong> <em>Béta-karotin</em> (A-provitamin, sárga/arany szín) – GR1: nárcisz, GR2: kukorica <em>fitoén-szintáz (psy)</em> + <em>Erwinia uredovora</em> kettős deszaturáz.</div>
+            <div class="p-2 rounded bg-[var(--background)] border border-[var(--border)]"><strong>Fekete / Lila paradicsom, Lila rizs (OsMYB1 KO), Pirosbélű antociános alma:</strong> <em>Antociánok</em> (paradicsomnál oroszlánszáj DEL és ROS1 transzkripciós faktorok; rizsnél OsMYB1 gátlógén kiütése).</div>
+            <div class="p-2 rounded bg-[var(--background)] border border-[var(--border)]"><strong>Ibolyavörös burgonya (Désirée) és padlizsán:</strong> <em>Betalain</em> pigment (pX11 vektor).</div>
+          </div>
+        </div>
+
+        <!-- Card 3: 4 Core Process Diagrams from the Exam -->
+        <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-4 space-y-3 md:col-span-2">
+          <h3 class="text-sm font-bold border-b border-[var(--card-border)] pb-2">3. Vizsgán kérdezett folyamatábrák és sorrendek</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+            <div class="p-3 rounded bg-[var(--background)] border border-[var(--border)] space-y-1.5">
+              <div class="font-bold text-[var(--primary)]">A) Vírusmentesítés folyamata (ábra alapján)</div>
+              <ol class="list-decimal list-inside space-y-1">
+                <li><strong>Vírusos anyanövény</strong> kiválasztása</li>
+                <li><strong>Hőkezelés (termoterápia):</strong> 36–52 °C (leggyakrabban 35–37 °C), a vírus szaporodása gátolt az új hajtáscsúcsokban</li>
+                <li><strong>Vírusmentes hajtáscsúcs / merisztéma izolálása:</strong> 0,1 mm átmérő, 0,25 mm hossz (1–2 sejtréteg)</li>
+                <li><strong>In vitro leszaporítás</strong> steril táptalajon</li>
+                <li><strong>Vírusteszt (ELISA / RT-PCR):</strong> a fertőzött tenyészeteket kiszűrik (X), csak az igazoltan <strong>vírusmentes növényt</strong> szaporítják tovább</li>
+              </ol>
+            </div>
+            <div class="p-3 rounded bg-[var(--background)] border border-[var(--border)] space-y-1.5">
+              <div class="font-bold text-[var(--primary)]">B) Agrobacterium tumefaciens géntranszfer (ábra alapján)</div>
+              <ol class="list-decimal list-inside space-y-1">
+                <li><strong>Sebzés és szignálészlelés:</strong> a sebzett kétszikű növényi sejt <em>polifenolokat</em> (pl. acetosziringont) és cukrokat bocsát ki</li>
+                <li><strong>Virulencia gének aktiválása:</strong> a <em>VirA</em> receptor érzékeli a polifenolt, foszforilálja a <em>VirG</em>-t, ami bekapcsolja a Ti-plazmid <em>vir</em> génjeit</li>
+                <li><strong>T-DNS kivágása:</strong> a <em>VirD1/VirD2</em> endonukleázok elvágják a 25 bp-os jobb és bal oldali határoló szekvenciát (LB, RB)</li>
+                <li><strong>Szállítás és csatorna:</strong> a <em>VirE2</em> fehérjék bevonják az egyszálú T-DNS-t, a <em>VirB/VirD4</em> komplex transzmembrán csatornát képez</li>
+                <li><strong>Integráció:</strong> a T-DNS bejut a sejtmagba (VIP1, aktin váz), és a növény saját DNS-hibajavító mechanizmusa beépíti a kromoszómába</li>
+              </ol>
+            </div>
+            <div class="p-3 rounded bg-[var(--background)] border border-[var(--border)] space-y-1.5">
+              <div class="font-bold text-[var(--primary)]">C) Részecskebombázás / Génpuska (ábra alapján)</div>
+              <ol class="list-decimal list-inside space-y-1">
+                <li><strong>Mikrolövedék előkészítése:</strong> 1–2 µm-es arany (Au) vagy volfrám (W) szemcsék felületére plazmid DNS-t kötnek</li>
+                <li><strong>Makrolövedékre helyezés:</strong> a DNS-sel bevont szemcséket műanyag korongra (makrolövedék) pipettázzák a fegyvercsőben</li>
+                <li><strong>Gyorsítás:</strong> nagy nyomású <em>héliumgáz</em> (vagy a gödöllői Geneboosterben <em>nitrogéngáz</em>) felgyorsítja a makrolövedéket</li>
+                <li><strong>Ütközőlemez (stopper disc / screen):</strong> a makrolövedék fennakad a rácson, a mikrolövedékek pedig áthaladva becsapódnak a célsejtekbe</li>
+                <li><strong>Szelekció és regeneráció:</strong> GUS teszt / markergén szelekció, majd in vitro növényregenerálás és akklimatizáció</li>
+              </ol>
+            </div>
+            <div class="p-3 rounded bg-[var(--background)] border border-[var(--border)] space-y-1.5">
+              <div class="font-bold text-[var(--primary)]">D) PCR ciklusok & Kimutatási módszerek érzékenységi sorrendje</div>
+              <div><strong>PCR 1 ciklusa (kb. 30× ismételve):</strong></div>
+              <ul class="list-disc list-inside">
+                <li><strong>1. Denaturáció:</strong> &gt;90 °C (94–95 °C, ~30 mp) – H-hidak felbomlanak, szálak szétválnak</li>
+                <li><strong>2. Primer tapadás (annealing):</strong> 40–60 °C (~30 mp) – forward és reverz primerek bekötődnek</li>
+                <li><strong>3. Lánchosszabbítás (elongáció / szintézis):</strong> 72 °C (~1–2 perc, ~1000 bp/perc) – Taq DNS-polimeráz</li>
+              </ul>
+              <div class="pt-1"><strong>GMO-kimutatás érzékenységi sorrendje:</strong><br/>
+                <em>Növekvő érzékenység:</em> <strong>Strip teszt</strong> (0,1–1%) &lt; <strong>ELISA</strong> (0,01–0,1%) &lt; <strong>PCR / qPCR</strong> (0,01%, legérzékenyebb)
+              </div>
+              <div class="pt-1"><strong>PCR specificitási szintek (növekvő):</strong><br/>
+                1. Screening (35S / nos) &lt; 2. Gén-specifikus &lt; 3. Konstrukció-specifikus &lt; 4. Esemény (event)-specifikus
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAIN TAB 3: QUESTION BANK SEARCHABLE LIST -->
+    <section id="mainTabBank" class="hidden space-y-4">
+      <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-4 flex flex-col sm:flex-row gap-3 items-center justify-between">
+        <input
+          id="bankSearchInput"
+          type="text"
+          oninput="renderQuestionBank()"
+          placeholder="Keresés a kérdések, válaszok és magyarázatok között (pl. EPSPS, Ereky, CRISPR, 0,9%, alginát)..."
+          class="w-full sm:flex-1 rounded-lg bg-[var(--background)] border border-[var(--border)] px-3.5 py-2 text-xs text-[var(--foreground)]"
+        />
+        <select id="bankFilterTopic" onchange="renderQuestionBank()" class="w-full sm:w-64 rounded-lg bg-[var(--background)] border border-[var(--border)] px-3 py-2 text-xs text-[var(--foreground)]">
+          <option value="all">Minden témakör</option>
+          <option value="exam">Csak ★ Vizsgakérdések</option>
+          <option value="t1">I. Bevezetés & In vitro</option>
+          <option value="t2">II. Transzformáció & CRISPR</option>
+          <option value="t3">III. PCR & Markerek</option>
+          <option value="t4">IV. Bioinformatika</option>
+          <option value="t5">V. GM növények & Színanyagok</option>
+          <option value="t6">VI. Szabályozás, Kimutatás & Etika</option>
+        </select>
+      </div>
+      <div id="bankListContainer" class="space-y-2.5"></div>
+    </section>
+
+  </div>
+
+  <script>
+    const TOPIC_NAMES = {
+      t1: "I. Bevezetés, Színek & In vitro mikroszaporítás",
+      t2: "II. Genetikai transzformáció & Genomszerkesztés (CRISPR)",
+      t3: "III. PCR, Gélelektroforézis & Molekuláris markerek",
+      t4: "IV. Bioinformatika, Adatbázisok & Filogenetika",
+      t5: "V. GM növények generációi & Színanyagok",
+      t6: "VI. GMO szabályozás, Kimutatás & Etika (2026)"
+    };
+
+    const QUESTIONS = [
+      // ==================== TOPIC 1: BEVEZETÉS, SZÍNEK, IN VITRO ====================
+      {
+        id: "q1", topic: "t1", type: "abcd", exam: true,
+        q: "Ki és mikor alkotta meg a „biotechnológia” kifejezést?",
+        options: [
+          "Ereky Károly magyar mérnök 1917-ben",
+          "Kary Mullis amerikai biokémikus 1983-ban",
+          "Matthias Schleiden és Theodor Schwann 1838-ban",
+          "Norman E. Borlaug 1950-ben"
+        ],
+        answer: 0,
+        exp: "A (német nyelvű) „Biotechnologie” szót Ereky Károly alkotta meg 1917-ben."
+      },
+      {
+        id: "q2", topic: "t1", type: "fill", exam: true,
+        q: "A „biotechnológia” szó megalkotója ________ Károly volt 1917-ben.",
+        answers: ["Ereky", "Ereky Károly"],
+        hints: ["Ereky", "Jenes", "Heszky", "Borlaug", "Mullis"],
+        exp: "Ereky Károly (1917) nevéhez fűződik a biotechnológia fogalmának megalkotása."
+      },
+      {
+        id: "q3", topic: "t1", type: "abcd", exam: true,
+        q: "Mi jelenti a fő határvonalat a hagyományos (klasszikus) és az új (modern) biotechnológia között?",
+        options: [
+          "Az, hogy történik-e célzott genetikai módosítás (génmódosítás) az élő szervezetben vagy sem",
+          "Az, hogy steril laboratóriumban vagy szabadföldön végzik-e az eljárást",
+          "Az, hogy mikroorganizmusokat vagy növényeket használnak-e fel",
+          "Az, hogy folyékony vagy szilárd (agaros) táptalajt alkalmaznak-e"
+        ],
+        answer: 0,
+        exp: "A hagyományos biotechnológia (pl. erjesztés, in vitro mikroszaporítás) nem végez genetikai módosítást, míg a modern biotechnológia genetikailag módosított szervezeteket alkalmaz."
+      },
+      {
+        id: "q4", topic: "t1", type: "abcd", exam: true,
+        q: "Mely színek jelölik helyesen az orvosi/egészségügyi, a mezőgazdasági/növényi és az ipari biotechnológiát?",
+        options: [
+          "Orvosi: vörös (piros), Mezőgazdasági: zöld, Ipari: fehér",
+          "Orvosi: fehér, Mezőgazdasági: zöld, Ipari: szürke",
+          "Orvosi: kék, Mezőgazdasági: sárga, Ipari: vörös",
+          "Orvosi: arany, Mezőgazdasági: barna, Ipari: lila"
+        ],
+        answer: 0,
+        exp: "Vörös = orvosi/gyógyászati, Zöld = mezőgazdasági/növényi, Fehér = ipari, Kék = vízi/tengeri, Sárga = élelmiszer, Barna = sivatagi, Arany = bioinformatika/nanobiotech, Fekete = bioterrorizmus, Lila = jogi/szabványügyi."
+      },
+      {
+        id: "q5", topic: "t1", type: "fill", exam: true,
+        q: "A biotechnológia színkódolásában a mezőgazdasági és növényi biotechnológia színe a(z) ________, míg az ipari biotechnológia színe a fehér.",
+        answers: ["zöld"],
+        hints: ["zöld", "vörös", "kék", "sárga", "arany"],
+        exp: "A zöld biotechnológia a mezőgazdasági és környezeti alkalmazásokat, a vörös az orvosit, a fehér az iparit jelöli."
+      },
+      {
+        id: "q6", topic: "t1", type: "abcd", exam: false,
+        q: "Melyik tudományos felismerést tekintjük a modern (növényi sejttani alapú) biotechnológia elméleti kezdetének (1838)?",
+        options: [
+          "Schleiden és Schwann sejtelméletét (totipotencia alapja: a differenciálódott sejtek megtartják a zigóta genetikai információját)",
+          "Watson és Crick DNS-kettőspirál modelljét",
+          "Kary Mullis polimeráz láncreakció (PCR) felfedezését",
+          "Az Agrobacterium tumefaciens Ti-plazmidjának felfedezését"
+        ],
+        answer: 0,
+        exp: "1838-ban Matthias J. Schleiden és Theodor Schwann megállapították, hogy minden szervezetet sejtek építenek fel, és a differenciálódott sejtek megőrzik a megtermékenyített petesejtben lévő összes információt."
+      },
+      {
+        id: "q7", topic: "t1", type: "abcd", exam: false,
+        q: "Melyek a növényi biotechnológia legfőbb biológiai kihívásai a növényi sejtek sajátosságai miatt?",
+        options: [
+          "A sejtfal jelenléte, a gyakori magas ploidiaszint, a nagy genomméret (10⁵–10⁸ kb) és az ismétlődő szakaszok nagy aránya",
+          "A sejtmag hiánya, a körkörös kromoszóma és a túl gyors sejtosztódás (20 perces generációs idő)",
+          "Az intronok teljes hiánya és a csak 10³ kilobázis méretű genom",
+          "Az, hogy a növényi sejtek nem képesek dedifferenciálódásra és kalluszképzésre"
+        ],
+        answer: 0,
+        exp: "A növényi sejtfal megnehezíti a géntranszfert (ezért készítenek protoplasztot), a poliploidia és a sok repetitív DNS pedig hatalmas genomméretet (10⁵–10⁸ kb) eredményez."
+      },
+      {
+        id: "q8", topic: "t1", type: "fill", exam: false,
+        q: "Azt a növényi sejtet, amelyről enzimatikus úton leválasztották a sejtfalat, ________-nak nevezzük.",
+        answers: ["protoplaszt", "protoplasztnak"],
+        hints: ["protoplaszt", "explantum", "kallusz", "merisztéma", "szomatikus embrió"],
+        exp: "A protoplaszt olyan növényi sejt, amelyről eltávolították a sejtfalat (pl. sejtfúzióhoz vagy közvetlen géntranszferhez)."
+      },
+      {
+        id: "q9", topic: "t1", type: "abcd", exam: false,
+        q: "Mi a különbség a merisztéma és a kallusz között?",
+        options: [
+          "A merisztéma elsődleges, állandóan osztódó differenciálatlan szövet (hajtás- és gyökércsúcsban), míg a kallusz már differenciált szövetből dedifferenciációval (sebzés/hormon hatására) másodlagosan kialakult osztódó szövet",
+          "A kallusz generatív ivarsejtekből áll, míg a merisztéma elhalt, fásodott sejtfalú szövet",
+          "A merisztéma csak in vitro táptalajon jön létre, a kallusz pedig csak a magvak endospermiumában",
+          "Nincs különbség, a két fogalom egymás szinonimája"
+        ],
+        answer: 0,
+        exp: "A merisztéma az embriótól kezdve osztódóképes csúcsi szövet, míg a kallusz differenciált sejtekből dedifferenciációval, másodlagosan jön létre sebzés vagy auxin/citokinin kezelés hatására."
+      },
+      {
+        id: "q10", topic: "t1", type: "fill", exam: false,
+        q: "Azt az izolált növényi részt, amelyet in vitro fenntartás és szaporítás céljából steril táptalajra helyezünk, ________-nak nevezzük.",
+        answers: ["explantum", "explantátum", "explantumnak", "explantátumnak"],
+        hints: ["explantum", "kallusz", "agar", "merisztéma", "klón"],
+        exp: "Az explantum (explantátum) a táptalajra helyezett kiindulási növényi rész (lehet szomatikus vagy generatív, differenciált vagy differenciálatlan)."
+      },
+      {
+        id: "q11", topic: "t1", type: "abcd", exam: true,
+        q: "Mely tényezők tartoznak az in vitro szövettenyésztés mesterségesen szabályozott környezeti feltételei közé, és miért kritikus a sterilitás?",
+        options: [
+          "Táptalaj (makro/mikroelemek, cukor, vitaminok, hormonok), ~100% páratartalom, szabályozott hőmérséklet, megvilágítás (pl. 16h/8h), pH; a sterilitás azért kritikus, mert a baktériumok és gombák sokkal gyorsabban nőnek a lassan osztódó növényi sejteknél",
+          "Alacsony (30%) páratartalom, cukormentes táptalaj és UV-besugárzás a teljes tenyésztés alatt",
+          "Nem-steril kerti föld, természetes esővíz és szélbeporzás biztosítása a fényszobában",
+          "Kizárólag folyékony nitrogén (-196 °C) és teljes sötétség a hajtásnövekedés alatt"
+        ],
+        answer: 0,
+        exp: "In vitro körülmények között 100%-os páratartalmat, pontos fotoperiódust (pl. 16 óra világos / 8 óra sötét), hőmérsékletet és komplett steril táptalajt biztosítunk."
+      },
+      {
+        id: "q12", topic: "t1", type: "abcd", exam: true,
+        q: "Mi a növényi részek (explantumok) felületi sterilizálásának helyes sorrendje az in vitro kultúra indításakor?",
+        options: [
+          "1. Bő folyó csapvizes mosás → 2. 70%-os etanolos áztatás (1–2 perc) → 3. Fertőtlenítés 10–30% Clorox / 1:3 hipó (NaOCl) oldattal (+ Tween20 nedvesítőszer) → 4. 4–5-szörös öblítés előre sterilizált vízzel lamináris boxban",
+          "1. Autoklávozás 120 °C-on 20 percig → 2. 170 °C-os hőlégsterilizálás → 3. Csapvizes lemosás",
+          "1. Steril vizes öblítés → 2. Hipós áztatás → 3. Folyó csapvizes lemosás a szabad levegőn",
+          "1. Bunsen-égő feletti leégetés → 2. Agaróz gélbe ágyazás → 3. UV-kezelés 2 órán át"
+        ],
+        answer: 0,
+        exp: "A növényi részeket először folyó csapvízzel mossák, majd a lamináris boxban 70%-os alkohollal (1–2 perc) és NaOCl/Clorox oldattal (+ Tween20 a viaszréteg ellen) kezelik, végül steril desztillált vízzel 4–5-ször átmossák."
+      },
+      {
+        id: "q13", topic: "t1", type: "fill", exam: true,
+        q: "Az in vitro sterilizálás során az erős viasz- vagy kutikularéteggel rendelkező növényi részek fertőtlenítéséhez ________ (pl. TWEEN20) nedvesítőszert adnak a hipós oldathoz.",
+        answers: ["TWEEN20", "Tween 20", "Tween-20", "nedvesítőszert", "felületaktív anyagot"],
+        hints: ["TWEEN20", "agar", "szacharóz", "ribavirin", "alginát"],
+        exp: "A TWEEN20 nedvesítőszer feloldja a hidrofób viasz-/kutikularéteget, így a fertőtlenítőszer hozzáfér a növény felszínéhez."
+      },
+      {
+        id: "q14", topic: "t1", type: "abcd", exam: false,
+        q: "Hogyan viszonyul egymáshoz a citokinin és az auxin aránya a táptalajban a hajtás-, illetve gyökérképzés szabályozásakor?",
+        options: [
+          "Ha a citokinin > auxin, akkor hajtásképzés (sarjadzás) indul be; ha a citokinin < auxin (vagy csak auxin van), akkor kallusz- és gyökérképződés történik",
+          "Ha az auxin > citokinin, akkor oldalhajtások képződnek; ha csak citokinin van, akkor gyökér fejlődik",
+          "A citokinin és az auxin kizárólag a sztómák záródását szabályozza, a szervképzést a B-vitaminok irányítják",
+          "A magas gibberellinsav (GA3) arány váltja ki a gyökérképződést, az auxin pedig a virágzást"
+        ],
+        answer: 0,
+        exp: "Skoog és Miller szabálya alapján: citokinin > auxin = hajtásképzés (sarjadzás); citokinin < auxin = kalluszindukció és gyökérképződés; csak auxin = gyökereztetés."
+      },
+      {
+        id: "q15", topic: "t1", type: "abcd", exam: false,
+        q: "Melyik vegyületcsoportba tartozik a kinetin, a BAP (benzil-amino-purin) és a zeatin, illetve a 2,4-D és a NES?",
+        options: [
+          "Kinetin, BAP, zeatin: citokininek; 2,4-D és NES (β-naftil-ecetsav): auxinok",
+          "Kinetin, BAP, zeatin: auxinok; 2,4-D és NES: gibberellinek",
+          "Mindegyik szintetikus gyomirtószer, amelyet szelekciós markerként használnak",
+          "Mindegyik B-vitamin származék (tiamin, piridoxin, nikotinsav)"
+        ],
+        answer: 0,
+        exp: "A kinetin, BAP és zeatin citokininek (sejtosztódást és sarjadzást serkentenek, késleltetik az öregedést), míg az indol-3-ecetsav, NES, indol-vajsav és 2,4-D auxinok."
+      },
+      {
+        id: "q16", topic: "t1", type: "abcd", exam: false,
+        q: "Milyen paraméterekkel működik az autokláv (nedves hővel történő sterilizálás) és a meleglevegős szárítószekrény a szövettenyésztő laborban?",
+        options: [
+          "Autokláv: túlnyomásos vízgőz, 120 °C, 100% páratartalom, 20 perc (táptalajokhoz); Szárítószekrény: 170 °C száraz hő, 2 óra (üveg-, fém- és papíreszközökhöz)",
+          "Autokláv: 170 °C, 2 óra; Szárítószekrény: 60 °C, 10 perc",
+          "Autokláv: 72 °C, 30 másodperc; Szárítószekrény: -196 °C folyékony nitrogén",
+          "Mindkettő UV-fénnyel sterilizál 37 °C-on 24 órán keresztül"
+        ],
+        answer: 0,
+        exp: "A táptalajt autoklávban (120 °C, magas nyomás, 100% páratartalom, 20 perc) sterilizálják, a hőálló üveg/fém eszközöket pedig 170 °C-os szárítószekrényben 2 órán át."
+      },
+      {
+        id: "q17", topic: "t1", type: "abcd", exam: false,
+        q: "Miért igényelnek fokozatos, 2–3 hónapos akklimatizációt (edzést) az in vitro kultúrából kikerülő növények?",
+        options: [
+          "Mert in vitro (100% páratartalom, cukros táptalaj) a kutikulájuk vékonyabb, gyakran hiányzik a viaszréteg, a sztómák nem működnek megfelelően, az oszloposugaras parenchima fejletlen, és a gyökérzet gyenge",
+          "Mert az in vitro növényekben túl vastag a viaszréteg, és nem tudnak vizet felvenni a szabadföldből",
+          "Mert az in vitro növények elveszítik a kloroplasztiszaikat, és csak sötétben képesek növekedni",
+          "Mert az agar maradványai genetikai mutációt okoznak a napfény hatására"
+        ],
+        answer: 0,
+        exp: "Az in vitro 100%-os páratartalom miatt a növénykék kutikulája vékony, viaszrétegük hiányos, sztómáik nem zárnak jól, ezért fokozatos páratartalom-csökkentéssel és inert közegben (perlit, tőzeg, homok) történő gyökérerősítéssel kell hozzászoktatni őket."
+      },
+      {
+        id: "q18", topic: "t1", type: "abcd", exam: true,
+        q: "Mely eljárásokkal végezhető el a fertőzött növények kórokozó- (vírus-) mentesítése, és melyik antivirális vegyület jelentett áttörést a kemoterápiában?",
+        options: [
+          "Hőkezelés (36–52 °C), hidegkezelés (5 °C, 3–6 hónap), merisztématenyésztés (0,1 × 0,25 mm csúcs) és kemoterápia, ahol a ribavirin (szintetikus ribozid) hozott előrelépést",
+          "Kizárólag antibiotikumos (kanamicin) áztatással és fagyasztással (-196 °C)",
+          "Agrobacterium tumefaciens fertőzéssel és glifozátos permetezéssel",
+          "Etídium-bromidos festéssel és agaróz gélelektroforézissel"
+        ],
+        answer: 0,
+        exp: "A vírusmentesítés kombinálja a hőkezelést (35–37 °C-on a vírusok szaporodása gátolt), a merisztéma-izolálást (0,1 mm × 0,25 mm) és a kemoterápiát (ribavirin)."
+      },
+      {
+        id: "q19", topic: "t1", type: "abcd", exam: true,
+        q: "Mi a mesterséges mag, milyen fejlődési stádiumban lévő szomatikus embriót kapszuláznak, és milyen vegyületek ioncseréjével alakul ki a gélszerű burok?",
+        options: [
+          "Kalluszból/sejtszuszpenzióból folyékony táptalajon létrehozott szomatikus embrió, amelyet torpedó stádiumban (magas cukorkoncentrációval szinkronizálva) nátrium-alginát és kalciumsó ioncseréjével ~4 mm-es gélkapszulába zárnak",
+          "Ivaros megporzással létrehozott zigóta, amelyet szilárd agarba és 70%-os etanolba zárnak gömb stádiumban",
+          "Génpuskával aranyrészecskékhez kötött pollenszem, amelyet polietilén-glikollal (PEG) vonnak be",
+          "Folyékony nitrogénben (-196 °C) tárolt gyökérdarab, amelyet paraffinnal vonnak be"
+        ],
+        answer: 0,
+        exp: "A mesterséges mag vegetatív (klónozó) szaporítóanyag: folyékony táptalajban szomatikus embriókat állítanak elő, magas cukor- és N-tartalommal torpedó stádiumban szinkronizálják őket, majd Na-alginát és Ca-só ioncseréjével 4 mm-es golyóvá kapszulázzák."
+      },
+      {
+        id: "q20", topic: "t1", type: "fill", exam: true,
+        q: "A mesterséges mag előállításakor a szomatikus embriókat ________ fejlettségi stádiumban szinkronizálják magas cukorkoncentrációval, majd nátrium-alginát és kalciumsó segítségével kapszulázzák.",
+        answers: ["torpedó"],
+        hints: ["torpedó", "zigóta", "kallusz", "merisztéma", "spóra"],
+        exp: "A szomatikus embriókat torpedó stádiumban állítják meg és szinkronizálják magas cukorkoncentrációjú táptalajban a kapszulázás előtt."
+      },
+      {
+        id: "q21", topic: "t1", type: "abcd", exam: false,
+        q: "Milyen hőmérsékleten történik az in vitro génbanki lassított tárolás, illetve a kriobankban (krioprezerváció) történő mélyfagyasztás és felolvasztás?",
+        options: [
+          "In vitro génbank: 0–8 °C (gyenge fény, ozmotikus/hormonális növekedésgátlók); Kriobank: tárolás folyékony nitrogénben -196 °C-on, felolvasztás gyorsan 40 °C-on",
+          "In vitro génbank: 25 °C; Kriobank: tárolás -20 °C-on, felolvasztás 100 °C-on",
+          "In vitro génbank: -80 °C; Kriobank: +4 °C sötétben",
+          "Mindkettő 37 °C-os rázóinkubátorban történik"
+        ],
+        answer: 0,
+        exp: "Az in vitro génbank 0–8 °C-on lassítja a növekedést, míg a kriobank folyékony nitrogénben (-196 °C) tárolja az előkezelt (4 °C) steril izolátumot, és gyors, 40 °C-os olvasztással regenerálja."
+      },
+
+      // ==================== TOPIC 2: GENETIKAI TRANSZFORMÁCIÓ & CRISPR ====================
+      {
+        id: "q22", topic: "t2", type: "abcd", exam: true,
+        q: "Melyik párosítás helyes a közvetett és a közvetlen géntranszfer módszerekre?",
+        options: [
+          "Közvetett: Agrobacterium tumefaciens és növényi vírusok (pl. CaMV); Közvetlen: részecskebombázás (génpuska), mikroinjektálás, elektroporáció, vákuum infiltráció, PEG-indukált sejtfúzió",
+          "Közvetett: génpuska és elektroporáció; Közvetlen: Agrobacterium tumefaciens és keresztezéses nemesítés",
+          "Közvetett: PCR és gélelektroforézis; Közvetlen: ELISA és Western blot",
+          "Közvetett: merisztématenyésztés; Közvetlen: hőkezelés és krioprezerváció"
+        ],
+        answer: 0,
+        exp: "Közvetett géntranszfernél biológiai közvetítőt (Agrobacterium tumefaciens, CaMV vírus) használunk, közvetlennél fizikai/kémiai úton (génpuska, mikroinjektálás, elektroporáció, vákuum infiltráció, PEG) juttatjuk be a DNS-t."
+      },
+      {
+        id: "q23", topic: "t2", type: "fill", exam: true,
+        q: "Az Agrobacterium tumefaciens segítségével végzett génbejuttatás ________ géntranszfernek minősül, míg a génpuska (részecskebombázás) közvetlen géntranszfer.",
+        answers: ["közvetett", "indirekt"],
+        hints: ["közvetett", "közvetlen", "in silico", "homológ", "konstitutív"],
+        exp: "Mivel egy másik élőlény (baktérium vagy vírus) közvetíti a DNS-átvitelt, az Agrobacterium-alapú transzformáció közvetett géntranszfer."
+      },
+      {
+        id: "q24", topic: "t2", type: "abcd", exam: true,
+        q: "Mi a promóter fogalma, és mi a különbség a konstitutív, illetve az induktív promóterek között?",
+        options: [
+          "A promóter az a szabályozó DNS-szakasz, amely meghatározza, hogy a gén hol, mikor és milyen mértékben íródjon át mRNS-sé; a konstitutív promóter (pl. CaMV 35S, nos) minden szövetben folyamatosan működik, az induktív pedig csak külső biotikus/abiotikus hatásra (pl. szárazság, sebzés) kapcsol be",
+          "A promóter a DNS-t elvágó bakteriális enzim; a konstitutív ragadós véget, az induktív tompa véget vág",
+          "A promóter egy antibiotikum-rezisztencia fehérje, amely megvédi a növényt a gyomirtószerektől",
+          "A promóter az mRNS-ből kivágódó nem-kódoló szakasz (intron)"
+        ],
+        answer: 0,
+        exp: "A promóter irányítja a transzkripciót. A konstitutív promóterek (pl. karfiol mozaik vírus 35S, Agrobacterium nopalin-szintáz / oktopin-szintáz) folyamatosan aktívak, az induktív és szövetspecifikus promóterek pedig feltételhez kötötten működnek."
+      },
+      {
+        id: "q25", topic: "t2", type: "fill", exam: true,
+        q: "A növényi géntechnológiában leggyakrabban alkalmazott konstitutív promóter a karfiol mozaik vírus ________ nevű promótere.",
+        answers: ["35S", "CaMV 35S", "35s"],
+        hints: ["35S", "PAT", "GUS", "Cas9", "T-DNS"],
+        exp: "A karfiol mozaik vírus (CaMV) 35S promótere a legismertebb konstitutív promóter, amely szinte minden szövetben folyamatos génexpressziót biztosít."
+      },
+      {
+        id: "q26", topic: "t2", type: "abcd", exam: true,
+        q: "Mi a szelektálható markergén szerepe, miért változott meg a használata 2006 után, és melyik ma a leggyakoribb markergén?",
+        options: [
+          "Segítségével elkülöníthetők a sikeresen transzformált sejtek a nem-transzformáltaktól; 2006-ban betiltották az antibiotikum-rezisztencia (pl. kanamicin, higromicin) markergének használatát, így ma a herbicidrezisztenciát (glüfozinát/FINALE) adó PAT gén a leggyakoribb",
+          "A génkifejeződés vizuális mérésére szolgál UV-fényben; 2006 óta csak a szentjánosbogár luciferáz génje használható",
+          "A baktériumok elpusztítására szolgál a táptalajban; 2006 óta a 35S promótert használják helyette",
+          "A növényi sejtfal lebontását végzi protoplaszt-előállításkor"
+        ],
+        answer: 0,
+        exp: "A szelektálható markergén saját promóterrel és terminátorral rendelkezik, és a transzformáns sejtek kiválogatására szolgál. 2006 után az antibiotikum-rezisztencia gének helyett a herbicidrezisztenciát kódoló PAT gén (foszfinotricin-acetiltranszferáz) terjedt el."
+      },
+      {
+        id: "q27", topic: "t2", type: "abcd", exam: true,
+        q: "Melyik állítás írja le helyesen a három legfontosabb riportergént (GUS, GFP, Luciferáz) és az általuk kiváltott szín-/fényreakciót?",
+        options: [
+          "GUS (béta-glükuronidáz): X-gluc szubsztrátból oldhatatlan indigókék festéket képez; GFP (kristálymedúza eredetű): UV-fényben zölden fluoreszkál; Luciferáz (szentjánosbogár eredetű): a luciferin oxidációjakor fényt bocsát ki (lumineszcencia)",
+          "GUS: zölden fluoreszkál; GFP: X-gluc hatására pirosra festődik; Luciferáz: indigókék csapadékot képez",
+          "GUS: sárga béta-karotint termel; GFP: lila antociánt termel; Luciferáz: rózsaszín likopint termel",
+          "Mindhárom riportergén antibiotikum-rezisztenciát biztosít színváltozás nélkül"
+        ],
+        answer: 0,
+        exp: "A riportergének a vizsgált promóter után kapcsolva a génexpresszió szintjét teszik láthatóvá: GUS + X-gluc → indigókék; GFP (medúza) → UV-fényben zöld fluoreszcencia; Luciferáz (szentjánosbogár, 1986 dohány) + luciferin → lumineszcencia."
+      },
+      {
+        id: "q28", topic: "t2", type: "fill", exam: true,
+        q: "A GUS riportergén által kódolt béta-glükuronidáz enzim az X-gluc szubsztrát hidrolízise során oldhatatlan ________ színű festéket hoz létre.",
+        answers: ["indigókék", "kék"],
+        hints: ["indigókék", "zöld", "rózsaszín", "sárga", "piros"],
+        exp: "A GUS-gén működésekor X-gluc kezelés után néhány percen belül indigókék festődés jelenik meg a szövetekben."
+      },
+      {
+        id: "q29", topic: "t2", type: "abcd", exam: false,
+        q: "Mekkora DNS-inzert befogadására alkalmas a plazmid, a λ-fág (bakteriofág) és a kozmid klónozó vektor?",
+        options: [
+          "Plazmid: ~1–10 kb, λ-fág: ~10–20 kb, Kozmid (mesterséges hibrid): ~35–45 kb",
+          "Plazmid: ~100–500 kb, λ-fág: ~1–2 kb, Kozmid: ~1–5 kb",
+          "Mindhárom pontosan 25 bázispár hosszúságú DNS-t képes befogadni",
+          "Plazmid: csak RNS-t, λ-fág: csak fehérjét, Kozmid: teljes növényi kromoszómát"
+        ],
+        answer: 0,
+        exp: "A transzgének többsége 10 kb alatti, így befér egy bakteriális plazmidba (~1–10 kb); nagyobb szakaszokhoz λ-fágot (~10–20 kb) vagy mesterséges kozmidot (~35–45 kb) használnak."
+      },
+      {
+        id: "q30", topic: "t2", type: "abcd", exam: false,
+        q: "Mi a restrikciós endonukleázok és a DNS-ligáz szerepe a rekombináns DNS előállításában, és hogyan juttatják be a plazmidot az E. coli baktériumba felszaporításra?",
+        options: [
+          "A restrikciós endonukleázok („molekuláris ollók”) specifikus 4–8 bp-os palindrom szekvenciáknál (ragadós vagy tompa véggel) elvágják a DNS-t, a ligáz összekapcsolja a vektort és az inszertet, majd 42 °C-os hősokkal (45–50 mp, utána jég) juttatják az E. coli-ba (37 °C-on szaporítva)",
+          "A ligáz elvágja a DNS-t, a restrikciós endonukleáz összeragasztja, majd 120 °C-on autoklávban szaporítják az E. coli-t",
+          "A restrikciós enzimek kizárólag mRNS-t vágnak, és 20–23 °C-on 3 nap alatt szaporítják az E. coli-t",
+          "A rekombináns DNS-t génpuskával lövik be az E. coli baktériumokba"
+        ],
+        answer: 0,
+        exp: "A restrikciós endonukleázok a baktériumok saját védekező enzimei (4–8 bp palindrom felismerőhellyel). A ligázzal összekapcsolt rekombináns plazmidot 42 °C-os hősokkal juttatják E. coli-ba, amelyet 37 °C-on rázatva 1 nap alatt felszaporítanak."
+      },
+      {
+        id: "q31", topic: "t2", type: "abcd", exam: true,
+        q: "Hogyan zajlik az Agrobacterium tumefaciens természetes fertőzési folyamata és a Ti-plazmid „lefegyverzése” géntranszferhez?",
+        options: [
+          "A sebzett növény polifenoljai aktiválják a VirA/VirG rendszert, a Vir fehérjék kivágják a 25 bp-os határszekvenciák közötti T-DNS-t és transzmembrán csatornán át a növényi sejtbe juttatják; lefegyverzéskor a T-DNS-ből kivágják az onkogéneket és opin-szintézis géneket, helyükre a célgént és a markergént építik be",
+          "Az Agrobacterium teljes kromoszómája bejut a növénybe héliumgáz nyomásával; lefegyverzéskor a baktérium sejtfalát távolítják el",
+          "Az Agrobacterium 37 °C-on 20 perc alatt elpusztítja a növényi sejtmagot, és saját riboszómáit építi be",
+          "A Ti-plazmidból eltávolítják a jobb és bal oldali határszekvenciákat és a virulencia régiót, majd az onkogéneket felszaporítják"
+        ],
+        answer: 0,
+        exp: "A Ti-plazmid T-DNS régiója természetesen onkogéneket (tumorképzés) és opin-szintézis géneket tartalmaz. Géntranszferhez ezeket kivágják (lefegyverzés) a 20–25 bp-os tükrös határszekvenciák (LB, RB) közül, és a helyükre építik a transzgént. Az Agrobacterium talajlakó, 20–23 °C-on 2–3 nap alatt szaporodik."
+      },
+      {
+        id: "q32", topic: "t2", type: "abcd", exam: true,
+        q: "Hogyan működik a génpuskás (részecskebombázásos) közvetlen géntranszfer, és ki fejlesztette ki a hazai Genebooster készüléket?",
+        options: [
+          "Az 1–2 µm-es arany vagy volfrám mikrolövedékekre kötött plazmid DNS-t műanyag makrolövedékre helyezik, nagy nyomású héliumgázzal (a gödöllői Jenes Barnabás és mtsai által kifejlesztett Geneboosterben nitrogéngázzal) felgyorsítják; a makrolövedék fennakad a stopper discen, a mikrolövedékek pedig behatolnak a célsejtekbe",
+          "Aranyrészecskék nélkül, tisztán elektromos árammal (60–120 V) lövik be az agaróz gélt a növényi levelekbe",
+          "Agrobacterium baktériumokat lőnek ki szén-dioxid gázzal a szabadföldi növényekre",
+          "Folyékony nitrogénnel fagyasztott DNS-cseppeket injektálnak üvegkapillárissal a virágporba"
+        ],
+        answer: 0,
+        exp: "A részecskebombázásnál 1–2 µm-es arany/volfrám szemcsékre (mikrolövedék) tapasztott DNS-t műanyag lemezről (makrolövedék) nagy nyomású gázzal gyorsítanak fel; a stopper disc megfogja a makrolövedéket, a mikrolövedékek pedig a célsejtekbe csapódnak. Előnye: organellumokba (kloroplasztisz) is bejuttatható."
+      },
+      {
+        id: "q33", topic: "t2", type: "abcd", exam: true,
+        q: "Mit jelent a CRISPR rövidítés, mi a természetes biológiai szerepe, és mi a Cas9 fehérje funkciója?",
+        options: [
+          "Clustered Regularly Interspaced Short Palindromic Repeats; a prokarióták (baktériumok) vírusok és plazmidok elleni adaptív „immunrendszere”, amelyben a Cas9 egy vezető RNS-t (crRNS/gRNS) hordozó endonukleáz enzim, amely a PAM szekvencia mellett elvágja a cél-DNS-t",
+          "Cleaved Amplified Polymorphic Sequence; egy eukarióta növényi hormon, amelyben a Cas9 egy DNS-polimeráz enzim",
+          "Egy mesterségesen tervezett antibiotikum-rezisztencia gén, amelyben a Cas9 egy sejtfalbontó celluláz enzim",
+          "Egy agaróz gélelektroforézis festékanyag, amely UV-fényben rózsaszínen világít"
+        ],
+        answer: 0,
+        exp: "A CRISPR a baktériumok genomjában található rövid, szabályos közönként ismétlődő palindrom szakaszok, köztük a korábbi vírusfertőzésekből származó 20–30 nt-os spacer („memória”) szakaszokkal. A Cas1/Cas2 építi be az új spacert, a Cas9 pedig crRNS/gRNS és a 3–5 bp-os PAM motívum alapján célzottan elvágja a DNS-t."
+      },
+      {
+        id: "q34", topic: "t2", type: "abcd", exam: true,
+        q: "Mi a különbség a CRISPR/Cas9 vágást követő NHEJ (Non-Homologous End Joining) és HDR (Homology Directed Repair), illetve az SDN-1, SDN-2 és SDN-3 génszerkesztési kategóriák között?",
+        options: [
+          "NHEJ (SDN-1): templát nélkül ragasztja össze a végeket, így kis deléciók/inszerciók (indelek) miatt génkiütésre (knock-out) alkalmas; HDR: 40–90 bp-os komplementer karokkal rendelkező javító templátot használ célzott pontmutációra (SDN-2) vagy nagyobb gén szakasz beépítésére (SDN-3)",
+          "NHEJ: mindig idegen fajból származó teljes gént épít be; HDR: véletlenszerűen feldarabolja a teljes kromoszómát",
+          "SDN-1: transzgénikus GMO-t hoz létre; SDN-3: nem használ DNS-templátot és nem változtatja meg a szekvenciát",
+          "Nincs különbség, mindkettő az Agrobacterium VirA fehérjéjén alapul"
+        ],
+        answer: 0,
+        exp: "Az SDN-1 (NHEJ) külső DNS-templát nélkül hoz létre kis indel mutációkat (génkiütés), az SDN-2 homológ javító templáttal (HR/HDR) végez precíz kis módosítást, az SDN-3 pedig hosszabb donor DNS-t illeszt be célzott helyre."
+      },
+      {
+        id: "q35", topic: "t2", type: "abcd", exam: false,
+        q: "Milyen három szinten és milyen molekuláris módszerekkel kell igazolni a sikeres genetikai transzformációt a regenerált növényekben?",
+        options: [
+          "1. Integráció (beépülés a DNS-be): Southern blot, PCR; 2. Expresszió (működés): Northern blot / RT-PCR (mRNS) és Western blot / ELISA (fehérje); 3. Öröklődés (stabilitás, mendeli hasadás az utódokban)",
+          "1. Mikroszkópos sejtszámlálás; 2. Sziromlevél színmérés; 3. Szabadföldi termésmérés",
+          "1. Gram-festés; 2. Autoklávozás; 3. Kapilláris elektroforézis",
+          "Kizárólag szabad szemmel történő megfigyeléssel az akklimatizáció után"
+        ],
+        answer: 0,
+        exp: "A transzgénikus növényt három szinten kell igazolni: beépülés (DNS: Southern hibridizáció, PCR), kifejeződés (mRNS: Northern hibridizáció/RT-PCR; fehérje: Western blot/ELISA, ill. markergén) és stabil öröklődés."
+      }
+    ];
+  </script>
+  <script>
+    QUESTIONS.push(
+      // ==================== TOPIC 3: PCR & MOLEKULÁRIS MARKEREK ====================
+      {
+        id: "q36", topic: "t3", type: "abcd", exam: false,
+        q: "Mi a fő különbség a morfológiai és a molekuláris (genetikai) markerek között?",
+        options: [
+          "A morfológiai marker a fenotípushoz kötődik (befolyásolja a környezet és a fejlődési állapot, és kevés van belőle), míg a molekuláris marker a genotípushoz (DNS-szekvenciához) kötődik, stabil, külső hatásoktól és fejlődési stádiumtól független, és kódoló/nem-kódoló régiókban is előfordul",
+          "A morfológiai marker kizárólag a nem-kódoló intronokban található, míg a molekuláris marker szabad szemmel látható a levélen",
+          "A molekuláris markert erősen befolyásolja az időjárás és a tápanyag-ellátottság",
+          "A morfológiai markerek vizsgálatához mindig kapilláris elektroforézis szükséges"
+        ],
+        answer: 0,
+        exp: "A morfológiai marker a fenotípushoz, a molekuláris marker a genotípushoz (DNS-szintű polimorfizmushoz) kötődik, így bármely szövetből, bármely fejlődési állapotban kimutatható."
+      },
+      {
+        id: "q37", topic: "t3", type: "abcd", exam: false,
+        q: "Mely mutációtípusok felelősek a molekuláris markereknél vizsgált DNS-polimorfizmusokért?",
+        options: [
+          "Szubsztitúció (egypontos nukleotid-polimorfizmust, SNP-t eredményez, pl. C–G helyett T–A), inszerció (beékelődés, ill. duplikáció), deléció (kiesés) és inverzió (szakasz megfordulása)",
+          "Kizárólag a teljes kromoszóma-szerelvény megkétszereződése (poliploidia)",
+          "A riboszómák denaturációja és a klorofill lebomlása",
+          "A sejtfal pektinrétegének enzimatikus hidrolízise"
+        ],
+        answer: 0,
+        exp: "A DNS-szintű variációkat a szubsztitúció (SNP), az inszerció (és duplikáció), a deléció és az inverzió okozza."
+      },
+      {
+        id: "q38", topic: "t3", type: "abcd", exam: true,
+        q: "Mi a PCR (polimeráz láncreakció) 3 fő lépésének helyes sorrendje és hőmérséklete egy cikluson belül? (Vigyázat: a vizsgán néha fordított számozással szerepelt!)",
+        options: [
+          "1. Denaturáció (>90 °C, kb. 94–95 °C, ~30 mp: a kétszálú DNS szétválik) → 2. Primer tapadás / annealing (40–60 °C, ~30 mp: a primerek bekötődnek) → 3. Szintézis / elongáció (72 °C, ~1–2 perc: a DNS-polimeráz felépíti az új szálat, ~1000 bp/perc)",
+          "1. Szintézis (72 °C) → 2. Primer tapadás (50 °C) → 3. Denaturáció (95 °C)",
+          "1. Fagyasztás (-196 °C) → 2. Hősokk (42 °C) → 3. Inkubálás (37 °C)",
+          "1. Autoklávozás (120 °C) → 2. Gélelektroforézis (100 V) → 3. UV-megvilágítás"
+        ],
+        answer: 0,
+        exp: "Kary Mullis (1983) módszerében 1 ciklus: 1) Denaturáció (>90 °C, H-hidak felbomlanak), 2) Primer tapadás (40–60 °C), 3) Szintézis/lánchosszabbítás (72 °C, ~1000 bázis/perc). Fordított sorrend kérdésnél: 3. Szintézis, 2. Tapadás, 1. Denaturáció!"
+      },
+      {
+        id: "q39", topic: "t3", type: "fill", exam: true,
+        q: "A PCR reakcióhoz szükséges 5 alapkomponens: minta (templát) DNS, hőstabil DNS-polimeráz enzim, reakciópuffer, szabad dezoxinukleozid-trifoszfátok (________) és a szakaszt közrefogó forward/reverz primerek.",
+        answers: ["dNTP", "dNTP-k"],
+        hints: ["dNTP", "ATP", "mRNS", "agaróz", "etídium-bromid"],
+        exp: "A dNTP a négyféle szabad építőkövet (dATP, dTTP, dCTP, dGTP) jelenti, amelyekből a polimeráz felépíti az új DNS-szálat."
+      },
+      {
+        id: "q40", topic: "t3", type: "abcd", exam: false,
+        q: "Hogyan működik az agaróz gélelektroforézis a PCR-termékek kiértékelésekor?",
+        options: [
+          "A foszfátcsoportok miatt negatív töltésű DNS-molekulák elektromos erőtérben (60–120 V) méret szerint vándorolnak (a kisebbek gyorsabban haladnak át a gél hálóján), majd az interkalálódó etídium-bromid festék UV-fényben rózsaszínen-lilán fluoreszkálva teszi láthatóvá a csíkokat",
+          "A pozitív töltésű DNS-molekulák tömegük szerint leülepednek a kémcső aljára, és X-gluc hatására kékre színeződnek",
+          "A DNS-szálakat 170 °C-on elégetik, és a keletkező gázokat lézerdetektorral mérik",
+          "A nagyobb DNS-molekulák haladnak gyorsabban, mert nagyobb a lendületük az agaróz gélben"
+        ],
+        answer: 0,
+        exp: "A DNS negatív töltésű (foszfátcsoportok), a kisebb fragmentumok gyorsabban haladnak a gélen, az etídium-bromid pedig a DNS-szálak közé épülve UV-fényben fluoreszkál."
+      },
+      {
+        id: "q41", topic: "t3", type: "abcd", exam: false,
+        q: "Mely PCR-alapú molekuláris markerek tartoznak az ismeretlen DNS-szekvencián (véletlen/egy primeren), illetve az ismert DNS-szekvencián alapuló módszerek közé?",
+        options: [
+          "Ismeretlen DNS-szekvencia (1 primer, domináns): RAPD és ISSR; Ismert DNS-szekvencia (specifikus F és R primer): SSR (mikroszatellit), CAPS és SCAR",
+          "Ismeretlen DNS-szekvencia: SSR és CAPS; Ismert DNS-szekvencia: RAPD és ISSR",
+          "Mindegyik módszer kodomináns és 6 bázispáros random primert használ",
+          "A RAPD és az ISSR hibridizációs (Southern blot) technikák PCR nélkül"
+        ],
+        answer: 0,
+        exp: "A RAPD (6–12 bp random primer, 37–38 °C) és az ISSR (18–20 bp mikroszatellithez kötődő primer, 50 °C, két mikroszatellit közti szakaszt amplifikál) nem igényel előzetes szekvenciaismeretet és domináns öröklődésű; az SSR, CAPS és SCAR ismert szekvencián alapul."
+      },
+      {
+        id: "q42", topic: "t3", type: "abcd", exam: false,
+        q: "Mi a különbség a domináns (pl. RAPD, ISSR, SCAR) és a kodomináns (pl. SSR, CAPS, RFLP) molekuláris markerek között?",
+        options: [
+          "A domináns markereknél (prezencia/abszencia) a heterozigóták nem különíthetők el a domináns homozigótáktól; a kodomináns markereknél mindkét allél külön kifejeződik/detektálható, így a homozigóta (pl. 160/160 bp) és heterozigóta (pl. 160/162 bp) egyedek egyértelműen megkülönböztethetők",
+          "A domináns markerek csak apai ágon, a kodominánsok csak anyai ágon öröklődnek",
+          "A domináns markerekhez kapilláris elektroforézis kell, a kodominánsokhoz nem kell DNS",
+          "A kodomináns markerek nem követik a mendeli öröklődés szabályait"
+        ],
+        answer: 0,
+        exp: "Kodomináns markernél (pl. SSR kapilláris elektroforézissel, vagy CAPS restrikciós emésztés utáni 3 csíkkal) a heterozigóta egyed mindkét allélja külön látható."
+      },
+      {
+        id: "q43", topic: "t3", type: "abcd", exam: false,
+        q: "Hogyan működik az SSR (Simple Sequence Repeat / mikroszatellit) és az ISSR marker, és miért nem szabad összekeverni a kettőt?",
+        options: [
+          "Az SSR-nél maga a rövid (1–6 nt) ismétlődő mikroszatellit régió hossza a kérdés, amihez ismerni kell a határoló szekvenciákat (F és R primer, kodomináns, kapilláris elektroforézis fluoreszcens primerrel); az ISSR-nél 1 db (18–20 bp) mikroszatellit-komplementer primerrel két szomszédos mikroszatellit közötti ismeretlen szakaszt amplifikálunk (domináns, agaróz gél)",
+          "Az SSR domináns és nem igényel szekvenciaismeretet, az ISSR pedig kodomináns és szekvenálást igényel",
+          "Az SSR fehérjéket, az ISSR pedig lipideket választ el",
+          "Mindkettő 6 bázispáros random primert használ 37 °C-on"
+        ],
+        answer: 0,
+        exp: "Az SSR a mikroszatellit ismétlődések számát méri (konzervált határoló régiókra tervezett F+R primerekkel, kapilláris elektroforézissel, kodomináns), míg az ISSR két mikroszatellit közötti régiót szaporít fel 1 primerrel (domináns)."
+      },
+      {
+        id: "q44", topic: "t3", type: "abcd", exam: false,
+        q: "Mi jellemzi a SCAR és a CAPS molekuláris markereket, és milyen SNP-típusokat különböztetünk meg helyzetük szerint?",
+        options: [
+          "SCAR: RAPD/ISSR gélből kivágott, megszekvenált egyedi sávra tervezett specifikus F+R primeres (domináns) marker; CAPS: PCR + restrikciós endonukleáz hasítás SNP kimutatására (kodomináns, heterozigótánál 3 sáv); SNP-k: iSNP (intron), cSNP (exon), rSNP (regulátor), gSNP (intergénikus)",
+          "SCAR: fehérjealapú immunológiai teszt; CAPS: 6 bp-os random primeres módszer",
+          "SCAR: kodomináns kapilláris elektroforézis; CAPS: nem használ PCR-t",
+          "Az SNP mindig teljes kromoszóma-kiesést jelent"
+        ],
+        answer: 0,
+        exp: "A SCAR egy random (RAPD/ISSR) gélből kivágott és megszekvenált fragmentumból fejlesztett specifikus, megbízható marker (gyakori gyógynövényeknél). A CAPS az SNP-t restrikciós enzimhasítással teszi láthatóvá (kodomináns)."
+      },
+
+      // ==================== TOPIC 4: BIOINFORMATIKA & FILOGENETIKA ====================
+      {
+        id: "q45", topic: "t4", type: "abcd", exam: true,
+        q: "Mi a bioinformatika definíciója, és mit jelent az „in silico” kísérlet?",
+        options: [
+          "A bioinformatika számítógépes módszerek kidolgozása és alkalmazása a biológiai információ (DNS-, RNS-, fehérjeszekvenciák) tárolására, kezelésére, elemzésére és a biológiai funkció predikciójára; az in silico számítógépen végzett szimulációt/elemzést jelent, amely segédeszköz (nem váltja ki az in vitro/in vivo kísérletet)",
+          "A bioinformatika szilikon táptalajon végzett növényi szövettenyésztés, amely teljesen kiváltja a laboratóriumi munkát",
+          "A bioinformatika kizárólag a mezőgazdasági traktorok GPS-vezérlésével foglalkozó tudomány",
+          "Az in silico kísérlet üvegházban, kvarchomokban történő gyökereztetést jelent"
+        ],
+        answer: 0,
+        exp: "A bioinformatika az élettudományok és az informatika határterülete: biológiai adatok tárolása, rendszerezése, keresése és funkció-előrejelzése (predikció). Az in silico elemzés irányt mutat, de nem helyettesíti a biológiai kísérletet."
+      },
+      {
+        id: "q46", topic: "t4", type: "abcd", exam: true,
+        q: "Minek a rövidítése az NCBI, mikor és hol alapították?",
+        options: [
+          "National Center for Biotechnology Information (1988, Bethesda, Maryland, USA – az amerikai Orvostudományi Nemzeti Könyvtár / NIH részlege)",
+          "National Council of Botanical Institutes (1995, Genf, Svájc)",
+          "New Center for Bacterial Immunology (2003, Brüsszel, Belgium)",
+          "Nukleinsav Cirkuláris Biológiai Intézet (1983, Gödöllő)"
+        ],
+        answer: 0,
+        exp: "Az NCBI (National Center for Biotechnology Information) a legtöbbet használt bioinformatikai központ és adatbázis-rendszer (GenBank, BLAST), 1988-ban alapították Bethesdában (MD, USA)."
+      },
+      {
+        id: "q47", topic: "t4", type: "fill", exam: true,
+        q: "Az NCBI rövidítés feloldása: National Center for ________ Information.",
+        answers: ["Biotechnology"],
+        hints: ["Biotechnology", "Biological", "Botanical", "Biochemical", "Bioinformatics"],
+        exp: "NCBI = National Center for Biotechnology Information."
+      },
+      {
+        id: "q48", topic: "t4", type: "abcd", exam: true,
+        q: "Minek a rövidítése a BLAST, mire használjuk, és mit mutat meg az E-érték (Expect value)?",
+        options: [
+          "Basic Local Alignment Search Tool; ismeretlen nukleotid- vagy fehérjeszekvenciához hasonló (homológ) szekvenciák keresésére szolgál az adatbázisban; az E-érték (0 és 1 közötti) azt mutatja, mekkora valószínűséggel a véletlen műve az egyezés – minél közelebb van a 0-hoz (pl. 10⁻⁹⁰), annál szignifikánsabb a biológiai/evolúciós kapcsolat",
+          "Bacterial Ligation and Sequencing Technique; minél nagyobb az E-érték (pl. 100 felett), annál biztosabb a homológia",
+          "Basic Linear Agarose Separation Test; gélelektroforézis csíkok megszámolására szolgál",
+          "Bioinformatics Library for Amino Acid Synthesis; csak növényi hormonok szerkezetét rajzolja meg"
+        ],
+        answer: 0,
+        exp: "A BLAST (Basic Local Alignment Search Tool) szekvenciaillesztéssel keresi meg a leginkább hasonló adatbázisbeli szekvenciákat. Ha az E-érték ~0 (pl. 10⁻⁹⁰), a találat biológiailag szignifikáns, nem a véletlen műve."
+      },
+      {
+        id: "q49", topic: "t4", type: "fill", exam: true,
+        q: "A BLAST keresőprogram nevének feloldása: Basic Local ________ Search Tool.",
+        answers: ["Alignment"],
+        hints: ["Alignment", "Amplification", "Analysis", "Accession", "Annotation"],
+        exp: "BLAST = Basic Local Alignment Search Tool (helyi szekvenciaillesztésen alapuló keresőeszköz)."
+      },
+      {
+        id: "q50", topic: "t4", type: "abcd", exam: false,
+        q: "Milyen három kérdésre keres választ a Gene Ontology (GO) rendszer egy gén biológiai funkciójának meghatározásakor (pl. a kajszi önmeddőségi S-RNáz gén példáján)?",
+        options: [
+          "1. „Miért?” – Biológiai folyamat (pl. önmeddőség kialakítása); 2. „Mi?” – Molekuláris funkció / biokémiai aktivitás (pl. ribonukleáz enzim); 3. „Hol?” – Sejtbeli/szöveti lokalizáció (pl. extracelluláris tér)",
+          "1. „Mikor?” – Évszak; 2. „Mennyiért?” – Költség; 3. „Ki?” – Kutató neve",
+          "1. „Hány bázispár?”; 2. „Milyen színű?”; 3. „Mekkora a ploidiaszint?”",
+          "1. Denaturáció; 2. Primer tapadás; 3. Elongáció"
+        ],
+        answer: 0,
+        exp: "A Gene Ontology három hierarchikus pillére: Miért? (biológiai folyamat), Mi? (molekuláris funkció, pl. RNáz), Hol? (celluláris komponens / működési hely, pl. extracelluláris tér)."
+      },
+      {
+        id: "q51", topic: "t4", type: "abcd", exam: false,
+        q: "Melyik volt az első teljes egészében megszekvenált növényi modellfaj (2000-ben), és mit jelent az elsődleges adatbázis, illetve az Accession Number?",
+        options: [
+          "Az Arabidopsis thaliana (lúdfű, kétszikű gyomnövény); az elsődleges adatbázis (pl. GenBank) direkt kísérletes szekvenciaadatokat tárol, az Accession Number pedig a beküldött szekvencia egyedi regisztrációs azonosítója (pl. EF101905), amely a tudományos publikáláshoz kötelező",
+          "A kukorica (Zea mays); az elsődleges adatbázis csak elméleti predikciókat tárol regisztrációs szám nélkül",
+          "A kék rózsa (Rosa hybrida); az Accession Number a laboratórium irányítószáma",
+          "A burgonya (Solanum tuberosum); az elsődleges adatbázis csak 3D fehérjekristály-képeket tartalmaz"
+        ],
+        answer: 0,
+        exp: "2000-ben szekvenálták az első növényt, az Arabidopsis thaliana-t (lúdfű). A GenBank flatfile rekord fő mezői: Accession number (azonosító), Definition, Source organism, Authors/Title/Journal, Features, Origin (5’→3’ szekvencia)."
+      },
+      {
+        id: "q52", topic: "t4", type: "abcd", exam: false,
+        q: "Mi a különbség a homológia és az analógia, valamint az ortológ és a paralóg gének között a molekuláris filogenetikában?",
+        options: [
+          "Homológia = közös evolúciós eredet (nem fejezhető ki %-ban!); Analógia = közös eredet nélküli (konvergens) hasonlóság (pl. szubtilizin és kimotripszin); Ortológ gének = különböző fajokban lévő, közös ősi génből fajképződéssel származó azonos funkciójú gének; Paralóg gének = ugyanabban a fajban génduplikációval keletkezett gének",
+          "A homológia %-ban kifejezhető (pl. 85% homológ), az ortológ gének pedig egyazon egyedben génduplikációval jönnek létre",
+          "Az analóg gének közös ősből származnak, a paralóg gének pedig vírusokból épültek be",
+          "A filogenetikai törzsfa gyökere (root) a ma élő legfiatalabb fajt (OTU-t) jelöli"
+        ],
+        answer: 0,
+        exp: "Homológia = közös evolúciós eredet (bináris fogalom: vagy homológ, vagy nem; nem %-os!). Ortológ = különböző fajokban fajképződés után (evolúciós óra); Paralóg = egy fajon belül génduplikáció után. A törzsfa részei: gyökér (root = közös ős), szögpontok (node), élek (branch), levelek (OTU)."
+      },
+
+      // ==================== TOPIC 5: GM NÖVÉNYEK GENERÁCIÓI & SZÍNANYAGOK ====================
+      {
+        id: "q53", topic: "t5", type: "abcd", exam: true,
+        q: "Melyik az 5 legnagyobb területen termesztett génmódosított (GM) szántóföldi növény a világon (sorrendben), és melyik a legtöbbet módosított dísznövény?",
+        options: [
+          "1. Szója, 2. Kukorica, 3. Gyapot (pamut), 4. Repce, 5. Lucerna; a legtöbbet módosított dísznövény a szegfű",
+          "1. Búza, 2. Rizs, 3. Árpa, 4. Zab, 5. Rozs; dísznövény: tulipán",
+          "1. Paradicsom, 2. Burgonya, 3. Papaya, 4. Alma, 5. Szilva; dísznövény: orchidea",
+          "1. Napraforgó, 2. Cukorrépa, 3. Tök, 4. Dinnye, 5. Uborka; dísznövény: muskátli"
+        ],
+        answer: 0,
+        exp: "A világon legnagyobb területen termesztett 5 GM növény: szója, kukorica, gyapot, repce, lucerna. Az EU-ban csak Spanyolországban és Portugáliában termesztenek GM kukoricát (MON810). Dísznövények közül a szegfű a leggyakoribb."
+      },
+      {
+        id: "q54", topic: "t5", type: "abcd", exam: false,
+        q: "Melyik kultúrnövényről bizonyosodott be (2015), hogy természetesen előforduló transzgénikus növény, és mi a három GMO-generáció fő stratégiája?",
+        options: [
+          "Az édesburgonyáról (Agrobacterium T-DNS géneket hordoz); 1. generáció: növénytermesztési technológia / stresszrezisztencia (herbicid, rovar, vírus, szárazság); 2. generáció: termékminőség javítása (beltartalom, szín, eltarthatóság); 3. generáció: ipari/gyógyszeripari alapanyagok, bioreaktor növények (ehető vakcinák, antitestek, PHB, enzimek)",
+          "A kukoricáról; 1. generáció: színmódosítás; 2. generáció: gyomirtószer-rezisztencia; 3. generáció: hagyományos nemesítés",
+          "A búzáról; mindhárom generáció kizárólag rovarrezisztenciával foglalkozik",
+          "A papayáról; az 1. generáció ehető vakcinákat, a 3. generáció glifozát-toleranciát állít elő"
+        ],
+        answer: 0,
+        exp: "Az édesburgonya genomjában természetes Agrobacterium T-DNS szakaszok működnek. Az 1. generáció a termesztéstechnológiát (stresszrezisztencia), a 2. a minőséget/beltartalmat, a 3. az ipari/gyógyszeripari molekulatermelést (pharm farming / bioreaktorok) célozza."
+      },
+      {
+        id: "q55", topic: "t5", type: "abcd", exam: true,
+        q: "Hogyan hat a glifozát (Roundup) gyomirtószer a növényekben, és hogyan alakították ki a glifozát-toleranciát (pl. Roundup Ready szója)?",
+        options: [
+          "A glifozát kompetitíven gátolja a kloroplasztiszban működő EPSPS (enolpiruvilsikiminsav-3-foszfát szintáz) enzimet, így leáll az aromás aminosavak (fenilalanin, tirozin, triptofán) bioszintézise és sikiminsav halmozódik fel; a GM növénybe bakteriális eredetű (Salmonella/E. coli aroA vagy Agrobacterium CP4) mutáns EPSPS gént (prolin→szerin csere) építettek be petúnia kloroplasztisz tranzit peptiddel (CTP4)",
+          "A glifozát feloldja a sejtfal cellulózát; a GM növénybe szentjánosbogár luciferáz gént építettek be",
+          "A glifozát gátolja a poligalakturonáz enzimet; a GM növényben antiszensz RNS-sel állították le az etiléntermelést",
+          "A glifozát a mitokondriumban gátolja a citokróm-oxidázt; a GM növénybe Bt Cry1Ab toxint vittek be"
+        ],
+        answer: 0,
+        exp: "A ma termesztett GMO-k többsége herbicidtoleráns. A glifozát az EPSPS enzimet gátolja az aromás aminosav szintézisútban; a mutáns EPSPS enzimhez (CP4 EPSPS / mutáns aroA) a glifozát nem tud kötődni."
+      },
+      {
+        id: "q56", topic: "t5", type: "fill", exam: true,
+        q: "A glifozát gyomirtószer a növényekben az aromás aminosavak bioszintéziséért felelős ________ (enolpiruvilsikiminsav-3-foszfát szintáz) enzimet gátolja.",
+        answers: ["EPSPS", "EPSP-szintáz", "EPSPS-enzim"],
+        hints: ["EPSPS", "PAT", "PPO", "DFR", "LCYB"],
+        exp: "Az EPSPS enzim gátlása miatt aromás aminosav-hiány és sikiminsav-felhalmozódás lép fel, ami a gyomnövény pusztulását okozza."
+      },
+      {
+        id: "q57", topic: "t5", type: "abcd", exam: true,
+        q: "Mi jellemzi a Bt-növényeket, melyik baktériumból származik a transzgén, és mikor kerültek először kereskedelmi forgalomba az USA-ban?",
+        options: [
+          "A Bacillus thuringiensis (Bt) talajbaktérium által termelt kristályfehérjét (delta-endotoxint) kódoló Cry géncsalád (>70 Cry gén, pl. Cry1Ab, Cry1Ac) valamelyikét hordozzák rovarrezisztencia céljából; az első Bt-növények 1995-ben kerültek forgalomba az USA-ban (pl. kukorica, burgonya, gyapot)",
+          "A Botrytis cinerea gombából származó gént hordozzák szárazságtűrésre; 2015-ben kerültek forgalomba Európában",
+          "Az Escherichia coli-ból származó béta-karotin gént hordozzák; 1983-ban kerültek forgalomba",
+          "A Bacillus subtilis cspB hidegsokk-fehérjéjét hordozzák vírusok ellen; 2004-ben kerültek forgalomba"
+        ],
+        answer: 0,
+        exp: "A Bacillus thuringiensis (Bt) baktériumot természetes rovarölő permetezőszerként már az 1920-as/1930-as évektől használták (a baktériumot 1901/1911-ben írták le), a delta-endotoxint (Cry fehérjéket) termelő első transzgénikus Bt-növények pedig 1995-ben kerültek forgalomba az USA-ban."
+      },
+      {
+        id: "q58", topic: "t5", type: "abcd", exam: true,
+        q: "Hogyan védekeztek a papaya gyűrűsfoltosság vírus (PRV / Papaya ringspot virus) ellen Hawaiin, mikor vezették be, és milyen rezisztenciastratégiát alkalmaztak?",
+        options: [
+          "1996-ban vezették be a génpuskával transzformált ’Rainbow’ és ’SunUp’ fajtákat, amelyekbe a PRV saját köpenyfehérje (CP) génjét építették be 35S CaMV konstitutív promóterrel (kórokozó-eredetű, fehérjealapú vírusrezisztencia)",
+          "1994-ben Agrobacteriummal vitték be a Bacillus thuringiensis Cry1Ac génjét a levéltetvek ellen",
+          "2017-ben CRISPR-Cas9-cel kiütötték a papaya polifenol-oxidáz (PPO) génjét",
+          "Kizárólag 5 °C-os hidegkezeléssel és ribavirin permetezéssel állították meg a járványt"
+        ],
+        answer: 0,
+        exp: "A PRV-rezisztens papaya (’Rainbow’ és ’SunUp’) 1996-ban mentette meg a hawaii papayaipart: génpuskával juttatták be a vírus köpenyfehérje (CP) génjét 35S CaMV promóterrel. 2011-ben Japán is engedélyezte a fogyasztását."
+      },
+      {
+        id: "q59", topic: "t5", type: "abcd", exam: false,
+        q: "Mi a különbség a fehérjealapú (pl. PRV papaya, C5 ’HoneySweet’ PPV-rezisztens szilva, CMV/ZYMV/WMV2 tök) és az RNS-alapú (pl. PVY-rezisztens burgonya) vírusrezisztencia között?",
+        options: [
+          "A fehérjealapú stratégia a vírus köpenyfehérje (CP) vagy mozgásfehérje (MP) génjének konstitutív expressziójával gátolja a vírus burokleválását/terjedését; az RNS-alapú stratégia (antiszensz RNS, RNAi géncsendesítés) kétszálú RNS-t (dsRNS) termel, amely aktiválja a RISC-komplexet és lebontja a vírus RNS-ét",
+          "A fehérjealapú stratégia lebontja a növényi DNS-t, az RNS-alapú pedig antibiotikumot termel",
+          "A fehérjealapú stratégia csak gombák (kitináz/glükanáz), az RNS-alapú csak baktériumok ellen hatásos",
+          "Nincs különbség, mindkettő a glifozát lebontásán alapul"
+        ],
+        answer: 0,
+        exp: "Kórokozó-eredetű vírusrezisztenciánál a fehérjealapú út a CP/MP fehérjét expresszálja (papaya, tök, HoneySweet szilva), míg az RNS-alapú út (RNAi, dsRNS → RISC komplex) a vírus RNS-ét csendesíti/bontja le (pl. PVY-rezisztens burgonya)."
+      },
+      {
+        id: "q60", topic: "t5", type: "abcd", exam: true,
+        q: "Melyik antocianidin pigment melyik virágszínt eredményezi, és hogyan hozták létre a „kék” szegfűt (Moonshadow, 1998) és a „kék” rózsát (’Applause’)?",
+        options: [
+          "Cianidin = piros, Pelargonidin = sárga/narancs, Delfinidin = kék; a kék színhez az árvácskából (Viola) származó F3’5’H (flavonoid 3’5’ hidroxiláz) gént vitték be, a rózsánál emellett RNS-interferenciával gátolták a saját vörös cianidint termelő DFR gént és beépítették a Torenia 5AT génjét",
+          "Cianidin = kék, Pelargonidin = zöld, Delfinidin = piros; kukoricából származó fitoén-szintázt vittek be",
+          "Betalain = kék, Likopin = lila, Xantofill = piros; génpuskával lőtték be a medúza GFP génjét",
+          "Klorofill = kék; a poligalakturonáz enzim antiszensz gátlásával állították elő őket"
+        ],
+        answer: 0,
+        exp: "A dihidrokempferolból (DHK) elágazó antocianidin szintézisben: cianidin-3-glükozid = piros, pelargonidin-3-glükozid = sárga/narancs, delfinidin-3-glükozid = kék. Az árvácska F3’5’H génje nyitja meg a delfinidin-utat (Florigene/Suntory)."
+      },
+      {
+        id: "q61", topic: "t5", type: "fill", exam: true,
+        q: "Az antocianidinek közül a cianidin piros, a pelargonidin sárga/narancs, míg a(z) ________ kék virágszínt eredményez (pl. a Moonshadow szegfűben és az Applause rózsában).",
+        answers: ["delfinidin", "delfinidin 3-glükozid"],
+        hints: ["delfinidin", "likopin", "béta-karotin", "betalain", "lutein"],
+        exp: "A delfinidin a kék színű antocianidin pigment, amelynek szintézisét az F3’5’H enzim katalizálja."
+      },
+      {
+        id: "q62", topic: "t5", type: "abcd", exam: true,
+        q: "Melyik színanyag / vegyület felelős a Rózsaszín ananász (Pinkglow), az Aranyrizs (Golden Rice), a Fekete/lila paradicsom és az Ibolyavörös Désirée burgonya színéért?",
+        options: [
+          "Rózsaszín ananász (Pinkglow): likopin felhalmozódás (LCYB enzim csökkentése miatt nem alakul sárga béta-karotinná/xantofillá); Aranyrizs: béta-karotin (A-provitamin, sárga); Fekete/lila paradicsom (és lila rizs, antociános alma): antociánok; Ibolyavörös burgonya/padlizsán: betalain",
+          "Rózsaszín ananász: antocián; Aranyrizs: likopin; Fekete paradicsom: klorofill; Ibolyavörös burgonya: xantofill",
+          "Mindegyik színét a GUS riportergén indigókék csapadéka okozza",
+          "Rózsaszín ananász: delfinidin; Aranyrizs: pelargonidin; Fekete paradicsom: melanin"
+        ],
+        answer: 0,
+        exp: "Pinkglow ananász = likopin (rózsaszín/piros karotinoid, LCYB gátlással); Aranyrizs (Ingo Potrykus & Peter Beyer) = béta-karotin (GR1: nárcisz, GR2: kukorica fitoén-szintáz + Erwinia deszaturáz); Fekete/lila paradicsom = antocián (oroszlánszáj DEL és ROS1 gének); Désirée burgonya/padlizsán = betalain."
+      },
+      {
+        id: "q63", topic: "t5", type: "fill", exam: true,
+        q: "A Pinkglow rózsaszín húsú ananászban a likopin-béta-cikláz (LCYB) enzim visszaszorítása miatt ________ halmozódik fel a sárga béta-karotin és xantofillok helyett.",
+        answers: ["likopin", "lycopene"],
+        hints: ["likopin", "delfinidin", "klorofill", "betalain", "zeatin"],
+        exp: "A normál ananászban a likopin továbbalakul béta-karotinná és sárga xantofillokká; az LCYB gátlásával a rózsaszín/piros likopin halmozódik fel."
+      },
+      {
+        id: "q64", topic: "t5", type: "abcd", exam: true,
+        q: "Melyik volt a világ első kereskedelmi forgalomba került GM növényi terméke (1994, USA), és mi a különbség a Flavr Savr és az Endless Summer paradicsom, valamint a Sicilian Rouge High GABA paradicsom között?",
+        options: [
+          "1994-ben a Flavr Savr paradicsom volt az első (antiszensz poligalakturonáz [PG] génnel gátolták a pektinbontást és puhulást); az 1995-ös Endless Summerben az etiléntermelést (ACC-szintáz) gátolták; a japán Sicilian Rouge paradicsomot pedig CRISPR-Cas9 génszerkesztéssel fejlesztették 5× magasabb GABA (gamma-aminovajsav, vérnyomáscsökkentő/relaxáló) tartalomra",
+          "1994-ben a Bt-kukorica volt az első; a Flavr Savr paradicsomban a glifozát-rezisztenciát növelték",
+          "A Flavr Savr paradicsomot CRISPR-Cas9-cel, a Sicilian Rouge-t pedig protoplaszt-fúzióval állították elő",
+          "Mindhárom paradicsomban a polifenol-oxidáz (PPO) enzimet csendesítették barnulás ellen"
+        ],
+        answer: 0,
+        exp: "Flavr Savr (1994, első GM élelmiszer): poligalakturonáz (PG) antiszensz gátlása → lassabb pektinbomlás/puhulás. Endless Summer (1995): ACC-szintáz / etiléntermelés gátlása. Sicilian Rouge (Japán, Sanatech Seed): világ első közvetlen fogyasztásra génszerkesztett (CRISPR) paradicsoma, magas GABA-tartalommal."
+      },
+      {
+        id: "q65", topic: "t5", type: "abcd", exam: true,
+        q: "Milyen génszerkesztési / géncsendesítési módosítást hajtottak végre a „nem barnuló” Arctic® almában, a GEiGS banánban és az Innate™ / Ranger Russet burgonyában?",
+        options: [
+          "Az Arctic® almában (RNAi) és a nem barnuló banánban (GEiGS) a polifenol-oxidáz (PPO) enzimet csendesítették, így a fenolos vegyületek nem oxidálódnak barna kinonokká/melaninná; a burgonyában pedig a vakuoláris invertáz (VInv) gént csendesítették (RNAi / TALEN), csökkentve a redukáló cukrok és a sütéskori rákkeltő akrilamid képződését",
+          "Az almában és a banánban a klorofillt bontó enzimet, a burgonyában pedig a keményítő-szintázt állították le",
+          "Mindhárom növénybe árvácska F3’5’H gént építettek be",
+          "Az Arctic® almába sarki halak fagyálló génjét építették be"
+        ],
+        answer: 0,
+        exp: "A vágás/ütődés utáni enzimes barnulást a polifenol-oxidáz (PPO) okozza: ennek csendesítésével készült az Arctic® alma és a GEiGS banán. A burgonyában a VInv (vakuoláris invertáz) kiütése (RNAi/TALEN) megakadályozza a szacharóz glükózzá/fruktózzá bomlását és az akrilamid-képződést."
+      },
+      {
+        id: "q66", topic: "t5", type: "abcd", exam: true,
+        q: "Milyen tulajdonságokat módosítottak CRISPR-Cas9 génszerkesztéssel a rizsben (OsNF-YC5 és OsMYB1 gének), a kínai kelben (eIF(iso)4E), a japán sárgadinnyében (CmACO1) és a spanyol búzában?",
+        options: [
+          "Rizs OsNF-YC5 kiütése: fokozott sóstressz-tolerancia; Rizs OsMYB1 kiütése: lila (antociándús) rizs (mivel az OsMYB1 gátolja a pigmentképzést); Kínai kel eIF(iso)4E: TuMV vírusrezisztencia; Japán dinnye CmACO1: csökkent etiléntermelés / hosszabb eltarthatóság; Spanyol búza: alacsony gluténtartalom (gluténmentes búza)",
+          "Mindegyikben glifozát-rezisztenciát alakítottak ki Agrobacterium CP4 EPSPS génnel",
+          "A rizsben gluténmentességet, a búzában pedig kék virágszínt hoztak létre",
+          "A japán dinnyében Bt-toxint, a kínai kelben pedig béta-karotint termeltettek"
+        ],
+        answer: 0,
+        exp: "Ezek a tananyag kiemelt CRISPR/Cas9 (nem-transzgénikus GE) példái: OsNF-YC5 KO → sótűrő rizs; OsMYB1 KO → lila rizs; Brassica rapa eIF(iso)4E → Turnip mosaic virus (TuMV) rezisztencia; japán dinnye CmACO1 → eltarthatóság; spanyol búza → gluténmentes/alacsony glutén."
+      },
+      {
+        id: "q67", topic: "t5", type: "abcd", exam: true,
+        q: "Miért kellett 2017-ben a NÉBIH-nek és az európai hatóságoknak betiltani és megsemmisíteni bizonyos narancssárga virágú petúniákat?",
+        options: [
+          "Mert a finn hatóság engedély nélküli genetikai módosítást mutatott ki bennük, és a genetikai szennyezés elhárítása, valamint a magyar mezőgazdaság GMO-mentességének megőrzése érdekében forgalomba hozatali tilalmat rendeltek el",
+          "Mert az emberi egészségre halálosan mérgező Bt-toxint tartalmaztak",
+          "Mert a papaya gyűrűsfoltosság vírust terjesztették az üvegházakban",
+          "Mert túl sok vizet fogyasztottak a közparkokban"
+        ],
+        answer: 0,
+        exp: "2017 áprilisában Finnországban mutatták ki, hogy a kereskedelemben lévő narancssárga petúniák engedély nélküli GM növények; bár egészségügyi veszélyt nem jelentettek, a NÉBIH elrendelte a megsemmisítésüket (komposztálás maghozás előtt)."
+      }
+    );
+  </script>
+  <script>
+    QUESTIONS.push(
+      // ==================== TOPIC 6: GMO SZABÁLYOZÁS, KIMUTATÁS & ETIKA (2026) ====================
+      {
+        id: "q68", topic: "t6", type: "abcd", exam: true,
+        q: "Mi a alapvető különbség az Európai Unió (valamint Ausztrália) és az USA (valamint Kanada) GMO-szabályozási megközelítése között?",
+        options: [
+          "Az EU-ban (és Ausztráliában) folyamatalapú („process-based”) szabályozás van (az előállítás módja számít, nyomonkövetési és 0,9% feletti jelölési kötelezettséggel), míg az USA-ban (és Kanadában) termékalapú („product-based”) szabályozás érvényesül (a végtermék tulajdonságai számítanak, az engedélyezett GMO-kat nem kell nyomon követni és nincs általános jelölési kötelezettség)",
+          "Az EU-ban termékalapú szabályozás van jelölési kötelezettség nélkül, az USA-ban pedig folyamatalapú szabályozás teljes GMO-tilalommal",
+          "Mindkét régióban 10%-os GMO-tartalom felett tilos az élelmiszerek forgalmazása",
+          "Az USA-ban az Alaptörvény tiltja minden génmódosított növény termesztését"
+        ],
+        answer: 0,
+        exp: "Klasszikus vizsgakérdés: EU és Ausztrália = folyamatalapú (process-based, az előállítási technológia dönt, kötelező nyomonkövetés és címkézés); USA és Kanada = termékalapú (product-based)."
+      },
+      {
+        id: "q69", topic: "t6", type: "fill", exam: true,
+        q: "Az Európai Unióban és Ausztráliában ________ alapú (process-based), míg az USA-ban és Kanadában termék alapú (product-based) GMO-szabályozás van érvényben.",
+        answers: ["folyamat", "folyamatalapú", "eljárás"],
+        hints: ["folyamat", "termék", "piac", "fogyasztó", "export"],
+        exp: "Az EU-s szabályozás hagyományosan folyamatalapú (process-based), bár a 2026-os NGT-reform részben elmozdult a végtermék genetikai jellemzői felé."
+      },
+      {
+        id: "q70", topic: "t6", type: "abcd", exam: true,
+        q: "Mekkora transzgénikus (GMO) tartalom felett áll fenn címkézési (jelölési) kötelezettség az élelmiszerekre és takarmányokra az Európai Unióban és Magyarországon?",
+        options: [
+          "0,9% transzgénikus tartalom felett (0,9% alatt csak akkor mentesül, ha a jelenlét bizonyítottan véletlenszerű és technikailag elkerülhetetlen; még nem engedélyezett GMO-kra 0% a tolerancia)",
+          "5,0% transzgénikus tartalom felett",
+          "0,01% transzgénikus tartalom felett",
+          "10,0% tömegszázalék felett"
+        ],
+        answer: 0,
+        exp: "Az 1829/2003/EK és 1830/2003/EK rendeletek szerint 0,9% GMO-tartalom felett kötelező a jelölés („Ez a termék géntechnológiával módosított szervezetet tartalmaz”)."
+      },
+      {
+        id: "q71", topic: "t6", type: "fill", exam: true,
+        q: "Az Európai Unióban (és Magyarországon) az élelmiszerek és takarmányok esetében ________% transzgénikus tartalom felett kötelező a GMO-jelölés alkalmazása.",
+        answers: ["0,9", "0.9", "0,9%"],
+        hints: ["0,9", "0,01", "0,5", "5", "10"],
+        exp: "0,9% felett kötelező a címkézés; 0,9% alatt csak akkor nem kell jelölni, ha az előfordulás véletlen és technikailag elkerülhetetlen."
+      },
+      {
+        id: "q72", topic: "t6", type: "abcd", exam: true,
+        q: "Mi jellemzi Magyarország GMO-szabályozását és gyakorlati helyzetét a köztermesztésben, illetve a takarmányimportban?",
+        options: [
+          "Az Alaptörvény (XX. cikk) rögzíti a GMO-mentes mezőgazdaságot és köztermesztési GMO-moratórium van érvényben (400 m izolációs távolság), ugyanakkor Magyarország nem teljesen GMO-mentes ország, hanem GMO-termesztéstől mentes: évente ~700 ezer tonna GM-szóját importálunk takarmányozásra és gyógyszereink (pl. rekombináns inzulin) is GM eredetűek",
+          "Magyarországon szabadon termeszthető a MON810 kukorica, de tilos a GM-szója importja és a rekombináns inzulin használata",
+          "Magyarországon nincs jelölési kötelezettség a kereskedelmi forgalomban lévő GM élelmiszerekre",
+          "Magyarországon a NÉBIH helyett csak magáncégek végezhetnek hatósági GMO-ellenőrzést"
+        ],
+        answer: 0,
+        exp: "Fontos megkülönböztetés az előadásból: Magyarország GMO-termesztéstől mentes (moratórium van a köztermesztésre), de évente ~700 000 tonna GM-szóját importál takarmányként, és rekombináns gyógyszereket is használunk. Hatósági ellenőrzésre kizárólag a NÉBIH jogosult (EU-s hálózat: ENGL)."
+      },
+      {
+        id: "q73", topic: "t6", type: "abcd", exam: false,
+        q: "Mely tevékenységek NEM minősülnek géntechnológiai módosításnak a 2001/18/EK irányelv szerint?",
+        options: [
+          "A mutagenezis, a hagyományos nemesítéssel is keresztezhető fajok növényi sejtfúziója (protoplaszt-fúziója), az in vitro megtermékenyítés, a természetes rekombinációs folyamatok (konjugáció, transzdukció, transzformáció) és a poliploidia-indukció",
+          "A rekombináns plazmidok beépítése Agrobacterium tumefaciens segítségével",
+          "A mikroinjektálás, makroinjektálást és mikroenkapszuláció szervezeten kívül előállított DNS-sel",
+          "Természetes körülmények között nem kereszteződő távoli fajok protoplaszt-fúziója"
+        ],
+        answer: 0,
+        exp: "A 2001/18/EK irányelv szerint a mutagenezis, a keresztezhető fajok sejtfúziója, az in vitro megtermékenyítés és a poliploidia-indukció nem minősül GMO-t eredményező géntechnológiai módosításnak."
+      },
+      {
+        id: "q74", topic: "t6", type: "abcd", exam: true,
+        q: "Hogyan működik az ELISA teszt a GMO-kimutatásban, és mit mérünk vele?",
+        options: [
+          "Immunológiai (antigén–antitest kölcsönhatáson alapuló) fehérjealapú módszer: a transzgén által termelt idegen fehérjét (antigént, pl. CP4-EPSPS vagy Bt Cry1Ab) specifikus antitest köti meg mikrotiter lemezen, majd enzimreakcióval (pl. alkalikus foszfatáz + színtelen pNPP szubsztrát → színes nitrofenol termék) teszik láthatóvá (érzékenység: 0,01–0,1%)",
+          "DNS-hibridizációs módszer, amely a 35S promóter nukleotidsorrendjét szekvenálja kapilláris csőben",
+          "Agaróz gélen végzett RNS-elválasztás etídium-bromidos festéssel",
+          "Gáz-kromatográfiás módszer, amellyel a növényi hormonok (auxin, citokinin) arányát mérik"
+        ],
+        answer: 0,
+        exp: "Az ELISA (Enzyme-Linked Immunosorbent Assay) fehérjealapú, immunológiai teszt: a transzgén fehérjetermékét (antigént) mutatja ki specifikus (monoklonális vagy poliklonális) ellenanyaggal és színreakciót adó enzimmel (pl. alkalikus foszfatáz: pNPP → színes nitrofenol). Hátránya: a fehérje hőérzékeny, így hőkezelt/feldolgozott élelmiszerekre kevésbé alkalmas."
+      },
+      {
+        id: "q75", topic: "t6", type: "abcd", exam: true,
+        q: "Mi a helyes sorrend a GMO-kimutatási módszerek (Strip teszt, ELISA, PCR) között az érzékenységük szerint (a legkevésbé érzékenytől a legérzékenyebbig)?",
+        options: [
+          "1. Strip teszt / tesztcsík (alacsonyabb érzékenység: 0,1–1%, terepi gyorsteszt) → 2. ELISA (magas érzékenység: 0,01–0,1%, fehérjealapú) → 3. PCR / Real-time qPCR (legmagasabb érzékenység: 0,01%, DNS-alapú ipari szabvány)",
+          "1. PCR (0,1–1%) → 2. ELISA (0,01–0,1%) → 3. Strip teszt (0,001%)",
+          "1. ELISA → 2. Strip teszt → 3. Western blot",
+          "Mindhárom módszer érzékenysége pontosan megegyezik (1,0%)"
+        ],
+        answer: 0,
+        exp: "Vizsgakérdés! Érzékenységi sorrend (növekvő): Strip teszt / immunokromatográfiás tesztcsík (0,1–1%, ~10 perc, 2 $, terepi) < ELISA (0,01–0,1%, 30–90 perc, 5 $) < PCR / qPCR (0,01%, legérzékenyebb, hivatalos szabvány)."
+      },
+      {
+        id: "q76", topic: "t6", type: "abcd", exam: true,
+        q: "Mi a PCR-alapú GMO-kimutatási stratégiák 4 szintje a legkevésbé specifikustól a legspecifikusabbig (és mit mutatnak ki)?",
+        options: [
+          "1. Screening / általános szűrés (35S promóter vagy nos terminátor) → 2. Gén-specifikus PCR (a gazdaságilag jelentős gén, pl. CP4 EPSPS vagy Cry1Ab) → 3. Konstrukció-specifikus PCR (két szomszédos elem, pl. promóter–gén átfedése a vektorban) → 4. Esemény (event)-specifikus PCR (a transzgén és a befogadó növényi genom egyedi beépülési csatlakozási pontja – legspecifikusabb!)",
+          "1. Esemény-specifikus → 2. Konstrukció-specifikus → 3. Gén-specifikus → 4. Screening",
+          "1. RAPD → 2. ISSR → 3. SSR → 4. Morfológiai bírálat",
+          "1. ELISA → 2. Strip teszt → 3. Nyomonkövethetőség → 4. Koegzisztencia"
+        ],
+        answer: 0,
+        exp: "Vizsgakérdés (fogalompárosítás): 1. Screening = promóter/terminátor (35S, T-nos) szűrése (legalacsonyabb specificitás); 2. Gén-specifikus = maga a hasznos transzgén; 3. Konstrukció-specifikus = az expressziós kazetta elemeinek kapcsolódása; 4. Esemény (event)-specifikus = az integrációs hely (terminátor/promóter és a növényi genom határa) – ez azonosítja az adott GM vonalat/fajtát."
+      },
+      {
+        id: "q77", topic: "t6", type: "abcd", exam: false,
+        q: "Miért csökkenhet a PCR érzékenysége élelmiszer-analitikai GMO-vizsgálatok során, és hogyan működik a Real-Time (valós idejű, qPCR) mennyiségi meghatározás?",
+        options: [
+          "A feldolgozás során a DNS töredezhet, mátrix-hatás (fehérjék, zsírok, polifenolok, poliszacharidok) és PCR-inhibitorok (pl. CTAB, SDS, EDTA, Ca²⁺, hemfehérjék) gátolhatják a reakciót; a qPCR „nem végpont analízis”, fluoreszcens festékkel (SYBR Green) vagy próbával (TaqMan) minden ciklusban méri a terméket, és a küszöbérték-ciklusszám (Ct) alapján határozza meg a kiindulási kópiaszámot (alacsonyabb Ct = több kiindulási DNS)",
+          "A qPCR csak a 30. ciklus végén, agaróz gélen méri a DNS-t; a magasabb Ct érték jelenti a több kiindulási kópiát",
+          "Az élelmiszerekben lévő glükóz felgyorsítja a Taq polimerázt, így túl sok DNS keletkezik",
+          "A qPCR antitesteket használ a fehérjék mennyiségének mérésére"
+        ],
+        answer: 0,
+        exp: "A Real-Time qPCR-ben a Ct (küszöbérték-ciklusszám) fordítottan arányos a kiindulási templátmennyiséggel (pl. a diasor kalibrációs görbéjén: Ct=10 → 500 000 kópia, Ct=14 → 50 000 kópia, Ct=18 → 5 000 kópia, Ct=26 → 5 kópia)."
+      },
+      {
+        id: "q78", topic: "t6", type: "abcd", exam: false,
+        q: "Hogyan működik az immunokromatográfiás gyorsteszt (Strip teszt / lateral flow dipstick), és mi a kontroll sáv szerepe?",
+        options: [
+          "A mintában lévő antigén kapilláris szívóerővel áramlik, először festékkel jelölt antitestekhez kötődik, majd a Teszt (T) sávban rögzített antitestek megfogják; a felesleges jelölt antitestek továbbhaladnak a Kontroll (K) sávig (másodlagos antitestek), amely igazolja, hogy a folyadékáramlás és a teszt működőképes volt",
+          "Elektromos áram hatására a DNS vándorol a papírcsíkon, és UV-fényben világít",
+          "Ha csak a Kontroll (K) sáv jelenik meg, a minta biztosan GMO-pozitív",
+          "A Strip teszt 2 napig tartó laboratóriumi autoklávozást igényel"
+        ],
+        answer: 0,
+        exp: "A Strip teszt kapilláris erővel működő szendvics-immunológiai gyorsteszt (~10 perc): 2 csík (T + K) = pozitív, 1 csík a Kontroll (K) sávnál = negatív, de érvényes teszt."
+      },
+      {
+        id: "q79", topic: "t6", type: "abcd", exam: false,
+        q: "Kihez fűződik a XX. századi „zöld forradalom” (1950–1985), és mennyi gabonára van szükség 1 kg sertés-, marha-, illetve baromfihús előállításához az etikai előadás szerint?",
+        options: [
+          "Norman E. Borlaug Nobel-díjas tudóshoz (féltörpe búza- és rizsfajták, N-műtrágya, növényvédelem, öntözés → 3,5× gabonatermés); 1 kg sertéshúshoz ~7 kg, 1 kg marhahúshoz ~5 kg, 1 kg baromfihúshoz ~2–3 kg gabona szükséges",
+          "Ereky Károlyhoz; 1 kg húshoz egységesen 50 kg gabona szükséges",
+          "Kary Mullishoz; 1 kg marhahúshoz 1 kg, 1 kg baromfihúshoz 10 kg gabona szükséges",
+          "Ingo Potrykushoz; a zöld forradalom során kizárólag GMO fajtákat termesztettek"
+        ],
+        answer: 0,
+        exp: "Az 1950–1985 közötti zöld forradalom (Norman E. Borlaug) 3,5-szeresére növelte a Föld gabonatermését. Az élelmiszerválasztás karbonlábnyoma jelentős: az előállítás adja a 83%-ot (sertés: 7 kg, marha: 5 kg, baromfi: 2–3 kg gabona / 1 kg hús)."
+      },
+      {
+        id: "q80", topic: "t6", type: "abcd", exam: false,
+        q: "Mit jelent a koegzisztencia elve (EU, 2003), és mekkora izolációs távolságot ír elő Magyarország a GM kukoricára más EU-tagállamokhoz képest?",
+        options: [
+          "A GM-, a hagyományos és a biotermesztés térbeli/időbeli egymás mellett élésének (elkülönítésének) biztosítása a termesztés, betakarítás, szállítás és feldolgozás során; az izolációs távolság Hollandiában 25 m, Spanyolországban 50 m, Olaszországban 200 m, Magyarországon 400 m, Luxemburgban 800 m",
+          "Azt jelenti, hogy a GM és a bio vetőmagokat kötelező összekeverni vetés előtt; Magyarországon 5 méter az izolációs távolság",
+          "Azt jelenti, hogy két különböző transzgént építenek be ugyanabba a sejtbe; Magyarországon 10 km a távolság",
+          "A koegzisztencia kizárólag a laboratóriumi lamináris boxok elhelyezésére vonatkozik"
+        ],
+        answer: 0,
+        exp: "A nagy izolációs távolságot előíró országokban (pl. Magyarország: 400 m, Luxemburg: 800 m) a pufferzóna mérete miatt a gazdák gyakorlatilag (de facto) nem is tudnának GM növényt termeszteni."
+      },
+      {
+        id: "q81", topic: "t6", type: "abcd", exam: false,
+        q: "Mit mond ki az EU-ban alkalmazott „elővigyázatosság elve” (precautionary principle), és mi a különbség a veszély, a kockázat és a biztonság fogalma között?",
+        options: [
+          "Elővigyázatosság elve: a GMO mindaddig veszélyesnek tekintendő, amíg be nem bizonyítják a veszélymentességét; Veszély = egy lehetséges káros hatás lehetősége; Kockázat = a veszély bekövetkezésének valószínűsége és súlyossága; Biztonság = amikor a kockázat elfogadható vagy kizárható",
+          "Elővigyázatosság elve: minden GMO biztonságos, amíg halálesetet nem okoz; a veszély és a kockázat ugyanazt jelenti",
+          "Elővigyázatosság elve: csak laboratóriumban szabad növényt termeszteni",
+          "A kockázat kizárólag a vetőmag árától függ"
+        ],
+        answer: 0,
+        exp: "Az EU-ban az elővigyázatosság elve érvényesül. Az EFSA (Európai Élelmiszerbiztonsági Hatóság, 2002) végzi a kockázatértékelést; az engedély 10 évre szól, utópiaci környezeti monitoringgal (PMEM)."
+      },
+      {
+        id: "q82", topic: "t6", type: "abcd", exam: false,
+        q: "Milyen környezeti kockázatokat igazoltak a GM repce (Brassica napus), a japán import repce, a mexikói kukorica és a Bt-toxin lebomlása kapcsán?",
+        options: [
+          "A GM repcéből a Bt (cry1Ac) transzgén szántóföldön átkerült a vad indiai mustárba (Brassica juncea) és növelte annak idegenmegporzását; Japánban a kikötők/utak mentén kivadult az import GM repce; Mexikóban (géncentrum!) a helyi kukorica-tájfajtákba bekereszteződött a GM kukorica; a GM növényekben termelt Bt-toxin a talajban hónapokig/1 évig megmaradhat (míg a Bt permetezőszer néhány nap alatt lebomlik)",
+          "A szója szélporozta növény, ezért 20 km-re elviszi a pollent, míg a kukorica szigorúan önbeporzó",
+          "A horizontális géntranszfer (HGT) valószínűsége 50% minden étkezésnél",
+          "A GM repce hibridek mindig teljesen meddők, így nem maradhat fenn a transzgén"
+        ],
+        answer: 0,
+        exp: "Kiemelt esettanulmányok a kockázati diasorból: 1) Brassica napus → B. juncea génáramlás; 2) Japánban kikötők körül kivadult import GM repce (Japán csak a kék rózsa termesztését engedélyezte); 3) Mexikói kukorica géncentrum kontamináció (Quist & Chapela 2001); 4) Hazánkban M1 mellett lucerna/somkóró és Kaposvárnál kivadult repce; 5) HGT valószínűsége rendkívül alacsony (10⁻¹⁰ – 10⁻¹⁷)."
+      },
+      {
+        id: "q83", topic: "t6", type: "abcd", exam: false,
+        q: "Hogyan vizsgálják a GM élelmiszerek toxikusságát az EFSA előírásai szerint rágcsálókon?",
+        options: [
+          "A tisztított heterológ fehérje (transzgéntermék) akut/szubakut toxicitását 28 napos etetési kísérletben, míg a transzgént tartalmazó teljes GM élelmiszer/takarmány hatását 90 napos rágcsáló-etetési kísérletben vizsgálják",
+          "1 napos etetési kísérletben kizárólag halakon",
+          "10 éves etetési kísérletben szarvasmarhákon",
+          "Nem végeznek állatetetési kísérletet, csak BLAST keresést"
+        ],
+        answer: 0,
+        exp: "A tisztított transzgén-fehérjét 28 napos, a teljes GM élelmiszert/takarmányt pedig 90 napos rágcsáló-etetési vizsgálatban tesztelik (figyelve arra, hogy az egyoldalú táplálás már nem-GM hagyma, burgonya vagy paradicsom esetén is okozhat elváltozást)."
+      },
+      {
+        id: "q84", topic: "t6", type: "abcd", exam: true,
+        q: "Mi a lényege az új genomi technikák (NGT-k) 2026-ban elfogadott európai uniós szabályozási reformjának (NGT-1 és NGT-2 kategóriák)?",
+        options: [
+          "Az EU a tisztán eljárásalapú megközelítéstől részben a végtermék genetikai jellemzői felé mozdult el: az NGT-1 növények (ellenőrzés után) a hagyományosan nemesített fajtákhoz hasonló kezelést kapnak (de a vetőmagot jelölni kell és ökológiai/bio termelésben nem használhatók), míg az NGT-2 növényekre továbbra is a szigorú GMO-szabályok (kockázatértékelés, engedélyezés, címkézés) vonatkoznak",
+          "Minden CRISPR-rel szerkesztett növényt véglegesen betiltottak az Európai Unióban 2026-tól",
+          "Az NGT-1 és NGT-2 növényeket kötelezővé tették a biotermesztésben (ökológiai gazdálkodásban)",
+          "A természetes génszekvenciák szabadalmaztatását korlátlanul engedélyezték"
+        ],
+        answer: 0,
+        exp: "A 2026. június 17-én elfogadott (és 24 hónapos átmenet után, 2028-tól alkalmazandó) EU NGT-szabályozás két kategóriát különít el: NGT-1 (hagyományos nemesítéshez hasonló, de vetőmag-jelöléssel és EU-adatbázissal, biotermelésben tilos) és NGT-2 (továbbra is GMO-szabályozás alá esik)."
+      },
+
+      // ==================== TOVÁBBI SZÓKIEGÉSZÍTŐS KÉRDÉSEK (MINDEN TÉMAKÖRBŐL) ====================
+      {
+        id: "q85", topic: "t1", type: "fill", exam: false,
+        q: "A szilárd és a folyékony in vitro táptalaj összetétele megegyezik, csupán a szilárdító anyagként hozzáadott ________ miatt lesz szilárd a tápközeg.",
+        answers: ["agar", "agar-agar"],
+        hints: ["agar", "szacharóz", "perlit", "alginát", "kinetin"],
+        exp: "A táptalajt agar hozzáadásával szilárdítják meg."
+      },
+      {
+        id: "q86", topic: "t1", type: "fill", exam: false,
+        q: "A már nem osztódó, differenciált növényi szövetből sebzés és hormonkezelés (dedifferenciáció) hatására másodlagosan kialakult, differenciálatlan osztódó szövetet ________-nak nevezzük.",
+        answers: ["kallusz", "kallusznak", "kallusz szövet", "kalluszszövet"],
+        hints: ["kallusz", "merisztéma", "protoplaszt", "explantum", "kutikula"],
+        exp: "A kallusz dedifferenciációval másodlagosan kialakuló, rendezetlenül osztódó sejttömeg."
+      },
+      {
+        id: "q87", topic: "t1", type: "fill", exam: false,
+        q: "A növényi szövettenyésztő laborban az aszeptikus (steril) levegőt a lamináris boxban található, még a vírusrészecskéket is kiszűrő ________-szűrő biztosítja.",
+        answers: ["HEPA", "HEPA-szűrő"],
+        hints: ["HEPA", "UV", "autokláv", "Clorox", "ELISA"],
+        exp: "HEPA = High Efficiency Particulate Air szűrő a lamináris fülke hátlapján vagy tetején."
+      },
+      {
+        id: "q88", topic: "t1", type: "fill", exam: false,
+        q: "A mikroszaporítás során a tenyésztett növényanyag genotípusában fellépő nem kívánt genetikai eltérést (mutációt) ________ variabilitásnak nevezzük.",
+        answers: ["szomaklonális"],
+        hints: ["szomaklonális", "mendeli", "ortológ", "kodomináns", "allélos"],
+        exp: "A szomaklonális variabilitás a mikroszaporítás egyik hátránya: a regenerált klónok egy része genotípusában eltérhet a kiinduló anyanövénytől."
+      },
+      {
+        id: "q89", topic: "t1", type: "fill", exam: false,
+        q: "A kriobankban (krioprezerváció során) a steril növényi izolátumokat folyékony nitrogénben, ________ °C-os hőmérsékleten tárolják.",
+        answers: ["-196", "-196 °C"],
+        hints: ["-196", "-80", "-20", "0", "120"],
+        exp: "A folyékony nitrogén hőmérséklete -196 °C; a felolvasztást gyorsan, 40 °C-on végzik."
+      },
+      {
+        id: "q90", topic: "t2", type: "fill", exam: true,
+        q: "A kristálymedúzából származó, ultraibolya (UV) fényben zölden fluoreszkáló riportergén rövidítése: ________.",
+        answers: ["GFP", "gfp"],
+        hints: ["GFP", "GUS", "LUC", "PAT", "EPSPS"],
+        exp: "GFP = Green Fluorescent Protein (zölden fluoreszkáló fehérje)."
+      },
+      {
+        id: "q91", topic: "t2", type: "fill", exam: true,
+        q: "A szentjánosbogár potrohából izolált ________ riportergén a luciferin szubsztrát oxidációja révén fénykibocsátásra (lumineszcenciára) képes.",
+        answers: ["luciferáz", "luc", "lux"],
+        hints: ["luciferáz", "béta-glükuronidáz", "restrikciós endonukleáz", "ligáz", "invertáz"],
+        exp: "Az első luciferázt kifejező transzgénikus növény egy dohány volt 1986-ban."
+      },
+      {
+        id: "q92", topic: "t2", type: "fill", exam: true,
+        q: "Ma a leggyakrabban alkalmazott szelektálható markergén a glüfozinát-ammónium (FINALE) gyomirtószerrel szemben rezisztenciát biztosító ________ gén (foszfinotricin-acetiltranszferáz).",
+        answers: ["PAT", "pat"],
+        hints: ["PAT", "GUS", "GFP", "VirA", "Cry1Ab"],
+        exp: "2006 után az antibiotikum-rezisztencia gének helyett a herbicidrezisztenciát kódoló PAT gén vált a legelterjedtebb szelekciós markergénné."
+      },
+      {
+        id: "q93", topic: "t2", type: "fill", exam: false,
+        q: "A rekombináns DNS előállításakor a specifikus, 4–8 bázispáros palindrom szekvenciáknál hasító restrikciós endonukleázok által elvágott DNS-szakaszokat a(z) ________ enzim kapcsolja (ragasztja) össze.",
+        answers: ["ligáz", "DNS-ligáz"],
+        hints: ["ligáz", "polimeráz", "helikáz", "kitináz", "glükanáz"],
+        exp: "A restrikciós endonukleáz a „molekuláris olló”, a DNS-ligáz pedig a „molekuláris ragasztó”."
+      },
+      {
+        id: "q94", topic: "t2", type: "fill", exam: true,
+        q: "Az Agrobacterium tumefaciens tumorindukáló (Ti) plazmidjának azt a 25 bp-os határszekvenciákkal közrefogott szakaszát, amely kivágódik és beépül a növényi sejtmagba, ________-nek (transzfer DNS-nek) nevezzük.",
+        answers: ["T-DNS", "tDNS", "T-régió"],
+        hints: ["T-DNS", "cDNS", "dsRNS", "gRNS", "kozmid"],
+        exp: "A Ti-plazmid T-DNS (transzfer DNS) régiója jut át a növényi sejtbe a Vir fehérjék segítségével."
+      },
+      {
+        id: "q95", topic: "t2", type: "fill", exam: true,
+        q: "A génpuskás (részecskebombázásos) géntranszfer során a plazmid DNS-t 1–2 mikrométeres ________ vagy volfrám szemcsék (mikrolövedékek) felületéhez tapasztják.",
+        answers: ["arany", "Au"],
+        hints: ["arany", "vas", "réz", "szilícium", "kalcium"],
+        exp: "A mikrolövedék 1–2 µm-es arany vagy volfrám szemcse, amelyet hélium- vagy nitrogéngázzal gyorsítanak fel."
+      },
+      {
+        id: "q96", topic: "t2", type: "fill", exam: true,
+        q: "A CRISPR/Cas9 rendszerben a Cas9 endonukleázt egy 20–30 nukleotid hosszúságú vezető RNS, angol rövidítéssel ________ (guide RNS) irányítja a célzott DNS-szakaszhoz.",
+        answers: ["gRNS", "sgRNS", "crRNS", "guide RNS"],
+        hints: ["gRNS", "tRNS", "rRNS", "T-DNS", "cDNS"],
+        exp: "A gRNS (guide RNS / vezető RNS) és a 3–5 bp-os PAM szekvencia jelöli ki a Cas9 enzim számára a hasítás pontos helyét."
+      },
+      {
+        id: "q97", topic: "t3", type: "fill", exam: true,
+        q: "Az agaróz gélelektroforézis során a DNS-molekulák negatív töltésük miatt az elektromos erőtérben méret szerint válnak el, láthatóvá tételükhöz pedig UV-fényben fluoreszkáló ________-bromid festéket használnak.",
+        answers: ["etídium", "Etídium", "etídium-bromid"],
+        hints: ["etídium", "nátrium", "kalcium", "ezüst", "indigó"],
+        exp: "Az etídium-bromid beépül (interkalálódik) a DNS-szálak közé, és UV-fényben rózsaszínen-lilán fluoreszkál."
+      },
+      {
+        id: "q98", topic: "t3", type: "fill", exam: false,
+        q: "Azokat a molekuláris markereket (pl. SSR, CAPS), amelyeknél mindkét allél külön detektálható, így a homozigóta és heterozigóta egyedek elkülöníthetők egymástól, ________ öröklődésű markereknek nevezzük.",
+        answers: ["kodomináns"],
+        hints: ["kodomináns", "domináns", "recesszív", "morfológiai", "monomorf"],
+        exp: "A kodomináns markerek (SSR, CAPS, RFLP) megkülönböztetik a homo- és heterozigótákat, míg a domináns markerek (RAPD, ISSR, SCAR) nem."
+      },
+      {
+        id: "q99", topic: "t3", type: "fill", exam: false,
+        q: "Az egypontos nukleotid-polimorfizmus angol rövidítése ________ (Single Nucleotide Polymorphism), amely a leggyakoribb pontmutáció a genomban.",
+        answers: ["SNP"],
+        hints: ["SNP", "SSR", "RAPD", "ISSR", "CAPS"],
+        exp: "SNP = Single Nucleotide Polymorphism (előfordulási helye szerint lehet iSNP, cSNP, rSNP, gSNP)."
+      },
+      {
+        id: "q100", topic: "t4", type: "fill", exam: false,
+        q: "A különböző fajokban található, közös ősi génből fajképződés során származó és azonos funkciót ellátó géneket ________ géneknek nevezzük (míg az egy fajon belüli génduplikációból származókat paralóg géneknek).",
+        answers: ["ortológ"],
+        hints: ["ortológ", "analóg", "polimorf", "onkogén", "endogén"],
+        exp: "Ortológ gének: különböző fajokban, közös ősből, azonos funkcióval (mutációs/evolúciós óra alapja)."
+      },
+      {
+        id: "q101", topic: "t5", type: "fill", exam: true,
+        q: "Az A-vitamin-hiány (VAD) leküzdésére Ingo Potrykus és Peter Beyer által kifejlesztett Aranyrizs (Golden Rice) endospermiuma az A-vitamin provitaminját, a sárga színű ________-karotint termeli.",
+        answers: ["béta", "β", "béta-karotin"],
+        hints: ["béta", "likopin", "delfinidin", "betalain", "klorofill"],
+        exp: "Az Aranyrizs (Golden Rice 1 nárcisz, Golden Rice 2 kukorica fitoén-szintáz + Erwinia deszaturáz génnel) béta-karotint halmoz fel."
+      },
+      {
+        id: "q102", topic: "t5", type: "fill", exam: true,
+        q: "A rovarrezisztens Bt-növényekbe a ________ thuringiensis talajbaktérium által termelt, Cry gének által kódolt delta-endotoxin génjét építették be.",
+        answers: ["Bacillus", "Bacillus thuringiensis"],
+        hints: ["Bacillus", "Agrobacterium", "Escherichia", "Salmonella", "Erwinia"],
+        exp: "Bt = Bacillus thuringiensis."
+      },
+      {
+        id: "q103", topic: "t5", type: "fill", exam: true,
+        q: "A „nem barnuló” Arctic® almában és a GEiGS banánban a zúzódáskori barnulásért felelős ________-oxidáz (PPO) enzim működését csendesítették.",
+        answers: ["polifenol", "polifenol-oxidáz"],
+        hints: ["polifenol", "poligalakturonáz", "invertáz", " glükuronidáz", "foszfatáz"],
+        exp: "A PPO (polifenol-oxidáz) enzim oxidálja a fenolos vegyületeket barna pigmentekké (kinonokká/melaninná)."
+      },
+      {
+        id: "q104", topic: "t6", type: "fill", exam: true,
+        q: "A PCR-alapú GMO-kimutatás 4 szintje közül a legspecifikusabb a(z) ________-specifikus (event-specifikus) PCR, amely a transzgén és a növényi genom egyedi beépülési határpontját mutatja ki.",
+        answers: ["esemény", "esemény-specifikus", "event", "vonal"],
+        hints: ["esemény", "screening", "gén", "konstrukció", "faj"],
+        exp: "A 4 szint növekvő specificitási sorrendben: 1. Screening (35S/nos), 2. Gén-specifikus, 3. Konstrukció-specifikus, 4. Esemény (event)-specifikus."
+      },
+      {
+        id: "q105", topic: "t6", type: "fill", exam: false,
+        q: "Az Európai Unióban a GMO-k tudományos kockázatértékelését a 2002-ben alapított Európai Élelmiszerbiztonsági Hatóság, angol rövidítéssel ________ végzi, míg Magyarországon a hatósági ellenőrzésre a NÉBIH jogosult.",
+        answers: ["EFSA"],
+        hints: ["EFSA", "USDA", "NCBI", "ENGL", "CSIRO"],
+        exp: "EFSA = European Food Safety Authority (Európai Élelmiszerbiztonsági Hatóság); az engedélyeket 10 évre adják ki."
+      }
+    );
+  </script>
+  <script>
+    let activeQuestions = [];
+    let currentIndex = 0;
+    let userAnswers = {}; // id -> { correct: bool, selectedText: string, revealed: bool }
+    let showWordBank = true;
+    let optionOrderMap = {}; // id -> shuffled indices [0,1,2,3]
+
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function normalizeStr(s) {
+      return (s || "")
+        .toString()
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, " ")
+        .replace(/[%°]/g, "")
+        .trim();
+    }
+
+    function stripAccents(s) {
+      return normalizeStr(s).normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
+    function switchMainTab(tab) {
+      const tabs = ["quiz", "diagrams", "bank"];
+      tabs.forEach(t => {
+        const sec = document.getElementById("mainTab" + t.charAt(0).toUpperCase() + t.slice(1));
+        const btn = document.getElementById("tab" + t.charAt(0).toUpperCase() + t.slice(1) + "Btn");
+        if (t === tab) {
+          sec.classList.remove("hidden");
+          btn.className = "px-3.5 py-2 rounded-lg text-xs font-semibold bg-[var(--primary)] text-[var(--primary-foreground)]";
+        } else {
+          sec.classList.add("hidden");
+          btn.className = "px-3.5 py-2 rounded-lg text-xs font-semibold bg-[var(--secondary)] text-[var(--secondary-foreground)] border border-[var(--border)]";
+        }
+      });
+      if (tab === "bank") {
+        renderQuestionBank();
+      }
+    }
+
+    function toggleWordBank() {
+      showWordBank = !showWordBank;
+      const btn = document.getElementById("wordBankToggleBtn");
+      btn.textContent = showWordBank ? "Szóbank: BE" : "Szóbank: KI";
+      const box = document.getElementById("wordBankBox");
+      if (box) {
+        if (showWordBank) box.classList.remove("hidden");
+        else box.classList.add("hidden");
+      }
+    }
+
+    function restartQuiz(customList = null) {
+      const topic = document.getElementById("topicSelect").value;
+      const type = document.getElementById("typeSelect").value;
+      const limit = document.getElementById("limitSelect").value;
+
+      let pool = customList || QUESTIONS.filter(item => {
+        if (topic === "exam" && !item.exam) return false;
+        if (topic !== "all" && topic !== "exam" && item.topic !== topic) return false;
+        if (type === "abcd" && item.type !== "abcd") return false;
+        if (type === "fill" && item.type !== "fill") return false;
+        return true;
+      });
+
+      if (!customList) {
+        if (limit !== "all_ordered") {
+          pool = shuffleArray(pool);
+        }
+        if (limit === "20") pool = pool.slice(0, 20);
+        if (limit === "40") pool = pool.slice(0, 40);
+      }
+
+      activeQuestions = pool;
+      currentIndex = 0;
+      userAnswers = {};
+      optionOrderMap = {};
+
+      activeQuestions.forEach(q => {
+        if (q.type === "abcd") {
+          optionOrderMap[q.id] = shuffleArray([0, 1, 2, 3]);
+        } else if (q.type === "fill") {
+          optionOrderMap[q.id] = shuffleArray(q.hints || []);
+        }
+      });
+
+      document.getElementById("summaryCard").classList.add("hidden");
+      document.getElementById("questionCard").classList.remove("hidden");
+      updateScoreStrip();
+      renderCurrentQuestion();
+    }
+
+    function updateScoreStrip() {
+      const answered = Object.values(userAnswers);
+      const correctCount = answered.filter(a => a.correct).length;
+      const wrongCount = answered.filter(a => !a.correct).length;
+      const pct = answered.length > 0 ? Math.round((correctCount / answered.length) * 100) : 0;
+
+      document.getElementById("scoreCorrect").textContent = correctCount;
+      document.getElementById("scoreWrong").textContent = wrongCount;
+      document.getElementById("scorePercent").textContent = pct + "%";
+    }
+
+    function renderCurrentQuestion() {
+      if (activeQuestions.length === 0) {
+        document.getElementById("questionPrompt").textContent = "Nincs a szűrőnek megfelelő kérdés.";
+        return;
+      }
+
+      const q = activeQuestions[currentIndex];
+      document.getElementById("progressText").textContent = `${currentIndex + 1} / ${activeQuestions.length}`;
+      document.getElementById("currentTopicBadge").textContent = TOPIC_NAMES[q.topic] || "";
+
+      const typeBadge = document.getElementById("currentTypeBadge");
+      if (q.type === "abcd") {
+        typeBadge.textContent = "ABCD választós";
+        typeBadge.className = "px-2 py-0.5 rounded font-semibold text-xs bg-[var(--primary)]/15 text-[var(--primary)]";
+      } else {
+        typeBadge.textContent = "Szókiegészítős";
+        typeBadge.className = "px-2 py-0.5 rounded font-semibold text-xs bg-[var(--accent)]/20 text-[var(--foreground)] border border-[var(--border)]";
+      }
+
+      const star = document.getElementById("examStarBadge");
+      if (q.exam) star.classList.remove("hidden");
+      else star.classList.add("hidden");
+
+      const state = userAnswers[q.id];
+
+      // Prompt formatting for fill-in-the-blank
+      const promptEl = document.getElementById("questionPrompt");
+      if (q.type === "fill") {
+        const replacement = state
+          ? `<span class="blank-slot">${state.selectedText || q.answers[0]}</span>`
+          : `<span class="blank-slot">? ? ?</span>`;
+        promptEl.innerHTML = q.q.replace("________", replacement);
+      } else {
+        promptEl.textContent = q.q;
+      }
+
+      const abcdContainer = document.getElementById("abcdContainer");
+      const fillContainer = document.getElementById("fillContainer");
+
+      if (q.type === "abcd") {
+        abcdContainer.classList.remove("hidden");
+        fillContainer.classList.add("hidden");
+        abcdContainer.innerHTML = "";
+
+        const letters = ["A", "B", "C", "D"];
+        const order = optionOrderMap[q.id] || [0, 1, 2, 3];
+
+        order.forEach((origIdx, dispIdx) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          const isCorrectOption = origIdx === q.answer;
+          const isUserChoice = state && state.chosenOrigIdx === origIdx;
+
+          let cls = "option-btn w-full text-left p-3.5 rounded-lg border text-xs md:text-sm flex items-start gap-3 ";
+          if (!state) {
+            cls += "bg-[var(--background)] border-[var(--border)] hover:border-[var(--primary)] text-[var(--foreground)]";
+          } else {
+            btn.disabled = true;
+            if (isCorrectOption) {
+              cls += "bg-[var(--success)]/15 border-[var(--success)] text-[var(--foreground)] font-semibold";
+            } else if (isUserChoice && !isCorrectOption) {
+              cls += "bg-[var(--error)]/15 border-[var(--error)] text-[var(--foreground)] line-through opacity-90";
+            } else {
+              cls += "bg-[var(--background)] border-[var(--border)] opacity-60";
+            }
+          }
+
+          btn.className = cls;
+          btn.innerHTML = `
+            <span class="shrink-0 w-6 h-6 rounded-md flex items-center justify-center font-mono text-xs font-bold border border-[var(--border)] bg-[var(--card)]">
+              ${letters[dispIdx]}
+            </span>
+            <span class="leading-relaxed">${q.options[origIdx]}</span>
+          `;
+          btn.onclick = () => selectAbcdOption(origIdx);
+          abcdContainer.appendChild(btn);
+        });
+      } else {
+        abcdContainer.classList.add("hidden");
+        fillContainer.classList.remove("hidden");
+
+        const input = document.getElementById("fillInput");
+        const submitBtn = document.getElementById("fillSubmitBtn");
+        input.value = state ? state.selectedText : "";
+        input.disabled = !!state;
+        submitBtn.disabled = !!state;
+
+        const wbBox = document.getElementById("wordBankBox");
+        if (showWordBank && !state) wbBox.classList.remove("hidden");
+        else wbBox.classList.add("hidden");
+
+        const chipsContainer = document.getElementById("wordBankChips");
+        chipsContainer.innerHTML = "";
+        const hints = optionOrderMap[q.id] || q.hints || [];
+        hints.forEach(h => {
+          const chip = document.createElement("button");
+          chip.type = "button";
+          chip.className = "chip-btn px-2.5 py-1 rounded-md text-xs font-medium bg-[var(--background)] border border-[var(--border)] hover:border-[var(--primary)] text-[var(--foreground)]";
+          chip.textContent = h;
+          chip.onclick = () => {
+            input.value = h;
+            submitFillAnswer();
+          };
+          chipsContainer.appendChild(chip);
+        });
+      }
+
+      // Feedback rendering
+      const fbBox = document.getElementById("feedbackBox");
+      if (state) {
+        fbBox.classList.remove("hidden");
+        const fbTitle = document.getElementById("feedbackTitle");
+        const fbAns = document.getElementById("feedbackAnswer");
+        const fbExp = document.getElementById("feedbackExplanation");
+
+        if (state.correct) {
+          fbBox.className = "rounded-lg p-4 border text-xs md:text-sm space-y-1.5 bg-[var(--success)]/10 border-[var(--success)]/40";
+          fbTitle.textContent = "✓ Helyes válasz!";
+          fbTitle.className = "font-bold text-sm text-[var(--success)]";
+        } else {
+          fbBox.className = "rounded-lg p-4 border text-xs md:text-sm space-y-1.5 bg-[var(--error)]/10 border-[var(--error)]/40";
+          fbTitle.textContent = state.revealed ? "Megoldás megjelenítve:" : "✗ Helytelen válasz!";
+          fbTitle.className = "font-bold text-sm text-[var(--error)]";
+        }
+
+        const correctDisplay = q.type === "abcd" ? q.options[q.answer] : q.answers.join(" / ");
+        fbAns.textContent = `Helyes megoldás: ${correctDisplay}`;
+        fbExp.textContent = q.exp || "";
+      } else {
+        fbBox.classList.add("hidden");
+      }
+
+      document.getElementById("prevBtn").disabled = currentIndex === 0;
+      document.getElementById("nextBtn").textContent =
+        currentIndex === activeQuestions.length - 1 ? "Eredmény megtekintése →" : "Következő →";
+    }
+
+    function selectAbcdOption(origIdx) {
+      const q = activeQuestions[currentIndex];
+      if (userAnswers[q.id]) return;
+      const isCorrect = origIdx === q.answer;
+      userAnswers[q.id] = {
+        correct: isCorrect,
+        chosenOrigIdx: origIdx,
+        selectedText: q.options[origIdx],
+        revealed: false
+      };
+      updateScoreStrip();
+      renderCurrentQuestion();
+    }
+
+    function submitFillAnswer() {
+      const q = activeQuestions[currentIndex];
+      if (userAnswers[q.id]) return;
+      const input = document.getElementById("fillInput");
+      const raw = input.value.trim();
+      if (!raw) return;
+
+      const normUser = stripAccents(raw);
+      const isCorrect = q.answers.some(ans => stripAccents(ans) === normUser);
+
+      userAnswers[q.id] = {
+        correct: isCorrect,
+        selectedText: raw,
+        revealed: false
+      };
+      updateScoreStrip();
+      renderCurrentQuestion();
+    }
+
+    function revealCurrentAnswer() {
+      const q = activeQuestions[currentIndex];
+      if (userAnswers[q.id]) return;
+      userAnswers[q.id] = {
+        correct: false,
+        chosenOrigIdx: -1,
+        selectedText: q.type === "abcd" ? q.options[q.answer] : q.answers[0],
+        revealed: true
+      };
+      updateScoreStrip();
+      renderCurrentQuestion();
+    }
+
+    function prevQuestion() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        renderCurrentQuestion();
+      }
+    }
+
+    function nextQuestion() {
+      if (currentIndex < activeQuestions.length - 1) {
+        currentIndex++;
+        renderCurrentQuestion();
+      } else {
+        showSummaryScreen();
+      }
+    }
+
+    function showSummaryScreen() {
+      document.getElementById("questionCard").classList.add("hidden");
+      const sumCard = document.getElementById("summaryCard");
+      sumCard.classList.remove("hidden");
+
+      const total = activeQuestions.length;
+      const correctCount = activeQuestions.filter(q => userAnswers[q.id] && userAnswers[q.id].correct).length;
+      const pct = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      document.getElementById("summaryStats").textContent =
+        `${total} kérdésből ${correctCount} helyes válasz (${pct}%).`;
+
+      const missed = activeQuestions.filter(q => !userAnswers[q.id] || !userAnswers[q.id].correct);
+      const missedList = document.getElementById("missedQuestionsList");
+      const retryBtn = document.getElementById("retryMistakesBtn");
+
+      missedList.innerHTML = "";
+      if (missed.length > 0) {
+        retryBtn.classList.remove("hidden");
+        missed.forEach(q => {
+          const div = document.createElement("div");
+          div.className = "p-3 rounded-lg bg-[var(--background)] border border-[var(--border)] text-xs space-y-1";
+          const ansText = q.type === "abcd" ? q.options[q.answer] : q.answers[0];
+          div.innerHTML = `
+            <div class="font-semibold text-[var(--foreground)]">${q.q}</div>
+            <div class="text-[var(--success)] font-medium">✓ Helyes: ${ansText}</div>
+            <div class="text-[var(--muted-foreground)]">${q.exp}</div>
+          `;
+          missedList.appendChild(div);
+        });
+      } else {
+        retryBtn.classList.add("hidden");
+        missedList.innerHTML = `<div class="p-4 text-sm text-[var(--success)] font-semibold text-center">Hibátlan teljesítmény! Minden kérdésre helyesen válaszoltál.</div>`;
+      }
+    }
+
+    function retryMistakes() {
+      const missed = activeQuestions.filter(q => !userAnswers[q.id] || !userAnswers[q.id].correct);
+      if (missed.length > 0) {
+        restartQuiz(shuffleArray(missed));
+      }
+    }
+
+    function renderQuestionBank() {
+      const query = stripAccents(document.getElementById("bankSearchInput").value || "");
+      const topicFilter = document.getElementById("bankFilterTopic").value;
+      const container = document.getElementById("bankListContainer");
+      container.innerHTML = "";
+
+      const filtered = QUESTIONS.filter(q => {
+        if (topicFilter === "exam" && !q.exam) return false;
+        if (topicFilter !== "all" && topicFilter !== "exam" && q.topic !== topicFilter) return false;
+        if (!query) return true;
+        const ansStr = q.type === "abcd" ? q.options.join(" ") : q.answers.join(" ");
+        const hay = stripAccents(`${q.q} ${ansStr} ${q.exp}`);
+        return hay.includes(query);
+      });
+
+      filtered.forEach((q, idx) => {
+        const card = document.createElement("div");
+        card.className = "bg-[var(--card)] border border-[var(--border)] rounded-xl p-4 text-xs space-y-1.5";
+        const ansText = q.type === "abcd" ? q.options[q.answer] : q.answers.join(" / ");
+        const badge = q.type === "abcd" ? "ABCD" : "Szókiegészítős";
+        const star = q.exam ? `<span class="text-[var(--warning)] font-bold">★ Vizsgakérdés</span> • ` : "";
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between text-[var(--muted-foreground)]">
+            <span>#${idx + 1} • ${star}${TOPIC_NAMES[q.topic]}</span>
+            <span class="font-mono px-2 py-0.5 rounded bg-[var(--background)] border border-[var(--border)]">${badge}</span>
+          </div>
+          <div class="text-sm font-semibold text-[var(--foreground)]">${q.q}</div>
+          <div class="text-[var(--success)] font-semibold">✓ Megoldás: ${ansText}</div>
+          <div class="text-[var(--muted-foreground)] leading-relaxed">${q.exp}</div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Initialize on load
+    document.getElementById("totalBankCount").textContent = QUESTIONS.length;
+    restartQuiz();
+  </script>
+</body>
+</html>
