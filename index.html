@@ -1761,6 +1761,243 @@
         options: ["Igaz", "Hamis"],
         answer: 1,
         exp: "HAMIS! Az E-érték (Expect value) a véletlen egyezés várható valószínűségét mutatja: minél KISEBB (minél közelebb van a 0-hoz, pl. 1e-50 vagy 0.0), annál megbízhatóbb és szignifikánsabb a találat!"
+      },
+
+      // ==================== ÚJ KÉRDÉSEK A 2/2 JEGYZET ÉS VIZSGA-ÖSSZEFOGLALÓ ALAPJÁN (q146–q170) ====================
+      {
+        id: "q146", topic: "t4", type: "abcd", exam: true,
+        q: "Mit értünk a bioinformatikai spektrum „szélessége”, illetve „mélysége” alatt egy DNS-szekvencia vizsgálatakor?",
+        options: [
+          "Szélesség: egy ismeretlen szekvencia összehasonlítása egyre több ismert adatbázisbeli szekvenciával a hasonló funkció felderítésére; Mélység: egyetlen DNS-szekvenciából eljutás a fehérje 1–4. rendű térszerkezetéig és molekuláris kölcsönhatásaiig",
+          "Szélesség: a vizsgált növényfaj teljes kromoszómaszámának és genomméretének meghatározása kilobázisokban; Mélység: ugyanannak a génnek a szekvenálása legalább száz különböző egyedben az allélgyakoriságok statisztikai kiszámításához",
+          "Szélesség: egyetlen fehérjemolekula aminosav-sorrendjének és 3D felszíni kölcsönhatásainak feltérképezése; Mélység: különböző rendszertani kategóriákba tartozó modellfajok mitokondriális és kloroplasztisz genomjainak páronkénti illesztése",
+          "Szélesség: a publikusan nem hozzáférhető ipari szekvencia-adatbázisok összekapcsolása az elsődleges adatbázisokkal; Mélység: az in silico predikciók kísérletes igazolása agaróz gélelektroforézissel és Southern blot hibridizációval"
+        ],
+        answer: 0,
+        exp: "A bioinformatikai spektrum szélessége az ismeretlen szekvencia összehasonlítását jelenti egyre több adatbázisbeli szekvenciával (páronként, majd többszörösen), míg a mélysége azt, hogy egyetlen DNS-szekvenciából eljutunk a kódolt fehérje 1., 2., 3. és 4. rendű térszerkezetéig és kölcsönhatásaiig."
+      },
+      {
+        id: "q147", topic: "t4", type: "abcd", exam: false,
+        q: "Miért írják vissza az mRNS-t cDNS-sé a molekuláris munka során, és mit jelentenek az ORF, illetve az UTR szakaszok?",
+        options: [
+          "Mert a fordított transzkripcióval előállított cDNS sokkal stabilabb az RNS-nél; az ORF a fehérjét ténylegesen kódoló leolvasási keret, az UTR pedig az mRNS nem transzlálódó (át nem íródó) 5' és 3' végi határoló régiója",
+          "Mert az mRNS nem tartalmazza a nem-kódoló intronokat, a cDNS-be viszont a ligáz enzim visszaépíti azokat; az ORF a promóter kötőhelye, az UTR pedig a fehérje kloroplasztiszba szállítását irányító tranzitpeptid",
+          "Mert a szekvenálógépek csak az uracilt tartalmazó cDNS-t képesek leolvasni 3'→5' irányban; az ORF a riboszóma leválási pontja, az UTR pedig a poligalakturonáz enzim által felismert ismétlődő mikroszatellit régió",
+          "Mert a cDNS közvetlenül, vektor nélkül is képes önálló replikációra a baktériumokban; az ORF a nem-kódoló intergénikus szakasz, az UTR pedig a génexpressziót véglegesen leállító metilált kromatinrégió"
+        ],
+        answer: 0,
+        exp: "Az mRNS bomlékony, ezért fordított transzkripcióval (reverz transzkriptázzal) stabil cDNS-sé írják át. A szoftverek megkeresik rajta a nyitott leolvasási keretet (ORF – Open Reading Frame) és a nem transzlálódó határoló szakaszokat (UTR – Untranslated Region)."
+      },
+      {
+        id: "q148", topic: "t4", type: "abcd", exam: true,
+        q: "Milyen részekből épül fel egy GenBank szekvenciarekord (flatfile), és milyen irányban, illetve számozással adják meg benne a nukleotidszekvenciát?",
+        options: [
+          "Annotációból (Accession number, Definition, Source organism, Authors/Title/Journal, Features) és magából a szekvenciából (Origin) áll; a nukleotidszekvencia mindig 5'–3' irányban szerepel, az 5' vég első bázisától folyamatosan számozva",
+          "Kizárólag a nyers aminosav-szekvenciából és a fehérje 3D atomkoordinátáiból áll; a nukleotidszekvencia mindig 3'–5' irányban szerepel, a terminátor régió utolsó bázisától visszafelé, negatív előjellel számozva",
+          "A BLAST illesztési pontszámokból, a PAM mátrixból és a filogenetikai törzsfából áll; a nukleotidszekvencia irányultság nélkül, a GC-tartalom szerinti csökkenő csoportokban szerepel, exononként újrakezdődő számozással",
+          "A szabadalmi engedélyszámból, az izolációs távolságból és a kimutatási PCR-receptből áll; a nukleotidszekvencia két külön szálon (5'–3' és 3'–5' irányban párhuzamosan) szerepel, csak a mutációs pontokat számozva"
+        ],
+        answer: 0,
+        exp: "A GenBank flatfile az annotációból (Accession number – pl. EF101905, Definition, Source organism – pl. Prunus armeniaca, szerzők/folyóirat, Features) és az Origin mezőben lévő, mindig 5'–3' irányú, folyamatosan számozott szekvenciából áll."
+      },
+      {
+        id: "q149", topic: "t4", type: "abcd", exam: false,
+        q: "Mire szolgálnak a hasonlósági mátrixok (PAM, BLOSUM) és mit jelent a hézag (gap) a többszörös szekvenciaillesztés (MSA) során?",
+        options: [
+          "A mátrixok az aminosavcseréket pontozzák fizikai-kémiai hasonlóság és mutációs gyakoriság alapján (a PAM a szelekció által jóváhagyott pontmutációkat >85% azonosságú szekvenciákból); a gap pedig inszercióra vagy delécióra utaló hiány az illesztésben",
+          "A mátrixok az agaróz gélben vándorló DNS-fragmentumok molekulatömegét számolják át bázispárokra; a gap pedig azt a hőmérsékleti szünetet jelenti, amikor a PCR-készülék 95 °C-ról 50 °C-ra hűti le a reakcióelegyet",
+          "A mátrixok a filogenetikai törzsfa szögpontjainak (node) földrajzi elterjedését ábrázolják; a gap pedig a két szomszédos gén között elhelyezkedő, fehérjét nem kódoló promóter és terminátor szakaszt jelöli a kromoszómán",
+          "A mátrixok kizárólag az azonos nukleotidokat jutalmazzák és minden aminosavcserét azonos hibaponttal büntetnek; a gap pedig a szekvenálógép optikai olvasási hibájából eredő ismeretlen bázist (N) jelenti az 5' végen"
+        ],
+        answer: 0,
+        exp: "A PAM (Accepted Point Mutation, Margaret Dayhoff, 1970-es évek, >85% azonosságú fehérjékből) és a BLOSUM mátrixok az egyezéseken túl a hasonló tulajdonságú aminosavcseréket is jutalmazzák. A hézag (gap) inszerciós vagy deléciós mutációs eseményt jelöl az illesztésben (match / mismatch / gap)."
+      },
+      {
+        id: "q150", topic: "t4", type: "abcd", exam: true,
+        q: "Milyen evolúciós jelenségre példa a szubtilizin és a kimotripszin enzimek hasonlósága, és melyek a filogenetikai törzsfa fő szerkezeti elemei?",
+        options: [
+          "Analógiára (konvergens evolúcióra), mert mindkettő His/Asp/Ser katalitikus triáddal működő szerin-proteáz, de térszerkezetük és eredetük teljesen eltérő; a törzsfa elemei: élek (branch), szögpontok (node), levelek (OTU) és a közös őst jelölő gyökér (root)",
+          "Homológiára (divergens evolúcióra), mert közös ősi génből génduplikációval jöttek létre ugyanabban a fajban; a törzsfa elemei: az intronok, az exonok, a nyitott leolvasási keret (ORF) és a transzkripciót indító promóter régió",
+          "Ortológiára, mert a két enzim aminosav-szekvenciája 95%-ban megegyezik, így mutációs óraként használhatók; a törzsfa elemei: az elsődleges adatbázis, a flatfile rekord, az Accession Number és az E-érték",
+          "Horizontális géntranszferre, mert a kimotripszin génje Agrobacterium közvetítésével került át a baktériumokba; a törzsfa elemei: a vezető RNS, a PAM szekvencia, a Cas9 endonukleáz és a homológ rekombinációs templát"
+        ],
+        answer: 0,
+        exp: "A szubtilizin és a kimotripszin az analógia (közös evolúciós eredet nélküli, konvergens hasonlóság) tankönyvi példája: mindkettő szerin-proteáz ugyanazzal a katalitikus triáddal (His/Asp/Ser), de eltérő térszerkezettel és szekvenciával. A törzsfa részei: élek (branch), szögpontok (node), levelek (OTU) és a gyökér (root = közös ős)."
+      },
+      {
+        id: "q151", topic: "t5", type: "abcd", exam: true,
+        q: "Hogyan viszonyul egymáshoz a genetikai módosítás (GM), a génszerkesztés (GE) és a mezőgazdaságban/élelmiszeriparban használt GMO fogalma az előadás definíciója szerint?",
+        options: [
+          "A biotechnológiában a GM a tágabb gyűjtőfogalom (magában foglalja a transzgénikus transzformációt és a génszerkesztést is), míg a mezőgazdaságban és élelmiszeriparban a GMO kifejezést szűkebben, kizárólag az idegen gént hordozó transzgénikus szervezetekre használják",
+          "A génszerkesztés (GE) a legtágabb fogalom, amely minden hagyományos keresztezést és mikroszaporítást magában foglal, míg a GM és a GMO kifejezést a biotechnológiában kizárólag a génpuskával előállított vírusrezisztens növényekre használják",
+          "A mezőgazdaságban és az élelmiszeriparban minden mutagenezissel vagy szövettenyésztéssel előállított fajtát GMO-nak neveznek, míg a biotechnológia a GM fogalmát kizárólag az idegen bakteriális plazmidot tartalmazó mikroorganizmusokra korlátozza",
+          "A GM és a GE kizárólag állati és humán orvosi (vörös biotechnológiai) beavatkozásokat jelöl, míg a növénytermesztésben minden célzott DNS-változtatás automatikusan transzgénikus GMO-nak minősül, függetlenül attól, hogy került-e bele idegen DNS"
+        ],
+        answer: 0,
+        exp: "Az V. előadás kiemelt fogalmi tisztázása: a biotechnológiában a GM tágabb fogalom (transzgénikus transzformáció + génszerkesztés/GE), viszont az élelmiszeriparban és mezőgazdaságban a GMO-t szűken, csak a transzgénikus szervezetekre használják – így egy idegen DNS-től mentes CRISPR-növény GM/GE, de nem transzgénikus GMO."
+      },
+      {
+        id: "q152", topic: "t5", type: "abcd", exam: true,
+        q: "Milyen eredetű transzgénekkel alakították ki a szárazságtűrést a kukoricában, a cukornádban, a szójában és búzában, illetve a burgonyában (az előadás összefoglalója alapján)?",
+        options: [
+          "Kukorica: bakteriális (Bacillus subtilis cspB); Cukornád: bakteriális (E. coli EcBetA → glicin-betain); Szója és búza: növényi, napraforgó eredetű (Helianthus annuus Hahb-4 transzkripciós faktor); Burgonya: élesztő eredetű (trehalóz-foszfát-szintáz, szárazság-indukált promóterrel)",
+          "Kukorica: élesztő eredetű (trehalóz-foszfát-szintáz); Cukornád: napraforgó eredetű (Hahb-4); Szója és búza: bakteriális (Salmonella aroA és Agrobacterium VirG); Burgonya: kristálymedúza és szentjánosbogár eredetű (konstitutív 35S promóterrel)",
+          "Kukorica és búza: vírus eredetű (CaMV és PRV köpenyfehérje); Cukornád és szója: gomba eredetű (kitináz és glükanáz); Burgonya: növényi, árvácska és petúnia eredetű (F3'5'H és kloroplasztisz tranzitpeptid, folyamatos expresszióval)",
+          "Kukorica: napraforgó eredetű (Hahb-4); Cukornád: élesztő eredetű (invertáz); Szója és búza: bakteriális (Bacillus thuringiensis Cry1Ac); Burgonya: saját endogén polifenol-oxidáz génjének csendesítése RNS-interferenciával"
+        ],
+        answer: 0,
+        exp: "Az V. óra és a vizsga-összefoglaló kiemelt csoportosítása: Bakteriális eredetű szárazságtűrés = kukorica (B. subtilis cspB hidegsokk-fehérje) és cukornád (E. coli EcBetA kolin-dehidrogenáz → glicin-betain ozmoprotektáns); Növényi (napraforgó) eredetű = szója és búza (Hahb-4); Élesztő eredetű = burgonya (TPS – trehalóz-foszfát-szintáz, szárazság-indukált promóterrel, a gumóméret változása nélkül)."
+      },
+      {
+        id: "q153", topic: "t5", type: "abcd", exam: true,
+        q: "Mi a különbség a kórokozó-eredetű, a növény-eredetű és a génszerkesztett kórokozó-rezisztencia között, és melyikhez tartozik a kitináz/glükanáz, illetve a 3 vírusra rezisztens tök?",
+        options: [
+          "Kórokozó-eredetű: a kórokozó saját génjét (pl. a tökben 3 vírus – CMV, ZYMV, WMV-2 – köpenyfehérje génjét) építik be; Növény-eredetű: más növényfaj védekező enzimjét (pl. gombarezisztenciát adó kitinázt vagy glükanázt) termeltetik túl; Génszerkesztett: RNAi vagy CRISPR alapú célzott védelem",
+          "Kórokozó-eredetű: más növényfajból származó kitináz és glükanáz enzimekkel bontják le a vírusok RNS-ét; Növény-eredetű: a növény saját köpenyfehérje génjeit ütik ki génpuskával; Génszerkesztett: három különböző baktérium antibiotikum-rezisztencia génjét piramidálják a tökben",
+          "Kórokozó-eredetű: a talajbaktériumok glifozát-bontó enzimjeit juttatják a kloroplasztiszba; Növény-eredetű: a vírusok mozgásfehérjéit (MP) fejeztetik ki 35S promóterrel; Génszerkesztett: hőkezeléssel és merisztématenyésztéssel távolítják el a gombaspórákat",
+          "Kórokozó-eredetű: kizárólag RNS-interferenciával működő gombarezisztencia; Növény-eredetű: a CMV, ZYMV és WMV-2 vírusokból izolált kitináz gének beépítése a sárgatökbe; Génszerkesztett: rügyoltással végzett vegetatív klónozás standard alanyokra"
+        ],
+        answer: 0,
+        exp: "Az összefoglaló 3 kategóriája: 1) Kórokozó-eredetű (pl. papaya PRV CP gén; tök 3 vírus – CMV, ZYMV, WMV-2 – CP génje 35S promóterrel; HoneySweet C5 szilva PPV CP gén; PVY burgonya RNAi; Pseudomonas toxin-inaktiváló enzim); 2) Növény-eredetű (más növényfajból származó kitináz vagy glükanáz túltermelése gombarezisztenciára); 3) Génszerkesztett (RNAi, CRISPR/Cas9, pl. kínai kel TuMV)."
+      },
+      {
+        id: "q154", topic: "t5", type: "abcd", exam: true,
+        q: "Melyik vírusrezisztens növényt milyen géntranszfer-módszerrel és milyen stratégiával (fehérje- vagy RNS-alapú) állították elő az előadás összefoglalója szerint?",
+        options: [
+          "PRV papaya: fehérjealapú (CP), génpuska; PPV ’HoneySweet’ (C5) szilva: fehérjealapú (CP), Agrobacterium (hipokotilból); PVY burgonya: RNS-alapú (RNAi), Agrobacterium; TSWV/CaMV paradicsom (kísérleti): RNS-alapú, génpuska; TuMV kínai kel: CRISPR-Cas9 (nem-transzgénikus), Agrobacterium",
+          "PRV papaya: RNS-alapú (RNAi), Agrobacterium; PPV ’HoneySweet’ (C5) szilva: RNS-alapú, génpuska; PVY burgonya: fehérjealapú (CP), génpuska; TSWV/CaMV paradicsom: fehérjealapú, protoplaszt-fúzió; TuMV kínai kel: klasszikus transzgénikus CP-bevitel, mikroinjektálás",
+          "Mind az öt növényt kizárólag génpuskával (részecskebombázással) és fehérjealapú köpenyfehérje-túltermeléssel állították elő, mivel az Agrobacterium tumefaciens egyik kétszikű kertészeti növényfajt sem képes megfertőzni in vitro körülmények között",
+          "PRV papaya és tök: CRISPR-Cas9 génszerkesztés, elektroporáció; PPV szilva és PVY burgonya: növény-eredetű kitináz gén bevitele génpuskával; TuMV kínai kel és TSWV paradicsom: virális vektoros fertőzés és ribavirines kemoterápia"
+        ],
+        answer: 0,
+        exp: "Az Összefoglaló (1258–1265. sor) pontos párosításai: PRV papaya (Rainbow = részleges, SunUp = komplett) → fehérjealapú, génpuska (1996); 3 vírusra rezisztens tök → fehérjealapú; PPV HoneySweet (C5) szilva → fehérjealapú, Agrobacterium (EHA101, hipokotilból, rügyoltással szaporítva); PVY burgonya → RNS-alapú (RNAi), Agrobacterium (>67% rezisztens); TSWV/CaMV paradicsom (Queensland/NexGen) → RNS-alapú, génpuska; TuMV kínai kel (Seoul) → CRISPR-Cas9 (eIF(iso)4E), Agrobacterium."
+      },
+      {
+        id: "q155", topic: "t5", type: "abcd", exam: false,
+        q: "Mi volt a célja a NASA-val közösen fejlesztett „folyamatosan virágzó” GM szilvafának, hogyan állították elő a fehér virágú GM petúniát, és mi a lényege a 3. generációs bioreaktor növényeknek?",
+        options: [
+          "A szilvafában a hosszú hidegigény kiküszöbölésére túltermeltették a virágzást szabályozó gént (űrutazáshoz/beltéri farmokhoz); a fehér petúniában a CHS és CHI enzimek antiszensz gátlásával blokkolták a színanyagokat; a 3. generációs bioreaktor növények pedig gyógyszeripari (vakcina, antitest), műanyagipari (PHB) és élelmiszeripari (α-amiláz, fitáz) molekulákat termelnek",
+          "A szilvafában az etiléntermelő ACC-oxidázt ütötték ki a gyümölcsök hullása ellen; a fehér petúniában az árvácska F3'5'H génjét fejeztették ki; a 3. generációs bioreaktor növények pedig kizárólag totális gyomirtószer-toleranciát és Bt-rovarrezisztenciát hordozó szántóföldi gabonák",
+          "A szilvafában az élesztő trehalóz-foszfát-szintáz génjével fokozták a szárazságtűrést; a fehér petúniában a polifenol-oxidáz (PPO) csendesítésével gátolták a szirmok barnulását; a 3. generációs növények pedig a hagyományos in vitro merisztématenyésztéssel vírusmentesített klónok",
+          "A szilvafában a PPV köpenyfehérje génjével alakítottak ki sharka-rezisztenciát; a fehér petúniában a likopin-béta-ciklázt gátolták; a 3. generációs bioreaktor növények pedig olyan vadon élő gyomnövények, amelyekből az édesburgonyához hasonlóan spontán módon került át a T-DNS"
+        ],
+        answer: 0,
+        exp: "1) NASA szilvafa: a gyümölcsfák hosszú hidegigénye az űrben nem biztosítható, ezért a virágzást szabályozó gén túltermeltetésével folyamatosan virágzik és terem. 2) Fehér GM-petúnia: az antociánút elején álló csalkon-szintáz (CHS) és csalkon-izomeráz (CHI) antiszensz gátlása minden pigmentet blokkol. 3) 3. generációs bioreaktor növények: gyógyszeripar (emberi fehérjék, peptidek, antitestek, vakcinák), műanyagipar (PHB), élelmiszeripar (alfa-amiláz, fitáz)."
+      },
+      {
+        id: "q156", topic: "t6", type: "abcd", exam: true,
+        q: "Mi okozza a GMO-kimutatási laboratóriumokban a „hamis pozitív”, illetve a „hamis negatív” eredményt, és hogyan csoportosítjuk a PCR-módszereket a mennyiségi értékelés szerint?",
+        options: [
+          "Hamis pozitív = keresztszennyezés; Hamis negatív = a módszer érzékenysége nem megfelelő (vagy DNS-töredezés/inhibitorok); Csoportosítás: kvalitatív (egyszerű, duplex, nested, inverz PCR), fél-kvantitatív (PCR + kapilláris elfó, PCR-ELISA) és kvantitatív (valós idejű qPCR)",
+          "Hamis pozitív = a DNS erős töredezése hőkezelés miatt; Hamis negatív = a laboratóriumi eszközök keresztszennyeződése; Csoportosítás: kvalitatív (Real-time qPCR TaqMan próbával), fél-kvantitatív (egyszerű agaróz géles PCR) és kvantitatív (duplex és inverz PCR)",
+          "Hamis pozitív = a polifenolok és a CTAB irreverzibilis kötődése a DNS-hez; Hamis negatív = túl sok fluoreszcens SYBR Green festék használata; Csoportosítás: kvalitatív (Western blot), fél-kvantitatív (Strip teszt) és kvantitatív (nested PCR)",
+          "Hamis pozitív = a kontroll sáv megjelenése a tesztcsíkon; Hamis negatív = a 0,9% feletti GMO-tartalom; Csoportosítás: kvalitatív (kalibrációs görbés Ct-mérés), fél-kvantitatív (hibridizációs Southern blot) és kvantitatív (egyszerű végpont-PCR)"
+        ],
+        answer: 0,
+        exp: "A VI. előadás szerint: hamis pozitív eredményt a keresztszennyezés (kontamináció), hamis negatívat a nem megfelelő érzékenység (vagy mátrix-hatás/inhibitorok) okoz. A PCR-technikák: 1. Kvalitatív (egyszerű, duplex – 2 primerpárral, nested, inverz PCR), 2. Fél-kvantitatív (PCR + kapilláris elektroforézis, PCR-ELISA), 3. Kvantitatív (valós idejű qPCR)."
+      },
+      {
+        id: "q157", topic: "t6", type: "abcd", exam: true,
+        q: "Mi a különbség a poliklonális és a monoklonális ellenanyagok (antitestek) között az ELISA vizsgálatokban, hogyan épül fel egy antitest, és mit tud az Immuno-PCR?",
+        options: [
+          "Poliklonális: többféle plazmasejt által termelt antitestek (pl. nyúlban, birkában, kecskében); Monoklonális: egyetlen plazmasejt-klón által termelt antitestek (egérből/patkányból); az antitest felső variábilis régiója köti az antigént, az alsó az effektor régió; az Immuno-PCR pedig 1000× nagyobb érzékenységű",
+          "Poliklonális: egyetlen egér-plazmasejt klónjából származó antitest; Monoklonális: nyúlban és kecskében többféle sejtvonal által termelt ellenanyag-keverék; az antitest alsó régiója köti a DNS-t, a felső régiója pedig bontja a szubsztrátot; az Immuno-PCR érzékenysége 100× kisebb az ELISA-nál",
+          "Poliklonális: bakteriális plazmidok által termelt restrikciós enzim; Monoklonális: növényi vakuólumban termelődő másodlagos anyagcseretermék; az antitest két karján mindig két teljesen különböző antigén-kötőhely található; az Immuno-PCR csak agaróz gélen olvasható le",
+          "Poliklonális: szintetikusan előállított oligonukleotid primerpár; Monoklonális: fluoreszcens TaqMan hibridizációs próba; az antitest hőstabil fehérje, amely 95 °C-os főzés után is megőrzi térszerkezetét; az Immuno-PCR pedig a Strip teszt másik elnevezése"
+        ],
+        answer: 0,
+        exp: "Az antitestek moduláris fehérjék: a felső, variábilis régió (a két karon azonos kötőhellyel) ismeri fel az antigént (a transzgén fehérjetermékét), az alsó az effektor régió. Poliklonális = többféle plazmasejt termeli (nyúl, birka, kecske); Monoklonális = egyetlen plazmasejt-klón és utódsejtjei termelik (egér, patkány). Az Immuno-PCR 1000-szeres érzékenységet biztosít!"
+      },
+      {
+        id: "q158", topic: "t4", type: "fill", exam: false,
+        q: "Az mRNS-sel végzett munka során az instabil RNS-molekulát fordított transzkripcióval (reverz transzkriptáz enzimmel) stabil, négybetűs rövidítéssel ________-nek nevezett DNS-formává írják vissza.",
+        answers: ["cDNS", "cDNS-sé", "cdns"],
+        hints: ["cDNS", "T-DNS", "gRNS", "dsRNS", "mtDNS"],
+        exp: "A cDNS (komplementer DNS) a kódoló génről keletkezett érett mRNS-ről fordított transzkripcióval visszaírt, intronmentes, stabil DNS-szekvencia."
+      },
+      {
+        id: "q159", topic: "t4", type: "fill", exam: true,
+        q: "A filogenetikai törzsfán a szögpontok által képviselt összes vizsgált faj vagy szekvencia (OTU) közös ősére utaló kiindulási pontot ________-nek nevezzük.",
+        answers: ["gyökér", "gyökérnek", "root"],
+        hints: ["gyökér", "levél", "él", "szögpont", "hézag"],
+        exp: "A filogenetikai törzsfa fő elemei az élek (branch), a szögpontok (node), a levelek (OTU) és a közös őst jelölő gyökér (root)."
+      },
+      {
+        id: "q160", topic: "t5", type: "fill", exam: false,
+        q: "A szárazságtűrő transzgénikus burgonya (WL-TPS) előállításához ________ eredetű trehalóz-foszfát-szintáz gént építettek be szárazság-indukált promóterrel.",
+        answers: ["élesztő", "élesztőgomba"],
+        hints: ["élesztő", "napraforgó", "baktérium", "árvácska", "medúza"],
+        exp: "Az összefoglaló szerint a szárazságtűrő kukorica és cukornád bakteriális, a szója és a búza növényi (napraforgó Hahb-4), a burgonya pedig élesztő eredetű (TPS) transzgént kapott."
+      },
+      {
+        id: "q161", topic: "t5", type: "fill", exam: false,
+        q: "A szárazságtűrő GM szójába és búzába a Hahb-4 dehidrációs transzkripciós faktor génjét ________ (Helianthus annuus) növényből ültették át.",
+        answers: ["napraforgó", "napraforgóból"],
+        hints: ["napraforgó", "kukorica", "petúnia", "nárcisz", "oroszlánszáj"],
+        exp: "A szója és a búza szárazságtűrését a napraforgóból (Helianthus annuus) származó Hahb-4 transzkripciós faktor génjével fokozták."
+      },
+      {
+        id: "q162", topic: "t5", type: "fill", exam: true,
+        q: "A szilvahimlő-vírussal (PPV / sharka) szemben rezisztens, Agrobacterium tumefaciens segítségével hipokotilból előállított első GM szilvafajta (C5 klón) kereskedelmi fajtaneve: ________.",
+        answers: ["HoneySweet", "'HoneySweet'", "’HoneySweet’"],
+        hints: ["HoneySweet", "Applause", "SunUp", "Rainbow", "Moonshadow"],
+        exp: "A ’HoneySweet’ (C5) az első genetikailag módosított, PPV (sharka) köpenyfehérje-gént hordozó, vírusrezisztens szilvafajta."
+      },
+      {
+        id: "q163", topic: "t5", type: "fill", exam: true,
+        q: "A második generációs Aranyrizs (Golden Rice 2) előállításakor a nárcisz helyett már ________ származó fitoén-szintáz gént és Erwinia uredovora kettős deszaturáz gént építettek be.",
+        answers: ["kukorica", "kukoricából"],
+        hints: ["kukorica", "búza", "napraforgó", "petúnia", "árvácska"],
+        exp: "Az első generációs Aranyrizsben (GR1) nárciszból, a sokkal hatékonyabb második generációs Aranyrizsben (GR2) pedig kukoricából származó fitoén-szintáz gént használtak."
+      },
+      {
+        id: "q164", topic: "t5", type: "fill", exam: true,
+        q: "A pX11 vektorral transzformált Désirée burgonyában és DR2 padlizsánban az ibolyavörös pigmentációt a(z) ________ nevű színanyag felhalmozódása okozza.",
+        answers: ["betalain", "betalainok"],
+        hints: ["betalain", "likopin", "béta-karotin", "klorofill", "pelargonidin"],
+        exp: "Az összefoglaló szerint az ibolyavörös GM burgonyában (cv. Désirée) és padlizsánban (DR2) a betalain színanyag termelődését tervezték meg."
+      },
+      {
+        id: "q165", topic: "t6", type: "fill", exam: true,
+        q: "A GMO-kimutatási laboratóriumokban a keresztszennyezés (kontamináció) miatt bekövetkező téves riasztást hamis ________ eredménynek nevezzük.",
+        answers: ["pozitív", "pozitívnak"],
+        hints: ["pozitív", "negatív", "kvantitatív", "homológ", "ortológ"],
+        exp: "Hamis pozitív hiba = keresztszennyezés miatt GMO-mentes mintát is pozitívnak jelez; hamis negatív hiba = nem megfelelő érzékenység miatt a GMO-t tartalmazó mintát nem mutatja ki."
+      },
+      {
+        id: "q166", topic: "t4", type: "tf", exam: false,
+        q: "IGAZ vagy HAMIS? A GenBank adatbázis rekordjaiban (flatfile) a nukleotidszekvenciák mindig 5'–3' irányban szerepelnek, és egy új szekvenciát tartalmazó tudományos publikációt ma már csak akkor fogadnak el a folyóiratok, ha a szekvenciát beküldték egy adatbázisba és megkapták hozzá az egyedi azonosítószámot (Accession Number).",
+        options: ["Igaz", "Hamis"],
+        answer: 0,
+        exp: "IGAZ! A nukleotidszekvenciák mindig 5'–3' irányban, folyamatosan számozva szerepelnek, a publikáláshoz pedig kötelező az adatbázisbeli regisztrációs szám (Accession Number, pl. EF101905)."
+      },
+      {
+        id: "q167", topic: "t5", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? A két PRV-rezisztens hawaii GM papayafajta közül a ’Rainbow’ komplett, míg a ’SunUp’ csak részleges vírusrezisztenciát biztosít, és fogyasztásukat Japán a mai napig szigorúan tiltja.",
+        options: ["Igaz", "Hamis"],
+        answer: 1,
+        exp: "HAMIS! Pont fordítva szerepel az előadásban: a ’Rainbow’ (heterozigóta) fajtában részleges, a ’SunUp’ (homozigóta) fajtában pedig komplett rezisztenciát biztosít a 35S CaMV promóterrel kifejeztetett PRV CP gén, és 2011 decemberében még a GMO-kritikus Japán is engedélyezte a fogyasztását!"
+      },
+      {
+        id: "q168", topic: "t5", type: "tf", exam: false,
+        q: "IGAZ vagy HAMIS? A rizsben az OsMYB1 gén természetes állapotában egy „gát” (represszor), amely kikapcsolja a pigmentképző géneket (OsDFR, OsANS), ezért ha az OsMYB1-et CRISPR-Cas9-cel kiütik, a rizs sokkal lilább (antociándúsabb) lesz.",
+        options: ["Igaz", "Hamis"],
+        answer: 0,
+        exp: "IGAZ! A 2025-ös (Jünnani Mezőgazdasági Egyetem) kutatás szerint az OsMYB1 gátolja az antociánszintézist; a CRISPR-es kiütésével a gátlás megszűnik, és a rizs lila, antociánban gazdag lesz."
+      },
+      {
+        id: "q169", topic: "t6", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? Egy új GMO hatósági engedélyeztetési dokumentációjában a forgalmazónak kötelező megadnia a bevitt szekvenciákat, a transzformációs eljárást, a kópiaszámot, az integrációs helyet és a kimutatási módszert („receptet”) is.",
+        options: ["Igaz", "Hamis"],
+        answer: 0,
+        exp: "IGAZ! Ahogy az előadás fogalmaz: „Engedélyezett GMO-knál nem tapogatózunk a sötétben!”, mert az engedélyezési dokumentáció kötelező része a pontos szekvencia, vektor, marker, kópiaszám, integrációs hely, mendeli öröklődés és a kimutatási RECEPT."
+      },
+      {
+        id: "q170", topic: "t6", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? Az ELISA módszer egyik nagy előnye a PCR-rel szemben, hogy a kimutatott transzgénikus fehérje teljesen hőstabil és mennyisége a növény minden szervében és életkorában állandó, így erősen hőkezelt élelmiszerekben is a legmegbízhatóbb.",
+        options: ["Igaz", "Hamis"],
+        answer: 1,
+        exp: "HAMIS! Ez éppen az ELISA legnagyobb HÁTRÁNYA: a növényben expresszált GMO-fehérje mennyisége szervenként és az öregedés során változó, a fehérje hőérzékeny (denaturálódik), így a feldolgozási technológia erősen rontja a kimutathatóságot."
       }
     );
   </script>

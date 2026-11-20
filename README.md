@@ -4,7 +4,7 @@
 
 Interaktív vizsgafelkészítő webalkalmazás a **MATE Kertészmérnök BSc (III. félév) – Kertészeti Biotechnológia** tárgyhoz.
 
-## Tartalom (145 kérdés részletes magyarázatokkal: 74 ABCD + 30 Igaz/Hamis + 41 Szókiegészítős)
+## Tartalom (170 kérdés részletes magyarázatokkal: 86 ABCD + 35 Igaz/Hamis + 49 Szókiegészítős)
 - **I. Bevezetés, Színek & In vitro mikroszaporítás** (Ereky Károly 1917, biotechnológia színei, explantum, merisztéma vs. kallusz, sterilizálás lépései, fitohormonok, vírusmentesítés, mesterséges mag – kalcium-alginát burokba zárt szomatikus embrió, in vitro génbank és kriobank)
 - **II. Genetikai transzformáció & Genomszerkesztés (CRISPR/Cas9)** (Közvetett és közvetlen géntranszfer, *Agrobacterium tumefaciens* Ti-plazmid és Vir fehérjék, génpuska/Genebooster, promóter fogalma és típusai: konstitutív/induktív és általános/szövetspecifikus, szelektálható markergének – PAT, riportergének – GUS, GFP, Luciferáz, CRISPR/Cas9, NHEJ/HDR, SDN-1/2/3)
 - **III. PCR, Gélelektroforézis & Molekuláris markerek** (PCR 3 lépése normál és fordított 3 → 2 → 1 számozással is, agaróz gélelektroforézis, RAPD, ISSR, SSR/mikroszatellit, kapilláris elektroforézis, SCAR, CAPS, SNP típusok, domináns vs. kodomináns markerek)
@@ -15,4 +15,4 @@ Interaktív vizsgafelkészítő webalkalmazás a **MATE Kertészmérnök BSc (II
 ## Funkciók
 - **Interaktív Teszt:** szűrés témakörre, feladattípusra (**ABCD választós**, **Igaz / Hamis**, **Szókiegészítős** beírós/szóbankos, vagy vegyes) és kérdésszámra; kiegyenlített válaszlehetőségek
 - **Vizsgaábrák & Színek:** gyors vizuális összefoglaló a folyamatábrákhoz, GMO-fajtanevekhez és színanyag-párosításokhoz
-- **Teljes Kérdésbank:** kereshető gyűjtemény az összes (145) kérdéssel, megoldással és magyarázattal
+- **Teljes Kérdésbank:** kereshető gyűjtemény az összes (170) kérdéssel, megoldással és magyarázattal
