@@ -75,7 +75,7 @@
           <span>MATE • Kertészmérnök BSc • III. félév • 2026</span>
         </div>
         <h1 class="text-xl md:text-2xl font-bold mt-1 text-[var(--foreground)]">
-          Kertészeti Biotechnológia – Interaktív ABCD & Szókiegészítős Teszt
+          Kertészeti Biotechnológia – Interaktív ABCD, Szókiegészítős & Igaz/Hamis Teszt
         </h1>
         <p class="text-xs md:text-sm text-[var(--muted-foreground)] mt-1">
           A teljes előadásanyag (1–6. óra), a 2026-os GMO szabályozási/kimutatási és etikai/kockázati diasorok, valamint a javított vizsgakérdések alapján.
@@ -115,9 +115,10 @@
         <div>
           <label class="block text-xs font-medium text-[var(--muted-foreground)] mb-1">Feladattípus</label>
           <select id="typeSelect" onchange="restartQuiz()" class="w-full rounded-lg bg-[var(--background)] border border-[var(--border)] text-[var(--foreground)] px-3 py-2 text-xs">
-            <option value="both">Vegyes (ABCD + Szókiegészítős)</option>
+            <option value="both">Vegyes (ABCD + Szókiegészítős + Igaz/Hamis)</option>
             <option value="abcd">Csak ABCD feleletválasztós</option>
             <option value="fill">Csak szókiegészítős (beírós / szóbankos)</option>
+            <option value="tf">Csak Igaz / Hamis</option>
           </select>
         </div>
 
@@ -251,13 +252,14 @@
 
         <!-- Card 2: Pigments & GM Plants -->
         <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-4 space-y-3">
-          <h3 class="text-sm font-bold border-b border-[var(--card-border)] pb-2">2. Színanyagok, Enzimek és GM/GE Növények Párosítása</h3>
+          <h3 class="text-sm font-bold border-b border-[var(--card-border)] pb-2">2. Színanyagok és GMO Fajtanevek Összepárosítása (Vizsgakérdés!)</h3>
           <div class="space-y-1.5 text-xs">
-            <div class="p-2 rounded bg-[var(--background)] border border-[var(--border)]"><strong>Kék szegfű (Moonshadow) & Kék rózsa (Applause):</strong> <em>Delfinidin</em> (kék antocianidin) felhalmozása árvácska <em>F3’5’H</em> génnel (+ DFR RNSi és Torenia 5AT gén). (Cianidin = piros, Pelargonidin = narancs/sárga)</div>
-            <div class="p-2 rounded bg-[var(--background)] border border-[var(--border)]"><strong>Rózsaszín ananász (Pinkglow):</strong> <em>Likopin</em> felhalmozódás (piros/rózsaszín karotinoid), mert a likopin-béta-cikláz (LCYB) enzim gátolt, így nem alakul át sárga béta-karotinná/xantofillokká.</div>
-            <div class="p-2 rounded bg-[var(--background)] border border-[var(--border)]"><strong>Aranyrizs (Golden Rice 1 & 2), Aranybanán, Arany saláta:</strong> <em>Béta-karotin</em> (A-provitamin, sárga/arany szín) – GR1: nárcisz, GR2: kukorica <em>fitoén-szintáz (psy)</em> + <em>Erwinia uredovora</em> kettős deszaturáz.</div>
+            <div class="p-2 rounded bg-[var(--background)] border border-[var(--border)]"><strong>Kék szegfű (’Moonshadow’, ’Moondust’, 1998) & Kék rózsa (’Applause’, 2004):</strong> <em>Delfinidin</em> (kék antocianidin) felhalmozása árvácska <em>F3’5’H</em> génnel (+ DFR RNSi és Torenia 5AT gén). (Cianidin = piros, Pelargonidin = narancs/sárga)</div>
+            <div class="p-2 rounded bg-[var(--background)] border border-[var(--border)]"><strong>Rózsaszín ananász (’Pinkglow’):</strong> <em>Likopin</em> felhalmozódás (piros/rózsaszín karotinoid), mert a likopin-béta-cikláz (LCYB) enzim gátolt, így nem alakul át sárga béta-karotinná/xantofillokká.</div>
+            <div class="p-2 rounded bg-[var(--background)] border border-[var(--border)]"><strong>Aranyrizs (’Golden Rice’ GR1 & GR2), Aranybanán, Arany saláta:</strong> <em>Béta-karotin</em> (A-provitamin, sárga/arany szín) – GR1: nárcisz, GR2: kukorica <em>fitoén-szintáz (psy)</em> + <em>Erwinia uredovora</em> kettős deszaturáz.</div>
             <div class="p-2 rounded bg-[var(--background)] border border-[var(--border)]"><strong>Fekete / Lila paradicsom, Lila rizs (OsMYB1 KO), Pirosbélű antociános alma:</strong> <em>Antociánok</em> (paradicsomnál oroszlánszáj DEL és ROS1 transzkripciós faktorok; rizsnél OsMYB1 gátlógén kiütése).</div>
-            <div class="p-2 rounded bg-[var(--background)] border border-[var(--border)]"><strong>Ibolyavörös burgonya (Désirée) és padlizsán:</strong> <em>Betalain</em> pigment (pX11 vektor).</div>
+            <div class="p-2 rounded bg-[var(--background)] border border-[var(--border)]"><strong>Klorofill-tartalmú (sötétzöld / eltartható) brokkoli & Ibolyavörös burgonya (’Désirée’) / padlizsán:</strong> Brokkoli = <em>Klorofill</em> (zöld színanyag megőrzése); Burgonya/padlizsán = <em>Betalain</em> pigment (pX11 vektor).</div>
+            <div class="p-2 rounded bg-[var(--background)] border border-[var(--border)]"><strong>Fontos GM fajtanevek:</strong> <strong>’SunUp’ & ’Rainbow’</strong> = PRV-rezisztens papaya (Hawaii, 1996); <strong>’HoneySweet’ (C5)</strong> = PPV-rezisztens szilva; <strong>’Flavr Savr’</strong> (1994, PG) & <strong>’Endless Summer’</strong> (1995, ACC) = későn puhuló/érő paradicsom; <strong>’Sicilian Rouge’</strong> = magas GABA paradicsom (CRISPR); <strong>’Arctic’</strong> = nem barnuló alma (PPO); <strong>’Innate’</strong> = nem barnuló, alacsony akrilamid burgonya (VInv/PPO).</div>
           </div>
         </div>
 
@@ -1440,6 +1442,325 @@
         answers: ["EFSA"],
         hints: ["EFSA", "USDA", "NCBI", "ENGL", "CSIRO"],
         exp: "EFSA = European Food Safety Authority (Európai Élelmiszerbiztonsági Hatóság); az engedélyeket 10 évre adják ki."
+      },
+
+      // ==================== KÜLÖN KÉRT VIZSGAKÉRDÉSEK (PÁROSÍTÁS, FORDÍTOTT PCR, FAJTANEVEK) ====================
+      {
+        id: "q106", topic: "t2", type: "abcd", exam: true,
+        q: "Mi a szelektálható markergén pontos fogalma, és miben különbözik a riportergéntől?",
+        options: [
+          "A markergén saját promóterrel rendelkező rezisztenciagén (pl. PAT), amellyel a sikeresen transzformált sejteket válogatjuk ki a nem-transzformáltaktól; a riportergén (pl. GUS, GFP) pedig a vizsgált promóter után kapcsolva a génkifejeződés erősségét teszi vizuálisan mérhetővé",
+          "A markergén a célgén promótere által irányított színképző gén (pl. GUS, GFP), amellyel a transzkripció szintjét mérjük; a riportergén (pl. kanamicin-rezisztencia) pedig saját promóterrel pusztítja el a nem transzformált növényi sejteket a táptalajon",
+          "A markergén egy 6–12 bázispár hosszúságú véletlenszerű PCR-primer, amellyel az agaróz gélen láthatóvá tesszük a polimorf DNS-szakaszokat; a riportergén pedig az Agrobacterium Ti-plazmidjának 25 bázispáros jobb és bal oldali határoló szekvenciája",
+          "A markergén és a riportergén egymás teljes szinonimái: mindkettő kizárólag antibiotikum-rezisztenciát kódol a transzformációs vektorban, és 2006 óta egyik sem használható az Európai Unióban előállított genetikailag módosított növényekben"
+        ],
+        answer: 0,
+        exp: "Vizsgakérdés (markergén fogalma): A szelektálható markergén saját promóterrel/terminátorral rendelkezik, és a transzformáns sejtek szelekciójára szolgál (2006 előtt antibiotikum-, ma herbicidrezisztencia, pl. PAT gén). A riportergén (GUS, GFP, luciferáz) a vizsgált promóterhez kapcsolva az expresszió szintjét mutatja."
+      },
+      {
+        id: "q107", topic: "t5", type: "abcd", exam: true,
+        q: "Melyik összepárosítás helyes az alábbi öt növény (kék szegfű, antociános alma, rózsaszín ananász, aranyrizs, sötétzöld brokkoli) és a bennük felhalmozódó színanyagok között?",
+        options: [
+          "Kék szegfű: delfinidin; Pirosbélű alma (és fekete paradicsom): antocián; Rózsaszín ananász (Pinkglow): likopin; Aranyrizs: béta-karotin; Sötétzöld eltartható brokkoli: klorofill",
+          "Kék szegfű: likopin; Pirosbélű alma (és fekete paradicsom): béta-karotin; Rózsaszín ananász (Pinkglow): pelargonidin; Aranyrizs: xantofill; Sötétzöld eltartható brokkoli: betalain",
+          "Kék szegfű: cianidin; Pirosbélű alma (és fekete paradicsom): delfinidin; Rózsaszín ananász (Pinkglow): betalain; Aranyrizs: likopin; Sötétzöld eltartható brokkoli: antocián",
+          "Kék szegfű: betalain; Pirosbélű alma (és fekete paradicsom): klorofill; Rózsaszín ananász (Pinkglow): antocián; Aranyrizs: pelargonidin; Sötétzöld eltartható brokkoli: zéta-karotin"
+        ],
+        answer: 0,
+        exp: "Vizsgakérdés (színanyagok összepárosítása): Kék szegfű (és kék rózsa) = delfinidin; Antociános alma (és fekete/lila paradicsom, lila rizs) = antocián; Rózsaszín ananász (Pinkglow) = likopin; Aranyrizs = béta-karotin; Zöld brokkoli = klorofill."
+      },
+      {
+        id: "q108", topic: "t5", type: "abcd", exam: true,
+        q: "Melyik összepárosítás helyes a GM/génszerkesztett növények fajtanevei (’Applause’, ’SunUp’ / ’Rainbow’, ’Moonshadow’, ’HoneySweet’ C5, ’Sicilian Rouge’, ’Arctic’, ’Innate’) és a növényfajok között?",
+        options: [
+          "’Applause’: kék rózsa; ’SunUp’ és ’Rainbow’: PRV-rezisztens papaya; ’Moonshadow’: kék szegfű; ’HoneySweet’ (C5): PPV-rezisztens szilva; ’Sicilian Rouge’: magas GABA-tartalmú paradicsom; ’Arctic’: nem barnuló alma; ’Innate’: csökkent akrilamid-képződésű burgonya",
+          "’Applause’: kék szegfű; ’SunUp’ és ’Rainbow’: későn érő paradicsom; ’Moonshadow’: kék rózsa; ’HoneySweet’ (C5): PRV-rezisztens papaya; ’Sicilian Rouge’: rózsaszín ananász; ’Arctic’: fagyálló burgonya; ’Innate’: gluténmentes búza",
+          "’Applause’: nem barnuló alma; ’SunUp’ és ’Rainbow’: szárazságtűrő kukorica; ’Moonshadow’: ibolyavörös burgonya; ’HoneySweet’ (C5): édesburgonya; ’Sicilian Rouge’: kék rózsa; ’Arctic’: sótűrő rizs; ’Innate’: PPV-rezisztens szilva",
+          "’Applause’: PPV-rezisztens szilva; ’SunUp’ és ’Rainbow’: kék szegfű; ’Moonshadow’: PRV-rezisztens papaya; ’HoneySweet’ (C5): magas cukortartalmú dinnye; ’Sicilian Rouge’: antociános alma; ’Arctic’: nem barnuló banán; ’Innate’: Bt-gyapot"
+        ],
+        answer: 0,
+        exp: "Vizsgakérdés (GMO fajtanevek összepárosítása): ’Applause’ = kék rózsa; ’Moonshadow’/’Moondust’ = kék szegfű; ’SunUp’ & ’Rainbow’ = PRV-rezisztens hawaii papaya; ’HoneySweet’ (C5) = PPV (sharka)-rezisztens szilva; ’Flavr Savr’ & ’Endless Summer’ = későn puhuló/érő paradicsom; ’Sicilian Rouge’ = magas GABA paradicsom; ’Pinkglow’ = rózsaszín ananász; ’Arctic’ = nem barnuló alma; ’Innate’ = nem barnuló, alacsony akrilamid burgonya."
+      },
+      {
+        id: "q109", topic: "t3", type: "abcd", exam: true,
+        q: "VIGYÁZAT, FORDÍTOTT SZÁMOZÁS! Hogyan követik egymást a PCR (polimeráz láncreakció) lépései, ha a ciklus UTOLSÓ (3.) lépésétől haladunk visszafelé az ELSŐ (1.) lépésig (3. → 2. → 1.)?",
+        options: [
+          "3. lépés: Szintézis / lánchosszabbítás (72 °C, Taq polimeráz, ~1000 bp/perc) → 2. lépés: Primer tapadás / annealing (40–60 °C, ~30 mp) → 1. lépés: Denaturáció (>90 °C / 94–95 °C, ~30 mp, a DNS-szálak szétválása)",
+          "3. lépés: Denaturáció (>90 °C / 94–95 °C, ~30 mp, a DNS-szálak szétválása) → 2. lépés: Primer tapadás / annealing (40–60 °C, ~30 mp) → 1. lépés: Szintézis / lánchosszabbítás (72 °C, Taq polimeráz, ~1000 bp/perc)",
+          "3. lépés: Primer tapadás / annealing (72 °C, ~2 perc) → 2. lépés: Szintézis / lánchosszabbítás (40–60 °C, ~30 mp) → 1. lépés: Denaturáció (120 °C, ~20 perc autoklávban)",
+          "3. lépés: Agaróz gélelektroforézis (60–120 V, etídium-bromid) → 2. lépés: Restrikciós endonukleáz hasítás (37 °C) → 1. lépés: Plazmid transzformáció hősokkal (42 °C, 45–50 mp)"
+        ],
+        answer: 0,
+        exp: "Vizsgacsapda! A vizsgán a sorszámozás fordítva (3., 2., 1.) szerepelt: a 3. (utolsó) lépés a szintézis (72 °C), a 2. (középső) lépés a primer tapadás (40–60 °C), az 1. (első) lépés pedig a denaturáció (>90 °C)."
+      },
+      {
+        id: "q110", topic: "t2", type: "abcd", exam: true,
+        q: "Melyik folyamatleírás adja meg helyesen az Agrobacterium tumefaciens géntranszfer-ábráján látható molekuláris lépések sorrendjét?",
+        options: [
+          "1. A sebzett növényi sejt polifenoljait érzékeli a VirA receptor és aktiválja a VirG-t → 2. A VirD1/VirD2 kivágja a T-DNS-t a 25 bp-os LB/RB határoknál → 3. A VirE2 bevonja a T-DNS-t, a VirB/VirD4 pedig transzmembrán csatornát képez → 4. A T-DNS a sejtmagba jut (VIP1/aktin), és a növény saját DNS-javító mechanizmusa beépíti a kromoszómába",
+          "1. Az Agrobacterium 1–2 µm-es aranyrészecskékhez köti a Ti-plazmidot → 2. Héliumgáz nyomásával átlövi a növényi sejtfalon → 3. A Cas9 endonukleáz a PAM szekvencia mellett elvágja a növényi kromoszómát → 4. A bakteriális ligáz enzim beépíti a teljes Ti-plazmidot a kloroplasztiszba",
+          "1. A növényi sejt citokinint választ ki, ami kikapcsolja a VirA/VirG rendszert → 2. A restrikciós endonukleázok 4–8 bp-os palindrom helyeken feldarabolják a baktérium kromoszómáját → 3. A két sejtmembrán összeolvad PEG hatására → 4. Az onkogének és opin-gének változatlan formában regenerálják a transzgénikus növényt",
+          "1. A baktérium 42 °C-os hősokk hatására felnyitja a növényi sejtfalat → 2. A VirB/VirD4 enzimek kivágják a virulencia régiót a Ti-plazmidból → 3. A VirD1/VirD2 transzmembrán csatornán át a vakuólumba szállítja az mRNS-t → 4. A fordított transzkriptáz enzim cDNS-sé írja át és beépíti a sejtmagba"
+        ],
+        answer: 0,
+        exp: "Az Agrobacterium ábra 3 fő szakasza: 1) Szignálészlelés és vir-indukció (polifenolok → VirA/VirG bekapcsolja a vir géneket); 2) T-DNS kivágás (VirD1/D2 a 25 bp-os határszekvenciáknál) és transzfer (VirE2 burok + VirB/D4 csatorna); 3) Sejtmagba jutás (VIP1, aktin citoszkeleton) és integráció a növényi DNS-hibajavító mechanizmussal."
+      },
+      {
+        id: "q111", topic: "t2", type: "abcd", exam: true,
+        q: "Hogyan csoportosítjuk a promótereket a működésük időbeli szabályozása, illetve a kifejeződés helye (hatóköre) szerint?",
+        options: [
+          "Időbeli szabályozás szerint: konstitutív (folyamatosan aktív, pl. CaMV 35S, nos) és induktív (külső biotikus/abiotikus hatásra kapcsol be); hatókör szerint mindkettő lehet általános (minden sejtben működő) vagy specifikus (csak adott szervben, szövetben vagy fejlődési stádiumban kifejeződő)",
+          "Időbeli szabályozás szerint: domináns (homozigótában és heterozigótában is működő) és kodomináns (csak heterozigótában működő); hatókör szerint lehet prokarióta (plazmidon működő) vagy eukarióta (intronokban működő)",
+          "Időbeli szabályozás szerint: elsődleges (merisztémában működő) és másodlagos (kalluszban dedifferenciációval kialakuló); hatókör szerint lehet ragadós végű (koheziós) vagy tompa végű restrikciós promóter",
+          "Időbeli szabályozás szerint: szelektálható (antibiotikumot vagy herbicidet bontó) és riporter (szín- vagy fényreakciót adó); hatókör szerint lehet közvetett (Agrobacteriumos) vagy közvetlen (génpuskás) promóter"
+        ],
+        answer: 0,
+        exp: "Vizsgakérdés (promóter fogalma és csoportosítása): A promóter határozza meg, hol és mikor készüljön mRNS-átirat a génről. Két fő csoportja a konstitutív (folyamatos, pl. 35S, nos/ocs/mas) és az induktív (stressz/hormon/fény hatására bekapcsoló); mindkettő lehet általános (egész szervezetben) vagy szerv-/szövetspecifikus (pl. csak virágban, gyökérben, bogyóban)."
+      },
+      {
+        id: "q112", topic: "t5", type: "abcd", exam: true,
+        q: "Mikor izolálták és használták először a Bacillus thuringiensis (Bt) baktériumot hagyományos biológiai rovarölő szerként, és mikor került forgalomba az első transzgénikus Bt-növény?",
+        options: [
+          "A baktériumot a XX. század elején (1901/1911) izolálták, spórás készítményét az 1920-as/1930-as évektől használták biológiai rovarölő permetezőszerként (1938: Sporeine), míg az első transzgénikus Bt-növények 1995-ben kerültek forgalomba az USA-ban",
+          "A baktériumot 1983-ban izolálta Kary Mullis, permetezőszerként soha nem használták a mezőgazdaságban, az első transzgénikus Bt-kukorica pedig 1994-ben került forgalomba az Európai Unióban a Flavr Savr paradicsommal együtt",
+          "A baktériumot 1917-ben fedezte fel Ereky Károly, az első Bt-permetszert 1995-ben engedélyezték, míg az első transzgénikus Bt-növényeket csak 2012-ben állították elő CRISPR-Cas9 génszerkesztéssel Kínában",
+          "A baktériumot már az ókori Egyiptomban és Kínában (i. e. 500) is használták gyomirtó szerként, az első transzgénikus Bt-papaya pedig 1996-ban került kereskedelmi forgalomba Hawaii szigetén a gyűrűsfoltosság vírus ellen"
+        ],
+        answer: 0,
+        exp: "Vizsgakérdés: A Bacillus thuringiensis baktériumot 1901-ben (Ishiwata) és 1911-ben (Berliner) írták le, az 1920-as végétől / 1938-tól (Sporeine) természetes biológiai rovarölő permetezőszerként alkalmazták (amely a napsugárzás hatására néhány nap alatt lebomlik), míg a Cry gént hordozó első GM Bt-növények 1995-ben kerültek forgalomba az USA-ban."
+      },
+      {
+        id: "q113", topic: "t6", type: "fill", exam: true,
+        q: "Az Európai Unióban és Magyarországon 0,9%-os transzgénikus tartalom felett ________ kötelezettség áll fenn az élelmiszerekre és takarmányokra vonatkozóan.",
+        answers: ["jelölési", "címkézési", "jelölési kötelezettség", "címkézési kötelezettség"],
+        hints: ["jelölési", "megsemmisítési", "exportálási", "klónozási", "szabadalmi"],
+        exp: "Vizsgakérdés („Hiányzott a jelölési kötelezettség, azt kellett mondatba tenni”): 0,9% GMO-tartalom felett az EU-ban és Magyarországon is jelölési (címkézési) kötelezettség áll fenn."
+      },
+      {
+        id: "q114", topic: "t5", type: "fill", exam: true,
+        q: "A Suntory és a Florigene által előállított, delfinidint termelő GM „kék” (mályvalila) rózsa kereskedelmi fajtaneve ________, míg a PRV-rezisztens hawaii GM papaya fajtanevei a ’SunUp’ és a ’Rainbow’.",
+        answers: ["Applause", "'Applause'", "’Applause’"],
+        hints: ["Applause", "Moonshadow", "HoneySweet", "Flavr Savr", "Pinkglow"],
+        exp: "A GM kék rózsa fajtaneve ’Applause’ (a kék szegfűé ’Moonshadow’/’Moondust’, a PPV-rezisztens szilváé ’HoneySweet’ C5, a PRV-rezisztens papayáé ’SunUp’ és ’Rainbow’)."
+      },
+      {
+        id: "q115", topic: "t6", type: "fill", exam: true,
+        q: "Az ELISA teszt egy immunológiai módszer, amellyel a GMO-kimutatás során a transzgén által termelt idegen ________ (antigént, pl. CP4-EPSPS vagy Bt-toxint) mérjük specifikus antitest segítségével.",
+        answers: ["fehérjét", "fehérje", "fehérjeterméket", "antigént"],
+        hints: ["fehérjét", "DNS-t", "promótert", "keményítőt", "hormont"],
+        exp: "Az ELISA fehérjealapú teszt: a transzgén fehérjetermékét (antigént) mutatja ki antigén–antitest kölcsönhatással és színreakciót adó enzimmel."
+      },
+
+      // ==================== IGAZ / HAMIS KÉRDÉSEK (VIZSGAKÉRDÉSEK & TELJES TANANYAG) ====================
+      {
+        id: "q116", topic: "t5", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? Az első rovarrezisztens, Bacillus thuringiensis (Bt) Cry-toxint termelő transzgénikus növények 1995-ben kerültek kereskedelmi forgalomba az Egyesült Államokban.",
+        options: ["Igaz", "Hamis"],
+        answer: 0,
+        exp: "IGAZ! Az első GM növény a Flavr Savr paradicsom volt 1994-ben, az első Bt-növények (kukorica, burgonya, gyapot) pedig 1995-ben kerültek forgalomba az USA-ban."
+      },
+      {
+        id: "q117", topic: "t5", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? A papaya gyűrűsfoltosság vírus (Papaya ringspot virus, PRV) elleni rezisztenciát Hawaiin 1996-ban vezették be a vírus köpenyfehérje (CP) génjét tartalmazó, génpuskával transzformált ’SunUp’ és ’Rainbow’ fajtákkal.",
+        options: ["Igaz", "Hamis"],
+        answer: 0,
+        exp: "IGAZ! A PRV-rezisztens transzgénikus papayát (’Rainbow’ és ’SunUp’) 1996-ban vezették be Hawaiin, génpuskás transzformációval és 35S CaMV promóter által irányított PRV köpenyfehérje (CP) génnel."
+      },
+      {
+        id: "q118", topic: "t6", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? A GMO-kimutatási módszerek érzékenységi sorrendjében a Strip teszt (tesztcsík) a legérzékenyebb (0,01%), míg a PCR a legkevésbé érzékeny (0,1–1%).",
+        options: ["Igaz", "Hamis"],
+        answer: 1,
+        exp: "HAMIS! Pont fordítva: a Strip teszt a legkevésbé érzékeny (0,1–1%), utána következik az ELISA (0,01–0,1%), és a PCR / qPCR a legérzékenyebb (0,01%)."
+      },
+      {
+        id: "q119", topic: "t6", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? Az Európai Unióban (és Ausztráliában) folyamatalapú (process-based), míg az USA-ban (és Kanadában) termékalapú (product-based) GMO-szabályozás van érvényben.",
+        options: ["Igaz", "Hamis"],
+        answer: 0,
+        exp: "IGAZ! Az EU-ban az előállítás folyamata alapján szabályoznak (nyomonkövetési és 0,9% feletti jelölési kötelezettséggel), míg az USA-ban a végtermék tulajdonságai számítanak."
+      },
+      {
+        id: "q120", topic: "t6", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? Magyarország teljesen GMO-mentes ország, vagyis a köztermesztési moratórium mellett GM-szója takarmánycélú importja és rekombináns gyógyszerek (pl. inzulin) felhasználása sem történik.",
+        options: ["Igaz", "Hamis"],
+        answer: 1,
+        exp: "HAMIS! Magyarország nem teljesen GMO-mentes, hanem GMO-termesztéstől mentes ország: köztermesztési moratórium van érvényben, de évente ~700 ezer tonna GM-szóját importálunk takarmányozásra, és a korszerű gyógyszereink (pl. inzulin) többsége is rekombináns termék."
+      },
+      {
+        id: "q121", topic: "t2", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? A GUS riportergén működése során az X-gluc szubsztrát hidrolízisével oldhatatlan indigókék festék keletkezik a transzformált növényi szövetekben.",
+        options: ["Igaz", "Hamis"],
+        answer: 0,
+        exp: "IGAZ! A GUS a béta-glükuronidáz enzimet kódolja, amely az X-gluc szubsztrátból indigókék csapadékot képez. (A medúza eredetű GFP UV-fényben zölden fluoreszkál, a szentjánosbogár luciferáz pedig luciferinnel lumineszkál.)"
+      },
+      {
+        id: "q122", topic: "t2", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? A szelektálható markergén saját promóterrel rendelkezik és a transzformáns sejtek kiválogatására szolgál, míg a riportergén expresszióját a vizsgált célgén promótere szabályozza.",
+        options: ["Igaz", "Hamis"],
+        answer: 0,
+        exp: "IGAZ! A szelektálható markergénnek (pl. PAT gén) saját promótere és terminátora van a túlélési szelekcióhoz, míg a riportergént a vizsgálandó promóter mögé kapcsolják az expresszió mérésére."
+      },
+      {
+        id: "q123", topic: "t2", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? 2006 óta az Európai Unióban a növényi géntechnológiában kizárólag antibiotikum-rezisztencia géneket (pl. kanamicin, higromicin) szabad szelektálható markergénként alkalmazni.",
+        options: ["Igaz", "Hamis"],
+        answer: 1,
+        exp: "HAMIS! 2006-ban betiltották az antibiotikum-rezisztencia markergének használatát a horizontális géntranszfer kockázata miatt; ma a leggyakoribb szelekciós marker a glüfozinát (FINALE) gyomirtószer-rezisztenciát kódoló PAT gén."
+      },
+      {
+        id: "q124", topic: "t1", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? A mesterséges mag előállításakor a folyékony táptalajban nevelt szomatikus embriókat torpedó stádiumban szinkronizálják magas cukorkoncentrációval, majd nátrium-alginát és kalciumsó ioncseréjével kapszulázzák.",
+        options: ["Igaz", "Hamis"],
+        answer: 0,
+        exp: "IGAZ! A mesterséges mag vegetatív klónozási forma: a szomatikus embriókat torpedó stádiumban magas cukor- és N-tartalommal blokkolják/szinkronizálják, majd Na-alginát és Ca-só ioncseréjével ~4 mm-es gélgolyóba zárják."
+      },
+      {
+        id: "q125", topic: "t1", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? A növényi szövettenyészetekben, ha a táptalajban a citokinin aránya nagyobb, mint az auxiné (citokinin > auxin), akkor gyökérképződés indul be, ha pedig az auxin van túlsúlyban, akkor hajtásképzés (sarjadzás) történik.",
+        options: ["Igaz", "Hamis"],
+        answer: 1,
+        exp: "HAMIS! Fordítva: ha citokinin > auxin, akkor hajtásképzés (sarjadzás) történik; ha citokinin < auxin (vagy csak auxin van), akkor kallusz- és gyökérképződés indul be."
+      },
+      {
+        id: "q126", topic: "t2", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? Az Agrobacterium tumefaciens természetes talajbaktérium, ezért laboratóriumban 20–23 °C-on (2–3 nap alatt) szaporítjuk, szemben a 37 °C-ot kedvelő Escherichia coli baktériummal.",
+        options: ["Igaz", "Hamis"],
+        answer: 0,
+        exp: "IGAZ! Az E. coli bélbaktériumként 37 °C-on 1 nap alatt felszaporodik (és 42 °C-os hősokkal transzformálják), míg a talajlakó Agrobacterium 20–23 °C-ot kedvel és lassabban, 2–3 nap alatt szaporodik fel."
+      },
+      {
+        id: "q127", topic: "t2", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? A génpuskás (részecskebombázásos) közvetlen géntranszfer során a makrolövedék áthalad az ütközőlemezen (stopper discen) és behatol a növényi sejtmagba.",
+        options: ["Igaz", "Hamis"],
+        answer: 1,
+        exp: "HAMIS! A műanyag makrolövedék fennakad a stopper discen (ütközőlemezen), és csak a felületéről leszakadó, DNS-sel bevont 1–2 µm-es arany vagy volfrám mikrolövedékek repülnek tovább a növényi célsejtekbe."
+      },
+      {
+        id: "q128", topic: "t2", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? A CRISPR/Cas9 genomszerkesztés egyik legfontosabb előnye, hogy idegen fajból származó gén (transzgén) beépítése nélkül is képes célzott, nukleotid-pontosságú módosítást vagy génkiütést létrehozni.",
+        options: ["Igaz", "Hamis"],
+        answer: 0,
+        exp: "IGAZ! A CRISPR/Cas9 (különösen az SDN-1 és SDN-2 típusú módosítás) idegen transzgén beépítése nélkül képes célzott mutációt létrehozni a sejt saját DNS-javító mechanizmusával (NHEJ vagy HDR)."
+      },
+      {
+        id: "q129", topic: "t3", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? Az agaróz gélelektroforézis során a DNS-molekulák a foszfátcsoportjaik miatt negatív töltésűek, és a nagyobb méretű DNS-fragmentumok haladnak gyorsabban a gél rácshálójában.",
+        options: ["Igaz", "Hamis"],
+        answer: 1,
+        exp: "HAMIS! A DNS valóban negatív töltésű a foszfátcsoportok miatt, azonban a KISEBB molekulák haladnak gyorsabban (fürgébben), míg a nagyobbak beleakadnak az agaróz gél térhálójába és lassabban vándorolnak."
+      },
+      {
+        id: "q130", topic: "t3", type: "tf", exam: false,
+        q: "IGAZ vagy HAMIS? A RAPD és az ISSR domináns öröklődésű molekuláris markerek (nem igényelnek előzetes szekvenciaismeretet és nem különítik el a heterozigótákat a homozigótáktól), míg az SSR és a CAPS kodomináns markerek.",
+        options: ["Igaz", "Hamis"],
+        answer: 0,
+        exp: "IGAZ! A RAPD (6–12 bp random primer) és az ISSR (18–20 bp mikroszatellit primer) egyprimeres, domináns markerek; az SSR (mikroszatellit határoló régiókra tervezett F+R primer) és a CAPS (PCR + restrikciós emésztés) ismert szekvencián alapuló kodomináns markerek."
+      },
+      {
+        id: "q131", topic: "t1", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? A „biotechnológia” kifejezést Ereky Károly magyar gépészmérnök és közgazdász alkotta meg és használta először a világon 1917-ben.",
+        options: ["Igaz", "Hamis"],
+        answer: 0,
+        exp: "IGAZ! Ereky Károly 1917-ben vezette be a biotechnológia fogalmát az élő szervezetek segítségével végzett ipari nyersanyag-feldolgozás leírására."
+      },
+      {
+        id: "q132", topic: "t4", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? A NCBI rövidítés a National Center for Biotechnology Information (Nemzeti Biotechnológiai Információs Központ) intézményét és adatbázis-rendszerét jelöli, amelyet az USA-ban 1988-ban alapítottak.",
+        options: ["Igaz", "Hamis"],
+        answer: 0,
+        exp: "IGAZ! Az NCBI (National Center for Biotechnology Information) 1988 óta működteti a GenBank és PubMed adatbázisokat, valamint a BLAST keresőrendszert."
+      },
+      {
+        id: "q133", topic: "t5", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? Az 'Applause' fajtanevű kék rózsa és a 'Moonshadow' kék szegfű a kék színét a likopin színanyag (karotinoid) bioszintéziséért felelős gének beépítésének köszönheti.",
+        options: ["Igaz", "Hamis"],
+        answer: 1,
+        exp: "HAMIS! Az 'Applause' kék rózsa és a 'Moonshadow' kék szegfű a kék színét a DELFINIDIN (antocián) pigmentnek köszönheti. A likopin a 'Pinkglow' rózsaszín ananász színanyaga!"
+      },
+      {
+        id: "q134", topic: "t5", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? A 'Pinkglow' rózsaszín húsú ananász a rózsaszín árnyalatát a likopin felhalmozódásának, míg az Aranyrizs (Golden Rice) a sárga színét az A-provitaminként működő béta-karotinnak köszönheti.",
+        options: ["Igaz", "Hamis"],
+        answer: 0,
+        exp: "IGAZ! A 'Pinkglow' ananászban a likopin-ciklázt csendesítették el, így a piros/rózsaszín likopin halmozódik fel; az Aranyrizsben pedig nárcisz/kukorica és Erwinia génekkel a béta-karotin (A-provitamin) termelődik a magban."
+      },
+      {
+        id: "q135", topic: "t5", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? A 'SunUp' (homozigóta) és a 'Rainbow' (heterozigóta F1 hibrid) fajtanevű transzgenikus papaya fajták a papaya gyűrűsfoltosság vírus (PRV / PRSV) burokfehérje-génjének köszönhetik vírusrezisztenciájukat.",
+        options: ["Igaz", "Hamis"],
+        answer: 0,
+        exp: "IGAZ! A PRV burokfehérje-génjével (coat protein) patogén eredetű rezisztenciát alakítottak ki; a 'SunUp' a transzgénre homozigóta piros húsú vonal, a 'Rainbow' pedig a 'SunUp' × 'Kapoho' sárga húsú F1 hibridje."
+      },
+      {
+        id: "q136", topic: "t5", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? A 'Flavr Savr' volt a világ első kereskedelmi forgalomba került GM-növénye (1994), amelyben a poligalakturonáz (PG) enzimet antiszensz RNS-technológiával gátolták a lassabb puhulás és hosszabb pultontarthatóság érdekében.",
+        options: ["Igaz", "Hamis"],
+        answer: 0,
+        exp: "IGAZ! A Calgene által kifejlesztett 'Flavr Savr' paradicsomban (1994) a sejtfal pektinjét bontó poligalakturonáz (PG) enzimet csendesítették el antiszensz RNS-sel."
+      },
+      {
+        id: "q137", topic: "t3", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? A PCR-reakció egyetlen ciklusa időrendben (az 1. lépéstől a 3. lépésig) a következő: 1. Denaturáció (>90 °C), 2. Primerek specifikus tapadása (40–60 °C), 3. DNS-szintézis / lánchosszabbítás (72 °C).",
+        options: ["Igaz", "Hamis"],
+        answer: 0,
+        exp: "IGAZ! Időrendben (1 → 2 → 3): 1. Denaturáció (>90 °C), 2. Annealing / primer tapadás (40–60 °C), 3. Szintézis Taq polimerázzal (72 °C). (Vigyázat: ha a vizsgán fordított számozással, 3 → 2 → 1 sorrendben kérik, akkor a Szintézistől indulunk visszafelé a Denaturációig!)"
+      },
+      {
+        id: "q138", topic: "t6", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? Az ELISA (Enzyme-Linked Immunosorbent Assay) módszerrel a genetikailag módosított növényben közvetlenül a rekombináns DNS bázissorrendjét és a promóter szekvenciáját mérjük.",
+        options: ["Igaz", "Hamis"],
+        answer: 1,
+        exp: "HAMIS! Az ELISA teszt antigén–antitest specifikus kapcsolódáson alapul, és a transzgén által termelt FEHÉRJÉT (antigént) mutatja ki és méri (0,01–0,1% érzékenységgel). A DNS-szekvenciát a PCR mutatja ki!"
+      },
+      {
+        id: "q139", topic: "t6", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? A GMO-kimutatási módszerek közül a gyorsteszt csík (Strip teszt) a legérzékenyebb (0,01%), míg a PCR (polimeráz láncreakció) a legkevésbé érzékeny eljárás (0,1–1%).",
+        options: ["Igaz", "Hamis"],
+        answer: 1,
+        exp: "HAMIS! Épp fordítva: a fehérjealapú Strip teszt a legkevésbé érzékeny (0,1–1%), az ELISA közepes érzékenységű (0,01–0,1%), és a DNS-alapú PCR a legérzékenyebb és legspecifikusabb módszer (0,01% kimutatási határ)."
+      },
+      {
+        id: "q140", topic: "t6", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? Az Európai Unióban a 0,9%-os küszöbértéket meghaladó GMO-tartalom esetén a termék csomagolásán jelölési kötelezettség áll fenn („géntechnológiával módosított szervezetet tartalmaz”).",
+        options: ["Igaz", "Hamis"],
+        answer: 0,
+        exp: "IGAZ! Az EU-ban 0,9% felett kötelező a GMO-jelölés (jelölési kötelezettség); 0,9% alatt csak akkor mentesül a termék, ha a jelenlét véletlenszerű (adventív) és technikailag elkerülhetetlen."
+      },
+      {
+        id: "q141", topic: "t7", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? A Bacillus thuringiensis baktériumot már 1938-ban (Franciaországban, Sporeine néven) használták biológiai rovarirtó permetezőszerként, jóval az 1995-ben forgalomba került első transzgenikus Bt-növények előtt.",
+        options: ["Igaz", "Hamis"],
+        answer: 0,
+        exp: "IGAZ! A Bt-baktériumot 1901/1911-ben izolálták, 1920-tól ismerték rovarölő hatását, és 1938-ban már kereskedelmi bio-inszekticidként alkalmazták, míg az első Bt-növény (burgonya, kukorica, gyapot) 1995-ben került forgalomba."
+      },
+      {
+        id: "q142", topic: "t7", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? A világon a legnagyobb vetésterületen termesztett 4 génmódosított (GM) növényfaj sorrendben a szója, a kukorica, a gyapot és az olajrepce, amelyeknél a gyomirtószer-tolerancia (HT) és a rovarrezisztencia (Bt) a leggyakoribb tulajdonság.",
+        options: ["Igaz", "Hamis"],
+        answer: 0,
+        exp: "IGAZ! A globális GM-vetésterület ~99%-át a szója, a kukorica, a gyapot és a repce (canola) adja, főként glifozát-toleráns (EPSPS) és rovarrezisztens (Bt) fajtákkal."
+      },
+      {
+        id: "q143", topic: "t2", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? A promóter a gén átírását (transzkripcióját) közvetlenül szabályozó és indító DNS-szakasz, amely lehet konstitutív (állandó, pl. CaMV 35S) vagy induktív (külső hatásra bekapcsoló), illetve általános vagy szövet-/szervspecifikus.",
+        options: ["Igaz", "Hamis"],
+        answer: 0,
+        exp: "IGAZ! A promóter a gén 5' végén található regulátor régió, ahová az RNS-polimeráz bekötődik; működése szerint konstitutív vagy induktív, kifejeződési helye szerint általános vagy szövet-/fejlődésspecifikus."
+      },
+      {
+        id: "q144", topic: "t6", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? Az EU 2026-os NGT (új genomikai technikák, pl. CRISPR) megállapodása szerint az NGT-1 kategóriába tartozó (legfeljebb 20 genetikai módosítást tartalmazó, idegen DNS-től mentes) növények a hagyományos fajtákkal azonos elbírálás alá esnek, de az ökológiai (bio) gazdálkodásban továbbra sem használhatók.",
+        options: ["Igaz", "Hamis"],
+        answer: 0,
+        exp: "IGAZ! Az NGT-1 növények mentesülnek a klasszikus GMO-engedélyezés és a fogyasztói végtermék-jelölés alól (csak a vetőmagzsákon jelölik őket), viszont az ökológiai gazdálkodásban az NGT-1 és NGT-2 egyaránt tilos marad."
+      },
+      {
+        id: "q145", topic: "t4", type: "tf", exam: true,
+        q: "IGAZ vagy HAMIS? A BLAST algoritmus futtatásakor az E-value (Expect value) minél nagyobb szám (pl. 10 vagy 100), annál megbízhatóbb és biológiailag annál szignifikánsabb a szekvenciatalálat.",
+        options: ["Igaz", "Hamis"],
+        answer: 1,
+        exp: "HAMIS! Az E-value a véletlen egyezés várható valószínűségét mutatja: minél KISEBB (minél közelebb van a 0-hoz, pl. 1e-50 vagy 0.0), annál megbízhatóbb és szignifikánsabb a találat!"
       }
     );
   </script>
@@ -1511,6 +1832,7 @@
         if (topic === "exam" && !item.exam) return false;
         if (topic !== "all" && topic !== "exam" && item.topic !== topic) return false;
         if (type === "abcd" && item.type !== "abcd") return false;
+        if (type === "tf" && item.type !== "tf") return false;
         if (type === "fill" && item.type !== "fill") return false;
         return true;
       });
@@ -1531,6 +1853,8 @@
       activeQuestions.forEach(q => {
         if (q.type === "abcd") {
           optionOrderMap[q.id] = shuffleArray([0, 1, 2, 3]);
+        } else if (q.type === "tf") {
+          optionOrderMap[q.id] = [0, 1];
         } else if (q.type === "fill") {
           optionOrderMap[q.id] = shuffleArray(q.hints || []);
         }
@@ -1567,6 +1891,9 @@
       if (q.type === "abcd") {
         typeBadge.textContent = "ABCD választós";
         typeBadge.className = "px-2 py-0.5 rounded font-semibold text-xs bg-[var(--primary)]/15 text-[var(--primary)]";
+      } else if (q.type === "tf") {
+        typeBadge.textContent = "Igaz / Hamis";
+        typeBadge.className = "px-2 py-0.5 rounded font-semibold text-xs bg-[var(--warning)]/20 text-[var(--warning)] border border-[var(--warning)]/40";
       } else {
         typeBadge.textContent = "Szókiegészítős";
         typeBadge.className = "px-2 py-0.5 rounded font-semibold text-xs bg-[var(--accent)]/20 text-[var(--foreground)] border border-[var(--border)]";
@@ -1592,13 +1919,13 @@
       const abcdContainer = document.getElementById("abcdContainer");
       const fillContainer = document.getElementById("fillContainer");
 
-      if (q.type === "abcd") {
+      if (q.type === "abcd" || q.type === "tf") {
         abcdContainer.classList.remove("hidden");
         fillContainer.classList.add("hidden");
         abcdContainer.innerHTML = "";
 
-        const letters = ["A", "B", "C", "D"];
-        const order = optionOrderMap[q.id] || [0, 1, 2, 3];
+        const letters = q.type === "tf" ? ["I", "H"] : ["A", "B", "C", "D"];
+        const order = optionOrderMap[q.id] || (q.type === "tf" ? [0, 1] : [0, 1, 2, 3]);
 
         order.forEach((origIdx, dispIdx) => {
           const btn = document.createElement("button");
@@ -1678,7 +2005,7 @@
           fbTitle.className = "font-bold text-sm text-[var(--error)]";
         }
 
-        const correctDisplay = q.type === "abcd" ? q.options[q.answer] : q.answers.join(" / ");
+        const correctDisplay = (q.type === "abcd" || q.type === "tf") ? q.options[q.answer] : q.answers.join(" / ");
         fbAns.textContent = `Helyes megoldás: ${correctDisplay}`;
         fbExp.textContent = q.exp || "";
       } else {
@@ -1729,7 +2056,7 @@
       userAnswers[q.id] = {
         correct: false,
         chosenOrigIdx: -1,
-        selectedText: q.type === "abcd" ? q.options[q.answer] : q.answers[0],
+        selectedText: (q.type === "abcd" || q.type === "tf") ? q.options[q.answer] : q.answers[0],
         revealed: true
       };
       updateScoreStrip();
@@ -1774,7 +2101,7 @@
         missed.forEach(q => {
           const div = document.createElement("div");
           div.className = "p-3 rounded-lg bg-[var(--background)] border border-[var(--border)] text-xs space-y-1";
-          const ansText = q.type === "abcd" ? q.options[q.answer] : q.answers[0];
+          const ansText = (q.type === "abcd" || q.type === "tf") ? q.options[q.answer] : q.answers[0];
           div.innerHTML = `
             <div class="font-semibold text-[var(--foreground)]">${q.q}</div>
             <div class="text-[var(--success)] font-medium">✓ Helyes: ${ansText}</div>
@@ -1805,7 +2132,7 @@
         if (topicFilter === "exam" && !q.exam) return false;
         if (topicFilter !== "all" && topicFilter !== "exam" && q.topic !== topicFilter) return false;
         if (!query) return true;
-        const ansStr = q.type === "abcd" ? q.options.join(" ") : q.answers.join(" ");
+        const ansStr = (q.type === "abcd" || q.type === "tf") ? q.options.join(" ") : q.answers.join(" ");
         const hay = stripAccents(`${q.q} ${ansStr} ${q.exp}`);
         return hay.includes(query);
       });
@@ -1813,8 +2140,8 @@
       filtered.forEach((q, idx) => {
         const card = document.createElement("div");
         card.className = "bg-[var(--card)] border border-[var(--border)] rounded-xl p-4 text-xs space-y-1.5";
-        const ansText = q.type === "abcd" ? q.options[q.answer] : q.answers.join(" / ");
-        const badge = q.type === "abcd" ? "ABCD" : "Szókiegészítős";
+        const ansText = (q.type === "abcd" || q.type === "tf") ? q.options[q.answer] : q.answers.join(" / ");
+        const badge = q.type === "abcd" ? "ABCD" : (q.type === "tf" ? "Igaz / Hamis" : "Szókiegészítős");
         const star = q.exam ? `<span class="text-[var(--warning)] font-bold">★ Vizsgakérdés</span> • ` : "";
 
         card.innerHTML = `
